@@ -1834,30 +1834,31 @@ function App() {
 
  const handleUserSession = async (u) => {
   setUser(u);
-  const timeout = new Promise((_, reject) => setTimeout(() => reject('timeout'), 4000));
   try {
-    let { data: prof } = await Promise.race([
-      sb.from('profiles').select('*').eq('id', u.id).single(),
-      timeout
-    ]);
+    const { data: prof } = await sb.from('profiles')
+      .select('*').eq('id', u.id).single();
     if (!prof) {
-      const { data: newProf } = await Promise.race([
-        sb.from('profiles').insert([{ id: u.id, email: u.email, full_name: u.user_metadata?.full_name, trial_start: new Date().toISOString(), plan: 'trial' }]).select().single(),
-        timeout
-      ]);
-      prof = newProf;
+      const { data: newProf } = await sb.from('profiles')
+        .insert([{ 
+          id: u.id, 
+          email: u.email, 
+          full_name: u.user_metadata?.full_name, 
+          trial_start: new Date().toISOString(), 
+          plan: 'trial',
+          generations_used: 0,
+          generations_reset_at: new Date().toISOString()
+        }]).select().single();
+      setProfile(newProf);
+    } else {
+      setProfile(prof);
     }
-    setProfile(prof);
     setPage('dashboard');
   } catch(e) {
-    await sb.auth.signOut();
-    setUser(null);
-    setProfile(null);
-    setPage('landing');
+    setPage('dashboard');
+  } finally {
+    setLoading(false);
   }
-  setLoading(false);
 };
-
   
 const handleLogout = async () => {
   try {
