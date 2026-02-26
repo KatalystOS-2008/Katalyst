@@ -1816,39 +1816,49 @@ function App() {
   const [loading, setLoading] = useState(true);
 
 useEffect(() => {
+  // Hard fallback — never spin forever
   const fallback = setTimeout(() => setLoading(false), 5000);
-  return () => clearTimeout(fallback);
+
+  const { data: { subscription } } = sb.auth.onAuthStateChange(async (event, session) => {
+    currentToken = session?.access_token || null;
+
+    if (event === 'INITIAL_SESSION') {
+      if (session?.user) {
+        await handleUserSession(session.user);
+      } else {
+        setLoading(false);
+      }
+      clearTimeout(fallback);
+    } else if (event === 'SIGNED_IN') {
+      currentToken = session.access_token;
+      await handleUserSession(session.user);
+      setAuthMode(null);
+    } else if (event === 'SIGNED_OUT') {
+      setUser(null);
+      setProfile(null);
+      setPage('landing');
+      setLoading(false);
+    }
+  });
+
+  return () => {
+    clearTimeout(fallback);
+    subscription.unsubscribe();
+  };
 }, []);
 
-      // In your main App or a suitable useEffect hook where you manage user state
-    useEffect(() => {
-      const { data: { subscription } } = sb.auth.onAuthStateChange((event, session) => {
-        // Store the session token globally or pass it down
-        currentToken = session?.access_token || null;
-        // You might also want to update your UI state (e.g., set user, profile) here
-      });
-      // Initial check for session on load
-      sb.auth.getSession().then(({ data: { session } }) => {
-        currentToken = session?.access_token || null;
-        // Also update UI state here if needed
-      });
-
-      return () => subscription.unsubscribe();
-    }, []);
-    
-
- const handleUserSession = async (u) => {
+const handleUserSession = async (u) => {
   setUser(u);
   try {
     const { data: prof } = await sb.from('profiles')
       .select('*').eq('id', u.id).single();
     if (!prof) {
       const { data: newProf } = await sb.from('profiles')
-        .insert([{ 
-          id: u.id, 
-          email: u.email, 
-          full_name: u.user_metadata?.full_name, 
-          trial_start: new Date().toISOString(), 
+        .insert([{
+          id: u.id,
+          email: u.email,
+          full_name: u.user_metadata?.full_name,
+          trial_start: new Date().toISOString(),
           plan: 'trial',
           generations_used: 0,
           generations_reset_at: new Date().toISOString()
@@ -1859,12 +1869,12 @@ useEffect(() => {
     }
     setPage('dashboard');
   } catch(e) {
-    setPage('dashboard');
+    setPage('landing');
   } finally {
     setLoading(false);
   }
 };
-  
+
 const handleLogout = async () => {
   try {
     setUser(null);
