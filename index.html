@@ -1114,7 +1114,7 @@ function ScopeTab({user,profile}) {
     const filled = pairs.filter(p=>p.q.trim()||p.a.trim());
     const sys = `You are a professional freelance project manager. Generate a clear, structured project scope document. Use plain text with section headers (no asterisks or markdown). Be specific, professional and thorough. Sections: Project Overview, Objectives, Deliverables, Timeline, Investment, What's Included, What's NOT Included, Next Steps.`;
     const usr = `Service: ${service}\nClient: ${clientName||'Client'}\nBudget: ${budget||'TBD'}\nTimeline: ${timeline||'TBD'}\n\nQ&A from onboarding:\n${filled.map((p,i)=>`Q${i+1}: ${p.q}\nA: ${p.a}`).join('\n\n')}\n\nGenerate a professional project scope document.`;
-    const r = await callClaude(sys, usr, 1200);
+    const r = await callClaude(sys, usr, 2000);
     setScope(r); setLoading(false);
   };
 
