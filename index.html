@@ -334,7 +334,7 @@ async function callClaude(system, user, maxTokens = 900) {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
-        "apikey": CONFIG.SUPABASE_ANON_KEY,
+        
       },
       body: JSON.stringify({
         system,
