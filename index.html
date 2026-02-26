@@ -311,52 +311,56 @@ async function checkAndIncrementUsage(userId, plan) {
   return { allowed: true, used: prof.generations_used + 1 };
 }
 
-    async function callClaude(system, user, maxTokens = 900) {
-      try {
-        // Ensure currentToken is updated via onAuthStateChange or getSession()
-        if (!currentToken) {
-          // Attempt to get session one last time, useful if onAuthStateChange hasn't fired yet
-          const { data: { session } } = await sb.auth.getSession();
-          currentToken = session?.access_token || null;
-        }
+async function callClaude(system, user, maxTokens = 900) {
+  try {
+    const { data: sessionData, error: sessionError } = await sb.auth.getSession();
 
-        if (!currentToken) {
-          console.error("No active session token found. User is likely not logged in.");
-          return 'Please log in to use AI features.';
-        }
+    let session = sessionData?.session;
 
-        const res = await fetch(CONFIG.CLAUDE_API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${currentToken}`, // Use the actively managed token
-          },
-          body: JSON.stringify({
-            system: system,
-            user: user,
-            maxTokens: maxTokens,
-          }),
-        });
+    if (!session) {
+      const { data: refreshData, error: refreshError } = await sb.auth.refreshSession();
 
-        // Check response status here before trying to parse JSON
-        if (!res.ok) {
-          const errorData = await res.json();
-          console.error("Claude proxy error:", errorData);
-          if (errorData.code === 401 && errorData.message === "Invalid JWT") {
-              // Optionally trigger a re-login flow or notify user their session expired
-              return 'Your session has expired. Please log in again.';
-          }
-          return `Error from AI: ${errorData.message || res.statusText}`;
-        }
-
-        const d = await res.json();
-        return d.content?.[0]?.text || '';
-
-      } catch(e) {
-        console.error("Error calling Claude function:", e);
-        return 'Error connecting to AI. Please check your configuration.';
+      if (refreshError || !refreshData?.session) {
+        return "Your session expired. Please login again.";
       }
+
+      session = refreshData.session;
     }
+
+    const token = session.access_token;
+
+    const res = await fetch(CONFIG.CLAUDE_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        system,
+        user,
+        maxTokens,
+      }),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Edge function error:", errorText);
+
+      if (res.status === 401) {
+        return "Your session expired. Please login again.";
+      }
+
+      return `Error from AI: ${errorText}`;
+    }
+
+    const data = await res.json();
+    return data.content?.[0]?.text || "";
+
+  } catch (e) {
+    console.error("Error calling Claude:", e);
+    return "Error connecting to AI. Please check your configuration.";
+  }
+}
     
 // ─── Icons ────────────────────────────────────────────
 const Icon = {
