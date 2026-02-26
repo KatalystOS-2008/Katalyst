@@ -1,0 +1,1900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katalyst — Business Automation for Freelancers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#FAFAF8;
+  --cream2:#F3F0EA;
+  --dark:#141414;
+  --text:#1C1C1C;
+  --muted:#6B7280;
+  --accent:#16A34A;
+  --accent2:#12B838;
+  --accent-light:#ebfdee;
+  --border:#d9e4da;
+  --card:#ffffff;
+  --dash-bg:#0C0F14;
+  --dash-card:#111520;
+  --dash-border:#1E2433;
+  --dash-muted:#4B5563;
+  --dash-text:#e8f0e9;
+  --amber:#12B838;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--text);line-height:1.6;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Instrument Serif',serif;font-weight:400;line-height:1.2;}
+input,select,textarea,button{font-family:'Poppins',sans-serif;}
+button{cursor:pointer;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+.fade-up{animation:fadeUp 0.5s ease forwards;}
+.delay-1{animation-delay:0.1s;opacity:0;}
+.delay-2{animation-delay:0.2s;opacity:0;}
+.delay-3{animation-delay:0.3s;opacity:0;}
+.delay-4{animation-delay:0.4s;opacity:0;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#0C0F14;}
+::-webkit-scrollbar-thumb{background:#2D3748;border-radius:3px;}
+/*═══════════════════════════════════════════════
+   MOBILE RESPONSIVE — className-based, additive
+   768px = tablet  |  480px = phone  |  380px = small phone
+   NO existing inline styles changed.
+═══════════════════════════════════════════════ */
+
+/* prevent iOS input zoom */
+@media(max-width:768px){
+  input,select,textarea{font-size:16px!important;}
+  body{overflow-x:hidden;}
+}
+
+/* ── LANDING: hide desktop nav links & login btn ── */
+@media(max-width:768px){
+  .mob-nav-hide{display:none!important;}
+}
+
+/* ── LANDING: hero section padding ── */
+@media(max-width:768px){
+  .mob-hero{padding:56px 20px 48px!important;}
+}
+
+/* ── LANDING: hero preview card hidden on tiny screens ── */
+@media(max-width:380px){
+  .mob-hero-card{display:none!important;}
+}
+
+/* ── LANDING: hero preview inner grid → 1 col ── */
+@media(max-width:600px){
+  .mob-hero-grid{grid-template-columns:1fr!important;}
+}
+
+/* ── LANDING: sections padding ── */
+@media(max-width:768px){
+  .mob-section{padding:56px 20px!important;}
+}
+
+/* ── LANDING: billing toggle full width ── */
+@media(max-width:768px){
+  .mob-billing{display:flex!important;width:100%!important;}
+  .mob-billing button{flex:1!important;padding:10px 8px!important;font-size:13px!important;}
+}
+
+/* ── LANDING: footer stack ── */
+@media(max-width:768px){
+  .mob-footer{flex-direction:column!important;align-items:center!important;text-align:center!important;gap:12px!important;}
+}
+
+/* ── AUTH MODAL: slide up as bottom sheet ── */
+@media(max-width:480px){
+  .mob-modal-wrap{align-items:flex-end!important;}
+  .mob-modal-box{border-radius:20px 20px 0 0!important;max-width:100%!important;width:100%!important;margin:0!important;padding:28px 20px 36px!important;}
+}
+
+/* ── DASHBOARD NAV: wrap + scrollable tabs ── */
+@media(max-width:768px){
+  .mob-dash-nav{
+    flex-wrap:wrap!important;
+    height:auto!important;
+    padding:0 16px!important;
+    position:sticky!important;
+    top:0!important;
+    z-index:50!important;
+  }
+  .mob-dash-logo{height:52px!important;}
+  .mob-dash-tabs{
+    order:3!important;
+    width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+    border-top:1px solid #1E2433!important;
+    padding:0!important;
+  }
+  .mob-dash-tabs::-webkit-scrollbar{display:none!important;}
+  .mob-dash-tabs button{
+    white-space:nowrap!important;
+    flex-shrink:0!important;
+    font-size:12px!important;
+    padding:10px 11px!important;
+  }
+  .mob-dash-right{gap:8px!important;}
+  .mob-username{display:none!important;}
+}
+
+/* ── DASHBOARD: content padding ── */
+@media(max-width:768px){
+  .mob-dash-content{padding:20px 16px!important;}
+  .mob-dash-card{padding:16px!important;}
+}
+
+/* ── DASHBOARD: trial banner stack ── */
+@media(max-width:600px){
+  .mob-banner{flex-direction:column!important;align-items:flex-start!important;gap:8px!important;}
+}
+
+/* ── DASHBOARD: trial bar at bottom ── */
+@media(max-width:600px){
+  .mob-trial-bar{flex-direction:column!important;align-items:flex-start!important;gap:12px!important;}
+  .mob-trial-bar button{width:100%!important;}
+}
+
+/* ── FORMS: 2-col grids → 1-col ── */
+@media(max-width:600px){
+  .mob-form-grid{grid-template-columns:1fr!important;}
+}
+
+/* ── PRICING PAGE: padding ── */
+@media(max-width:768px){
+  .mob-pricing{padding:40px 20px!important;}
+}
+
+/* ── ANALYTICS: stat cards 2-col on mobile ── */
+@media(max-width:768px){
+  .mob-stat-grid{grid-template-columns:1fr 1fr!important;}
+  .mob-analytics-mid{grid-template-columns:1fr!important;}
+}
+@media(max-width:380px){
+  .mob-stat-grid{grid-template-columns:1fr!important;}
+}
+
+@media(max-width:768px){
+ .fade-up delay-4{
+    font-size: 10px!important;
+    grid-template-columns:1fr!important;
+ }
+ .fade-up delay-4 .grid-content{
+  columns:1fr!important ;
+ }
+}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  input,select,textarea{font-size:16px!important;}
+
+  /* Dashboard nav: wrap so tabs go to second row */
+  nav[style*="0C0F14"]{flex-wrap:wrap!important;height:auto!important;padding:0 16px!important;position:sticky!important;top:0!important;z-index:50!important;}
+  nav[style*="0C0F14"] > div:first-child{height:52px!important;}
+  /* Username text: hide */
+  nav[style*="0C0F14"] span[style*="maxWidth:120"]{display:none!important;}
+  /* Tab row: full width scrollable strip */
+  nav[style*="0C0F14"] > div:nth-child(2){order:3!important;width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;scrollbar-width:none!important;border-top:1px solid #1E2433!important;}
+  nav[style*="0C0F14"] > div:nth-child(2)::-webkit-scrollbar{display:none!important;}
+  nav[style*="0C0F14"] > div:nth-child(2) button{white-space:nowrap!important;flex-shrink:0!important;font-size:11px!important;padding:10px 10px!important;}
+  /* Right controls: tighten gap */
+  nav[style*="0C0F14"] > div:nth-child(3){gap:6px!important;}
+
+  /* Dashboard content padding */
+  div[style*="padding:'28px 32px'"]{padding:16px!important;}
+  div[style*="minHeight:400"]{padding:14px!important;}
+
+  /* Trial banner: stack vertically */
+  div[style*="1C1500"],div[style*="7F1D1D"]{flex-wrap:wrap!important;gap:8px!important;padding:10px 16px!important;}
+
+  /* Trial bar at bottom: stack */
+  div[style*="justifyContent:'space-between'"][style*="marginTop:16"]{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;}
+  div[style*="justifyContent:'space-between'"][style*="marginTop:16"] button{width:100%!important;}
+
+  /* All 2-col form grids → 1 col */
+  div[style*="gridTemplateColumns:'1fr 1fr'"]{grid-template-columns:1fr!important;}
+
+  /* Scope 4-col grid → 2 col */
+  div[style*="gridTemplateColumns:'1fr 1fr 1fr 1fr'"]{grid-template-columns:1fr 1fr!important;}
+}
+
+@media(max-width:480px){
+  /* Scope 4-col → 1 col on phone */
+  div[style*="gridTemplateColumns:'1fr 1fr 1fr 1fr'"]{grid-template-columns:1fr!important;}
+
+  /* PRO badge: hide to save space */
+  span[style*="PRO MONTHLY"],span[style*="PRO YEARLY"]{display:none!important;}
+}
+
+@media(max-width:768px){
+  input,select,textarea{font-size:16px!important;}
+  .r-nav{flex-wrap:wrap!important;height:auto!important;padding:0 12px!important;}
+  .r-logo{height:52px!important;}
+  .r-tabs{order:3!important;width:100%!important;overflow-x:auto!important;scrollbar-width:none!important;border-top:1px solid #1E2433!important;}
+  .r-tabs::-webkit-scrollbar{display:none!important;}
+  .r-tabs button{white-space:nowrap!important;flex-shrink:0!important;font-size:11px!important;padding:9px 10px!important;}
+  .r-right{gap:6px!important;}
+  .r-uname{display:none!important;}
+  .r-content{padding:16px!important;}
+  .r-card{padding:14px!important;}
+  .r-grid2{grid-template-columns:1fr!important;}
+  .r-grid4{grid-template-columns:1fr 1fr!important;}
+  .r-banner{flex-wrap:wrap!important;gap:8px!important;padding:10px 14px!important;}
+  .r-trialbar{flex-direction:column!important;align-items:flex-start!important;gap:10px!important;}
+  .r-trialbar button{width:100%!important;}
+}
+@media(max-width:480px){
+  .r-grid4{grid-template-columns:1fr!important;}
+  .r-probadge{display:none!important;}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+// ═══════════════════════════════════════════════════════
+//  ⚙️  CONFIGURATION — Replace with your actual values
+// ═══════════════════════════════════════════════════════
+const CONFIG = {
+  SUPABASE_URL: 'https://bcmyzxjcdsyjitrggorj.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjbXl6eGpjZHN5aml0cmdnb3JqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1NzQwMTgsImV4cCI6MjA4NzE1MDAxOH0.VVssGMhfbNgw5MFE36RngnjaUaeNmLcoxmd7h26WB0M',
+  CLAUDE_API_URL: 'https://bcmyzxjcdsyjitrggorj.supabase.co/functions/v1/claude-proxy-', 
+  // In production: route Claude calls through your own backend proxy
+  // so you never expose an API key to users.
+ LEMON_MONTHLY_LINK: 'https://yourstore.lemonsqueezy.com/checkout/buy/YOUR_MONTHLY_ID',
+ LEMON_YEARLY_LINK: 'https://yourstore.lemonsqueezy.com/checkout/buy/YOUR_YEARLY_ID',
+  TRIAL_DAYS: 7,
+  PLANS: {
+    monthly: { price: 9, label: 'Monthly', period: '/month' },
+    yearly:  { price: 69, label: 'Yearly',  period: '/year', monthly_eq: '5.75' },
+  }
+};
+// ═══════════════════════════════════════════════════════
+
+const { createClient } = supabase;
+const sb = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+let currentToken = null;
+const { useState, useEffect, useCallback, useRef } = React;
+
+// ─── Helpers ─────────────────────────────────────────
+const trialDaysLeft = (profile) => {
+  if (!profile?.trial_start) return CONFIG.TRIAL_DAYS;
+  const ms = Date.now() - new Date(profile.trial_start).getTime();
+  const days = Math.floor(ms / 86400000);
+  return Math.max(0, CONFIG.TRIAL_DAYS - days);
+};
+const hasAccess = (profile) => {
+  if (!profile) return false;
+  if (profile.plan === 'monthly' || profile.plan === 'yearly') return true;
+  return trialDaysLeft(profile) > 0;
+};
+
+const TRIAL_LIMIT = 10;
+
+async function checkAndIncrementUsage(userId, plan) {
+  // Paid users have no limits
+  if (plan === 'monthly' || plan === 'yearly') return { allowed: true };
+
+  const { data: prof } = await sb.from('profiles').select('generations_used, generations_reset_at').eq('id', userId).single();
+
+  // Reset counter if it's been over 30 days
+  const resetDate = new Date(prof.generations_reset_at);
+  const daysSinceReset = (Date.now() - resetDate.getTime()) / 86400000;
+  if (daysSinceReset > 30) {
+    await sb.from('profiles').update({ generations_used: 0, generations_reset_at: new Date().toISOString() }).eq('id', userId);
+    prof.generations_used = 0;
+  }
+
+  if (prof.generations_used >= TRIAL_LIMIT) {
+    return { allowed: false, used: prof.generations_used };
+  }
+
+  // Increment the counter
+  await sb.from('profiles').update({ generations_used: prof.generations_used + 1 }).eq('id', userId);
+  return { allowed: true, used: prof.generations_used + 1 };
+}
+
+    async function callClaude(system, user, maxTokens = 900) {
+      try {
+        // Ensure currentToken is updated via onAuthStateChange or getSession()
+        if (!currentToken) {
+          // Attempt to get session one last time, useful if onAuthStateChange hasn't fired yet
+          const { data: { session } } = await sb.auth.getSession();
+          currentToken = session?.access_token || null;
+        }
+
+        if (!currentToken) {
+          console.error("No active session token found. User is likely not logged in.");
+          return 'Please log in to use AI features.';
+        }
+
+        const res = await fetch(CONFIG.CLAUDE_API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${currentToken}`, // Use the actively managed token
+          },
+          body: JSON.stringify({
+            system: system,
+            user: user,
+            maxTokens: maxTokens,
+          }),
+        });
+
+        // Check response status here before trying to parse JSON
+        if (!res.ok) {
+          const errorData = await res.json();
+          console.error("Claude proxy error:", errorData);
+          if (errorData.code === 401 && errorData.message === "Invalid JWT") {
+              // Optionally trigger a re-login flow or notify user their session expired
+              return 'Your session has expired. Please log in again.';
+          }
+          return `Error from AI: ${errorData.message || res.statusText}`;
+        }
+
+        const d = await res.json();
+        return d.content?.[0]?.text || '';
+
+      } catch(e) {
+        console.error("Error calling Claude function:", e);
+        return 'Error connecting to AI. Please check your configuration.';
+      }
+    }
+    
+// ─── Icons ────────────────────────────────────────────
+const Icon = {
+  leads: () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
+  outreach: () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+  onboard: () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>,
+  scope: () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
+  google: () => <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>,
+  menu: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
+  x: () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  check: () => <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>,
+  copy: () => <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>,
+  logout: () => <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>,
+  star: () => <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>,
+  zap: () => <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>,
+  clock: () => <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>,
+  analytics: () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>,
+
+};
+
+const Spinner = ({color='#F59E0B'}) => (
+  <div style={{display:'flex',alignItems:'center',gap:8,color,fontSize:13,fontFamily:"'IBM Plex Mono',monospace"}}>
+    <div style={{width:14,height:14,border:`2px solid ${color}`,borderTopColor:'transparent',borderRadius:'50%',animation:'spin 0.7s linear infinite'}}/>
+    Generating...
+  </div>
+);
+
+// ═══════════════════════════════════════════════════════
+//  AUTH MODAL
+// ═══════════════════════════════════════════════════════
+function AuthModal({ mode: initialMode, onClose }) {
+  const [mode, setMode] = useState(initialMode || 'signup');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleEmail = async (e) => {
+    e.preventDefault();
+    setLoading(true); setError(''); setSuccess('');
+    try {
+      if (mode === 'signup') {
+        const { error } = await sb.auth.signUp({ email, password, options: { data: { full_name: name } } });
+        if (error) throw error;
+        setSuccess('Account created! Check your email to confirm.');
+      } else {
+        const { error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        onClose();
+      }
+    } catch(e) { setError(e.message); }
+    setLoading(false);
+  };
+
+  const handleGoogle = async () => {
+    await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.href }
+    });
+  };
+
+  const inp = {
+    width:'100%', padding:'12px 14px', borderRadius:10, border:'1.5px solid var(--border)',
+    background:'var(--cream)', fontSize:14, outline:'none', transition:'border 0.2s',
+    onFocus: e => e.target.style.borderColor = 'var(--accent)',
+    onBlur: e => e.target.style.borderColor = 'var(--border)',
+  };
+
+  return (
+    <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000,backdropFilter:'blur(4px)'}} onClick={onClose}>
+      <div style={{background:'white',borderRadius:20,padding:36,width:'100%',maxWidth:440,position:'relative',boxShadow:'0 24px 60px rgba(0,0,0,0.2)',animation:'slideDown 0.3s ease'}} onClick={e=>e.stopPropagation()}>
+        <button onClick={onClose} style={{position:'absolute',top:16,right:16,background:'none',border:'none',color:'var(--muted)',padding:4}}><Icon.x/></button>
+        <div style={{textAlign:'center',marginBottom:28}}>
+          <div><img style={{width:45,height:45}} src="https://cdn.jsdelivr.net/gh/ShadyLabs-Web/shadylabs-assets@main/IMG-20260223-WA0003-removebg-preview.png" alt="ShadyLabs Image"></img> </div>
+          <h2 style={{fontSize:24,marginBottom:6}}>
+            {mode==='signup' ? 'Start your free trial' : 'Welcome back'}
+          </h2>
+          <p style={{color:'var(--muted)',fontSize:14}}>{mode==='signup' ? '7 days free. No credit card needed.' : 'Pick up where you left off.'}</p>
+        </div>
+
+        <button onClick={handleGoogle} style={{width:'100%',padding:'12px',borderRadius:10,border:'1.5px solid var(--border)',background:'white',fontSize:14,fontWeight:500,display:'flex',alignItems:'center',justifyContent:'center',gap:10,marginBottom:20,transition:'border 0.2s'}} onMouseEnter={e=>e.currentTarget.style.borderColor='#999'} onMouseLeave={e=>e.currentTarget.style.borderColor='var(--border)'}>
+          <Icon.google/> Continue with Google
+        </button>
+
+        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:20}}>
+          <div style={{flex:1,height:1,background:'var(--border)'}}/>
+          <span style={{color:'var(--muted)',fontSize:12}}>or with email</span>
+          <div style={{flex:1,height:1,background:'var(--border)'}}/>
+        </div>
+
+        <form onSubmit={handleEmail} style={{display:'flex',flexDirection:'column',gap:12}}>
+          {mode==='signup' && <input value={name} onChange={e=>setName(e.target.value)} placeholder="Full name" required style={inp}/>}
+          <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email address" required style={inp}/>
+          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password (min 8 chars)" minLength={8} required style={inp}/>
+          {error && <p style={{color:'#EF4444',fontSize:13,background:'#FEF2F2',padding:'10px 12px',borderRadius:8}}>{error}</p>}
+          {success && <p style={{color:'#10B981',fontSize:13,background:'#F0FDF4',padding:'10px 12px',borderRadius:8}}>{success}</p>}
+          <button type="submit" disabled={loading} style={{width:'100%',padding:'13px',borderRadius:10,background:loading?'#ccc':'var(--accent)',color:'white',border:'none',fontWeight:600,fontSize:15,marginTop:4}}>
+            {loading ? 'Please wait...' : mode==='signup' ? 'Create free account' : 'Log in'}
+          </button>
+        </form>
+
+        <p style={{textAlign:'center',marginTop:20,fontSize:14,color:'var(--muted)'}}>
+          {mode==='signup' ? 'Already have an account? ' : "Don't have an account? "}
+          <button onClick={()=>setMode(mode==='signup'?'login':'signup')} style={{background:'none',border:'none',color:'var(--accent)',fontWeight:600,fontSize:14}}>
+            {mode==='signup' ? 'Log in' : 'Sign up free'}
+          </button>
+        </p>
+
+        {mode==='signup' && <p style={{textAlign:'center',marginTop:12,fontSize:11,color:'var(--muted)'}}>By signing up, you agree to our Terms of Service and Privacy Policy.</p>}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+//  LANDING PAGE
+// ═══════════════════════════════════════════════════════
+function LandingPage({ onShowAuth, onShowPricing }) {
+  const [billing, setBilling] = useState('yearly');
+  const [mobileMenu, setMobileMenu] = useState(false);
+
+  const features = [
+    { icon: '◎', title: 'Lead Pipeline', desc: 'Track prospects from Threads with tags, notes, and filtering. Your whole pipeline in one view.' },
+    { icon: '✉', title: 'AI Outreach', desc: 'Generate personalized DMs and cold emails that feel hand-crafted — powered by Claude AI.' },
+    { icon: '◈', title: 'Client Onboarding', desc: 'Auto-generate smart onboarding questionnaires tailored to each service and client.' },
+    { icon: '◇', title: 'Scope Builder', desc: "Turn client answers into a polished project scope you can edit and send in minutes." },
+  ];
+
+  const steps = [
+    { n:'01', title:'Find prospects on Threads', desc:'Browse Threads, spot your target audience, and add them to your lead pipeline in seconds.' },
+    { n:'02', title:'Generate personalized outreach', desc:'Let AI craft a DM or cold email that references their exact niche, pain, and situation.' },
+    { n:'03', title:'Onboard & close on autopilot', desc:'Smart questions → AI scope document → client says yes. You barely lifted a finger.' },
+  ];
+
+  return (
+    <div style={{background:'var(--cream)',minHeight:'100vh'}}>
+      {/* NAV */}
+      <nav style={{position:'sticky',top:0,background:'rgba(250,250,248,0.92)',backdropFilter:'blur(12px)',borderBottom:'1px solid var(--border)',zIndex:100}}>
+        <div style={{maxWidth:1120,margin:'0 auto',padding:'0 24px',display:'flex',alignItems:'center',justifyContent:'space-between',height:64}}>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <div><img style={{width:45,height:45}} src="https://cdn.jsdelivr.net/gh/ShadyLabs-Web/shadylabs-assets@main/IMG-20260223-WA0003-removebg-preview.png" alt="ShadyLabs Image"></img> </div>
+            <span style={{fontFamily:"'Instrument Serif',serif",fontSize:22,letterSpacing:-0.5}}>Katalyst</span>
+          </div>
+          
+          <div style={{display:'flex',gap:32,alignItems:'center'}}>
+            <div className="mob-nav-hide" style={{display:'flex',gap:32,alignItems:'center'}}>
+            <a href="#features" style={{color:'var(--muted)',fontSize:14,fontWeight:500,textDecoration:'none'}}>Features</a>
+            <a href="#how" style={{color:'var(--muted)',fontSize:14,fontWeight:500,textDecoration:'none'}}>How it works</a>
+            <button onClick={onShowPricing} style={{background:'none',border:'none',color:'var(--muted)',fontSize:14,fontWeight:500}}>Pricing</button>
+            <button onClick={()=>onShowAuth('login')} style={{background:'none',border:'none',fontSize:14,fontWeight:500,color:'var(--text)'}}>Log in</button>
+             </div>
+            <button onClick={()=>onShowAuth('signup')} style={{background:'var(--accent)',color:'white',border:'none',borderRadius:10,padding:'9px 20px',fontSize:14,fontWeight:600}}>Start free trial</button>
+           
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+     
+      <section style={{maxWidth:1120,margin:'0 auto',padding:'96px 24px 80px',textAlign:'center'}}>
+        <div className="fade-up" style={{display:'inline-block',background:'var(--accent-light)',border:'1px solid rgba(22, 163, 74, 0.25)',borderRadius:30,padding:'6px 16px',fontSize:13,color:'var(--accent)',fontWeight:500,marginBottom:28}}>
+          🍀 7-day free trial
+        </div>
+        <h1 className="fade-up delay-1" style={{fontSize:'clamp(42px,6vw,76px)',lineHeight:1.08,marginBottom:24,color:'var(--dark)',letterSpacing:-2}}>
+          Run your freelance<br/>
+          <em style={{color:'var(--accent)'}}>business while you study.</em>
+        </h1>
+        <p className="fade-up delay-2" style={{fontSize:'clamp(16px,2vw,20px)',color:'var(--muted)',maxWidth:580,margin:'0 auto 42px',lineHeight:1.7}}>
+          Find clients on Threads, send AI-personalized outreach, onboard them automatically, and close deals — all from one dashboard.
+        </p>
+        <div className="fade-up delay-3" style={{display:'flex',gap:14,justifyContent:'center',flexWrap:'wrap'}}>
+          <button onClick={()=>onShowAuth('signup')} style={{background:'var(--accent)',color:'white',border:'none',borderRadius:12,padding:'15px 32px',fontSize:16,fontWeight:600,boxShadow:'0 8px 24px rgba(22, 163, 74, 0.25)'}}>
+            Get started free →
+          </button>
+          <a href="#how" style={{display:'flex',alignItems:'center',gap:8,background:'white',color:'var(--text)',border:'1.5px solid var(--border)',borderRadius:12,padding:'15px 28px',fontSize:15,fontWeight:500,textDecoration:'none'}}>
+            See how it works
+          </a>
+        </div>
+        
+
+        {/* Hero card preview */}
+        <div className="fade-up delay-4" style={{marginTop:72,background:'var(--dark)',borderRadius:20,padding:24,maxWidth:780,margin:'72px auto 0',boxShadow:'0 40px 100px rgba(0,0,0,0.25)',border:'1px solid #2D3748',textAlign:'left'}}>
+          <div style={{display:'flex',gap:6,marginBottom:20}}>
+            {['#FF5F57','#FEBC2E','#28C840'].map(c=><div key={c} style={{width:12,height:12,borderRadius:'50%',background:c}}/>)}
+          </div>
+          <div style={{display:'flex',gap:3,marginBottom:20,borderBottom:'1px solid #1E2433',paddingBottom:16}}>
+            {['◎ Leads','✉ DMs','◈ Engage','◇ Scope'].map((t,i)=>(
+              <div key={t} style={{padding:'6px 14px',borderRadius:8,background:i===1?'rgba(245,158,11,0.15)':'transparent',color:i===1?'#F59E0B':'#4B5563',fontSize:12,fontFamily:"'IBM Plex Mono',monospace"}}>
+                {t}
+              </div>
+            ))}
+          </div>
+         <div className="grid-content">
+          <div style={{display:'grid',gridTemplateColumns:'1fr',gap:10}}>
+            <div style={{background:'#111520',borderRadius:12,padding:16,border:'1px solid #1E2433'}}>
+              <div style={{fontSize:11,color:'#F59E0B',fontFamily:"'IBM Plex Mono',monospace",marginBottom:10}}>GENERATED DM</div>
+              <p style={{color:'#9CA3AF',fontSize:12,lineHeight:1.7,fontStyle:'italic'}}>"Hey @miracledesigns — saw your recent post about brand consistency. Your content is great but I noticed your visuals don't quite match. I help lifestyle creators build cohesive brand identities. Worth a quick chat?"</p>
+            </div>
+            <div style={{background:'#111520',borderRadius:12,padding:16,border:'1px solid #1E2433'}}>
+              <div style={{fontSize:11,color:'#F59E0B',fontFamily:"'IBM Plex Mono',monospace",marginBottom:10}}>LEADS PIPELINE</div>
+              {[{n:'Kavindu W.',t:'Hot Lead',c:'#ef4444'},{n:'Jake T.',t:'Interested',c:'#10b981'},{n:'Maya S.',t:'Follow Up',c:'#f59e0b'}].map(l=>(
+                <div key={l.n} style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:'1px solid #1E2433'}}>
+                  <span style={{color:'#E8EAF0',fontSize:12}}>{l.n}</span>
+                  <span style={{color:l.c,fontSize:11,fontFamily:"'IBM Plex Mono',monospace"}}>{l.t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          </div>
+        </div>
+       
+      </section>
+
+      {/* FEATURES */}
+      <section id="features" style={{background:'white',padding:'96px 24px'}}>
+        <div style={{maxWidth:1120,margin:'0 auto'}}>
+          <div style={{textAlign:'center',marginBottom:60}}>
+            <h2 style={{fontSize:'clamp(32px,4vw,52px)',marginBottom:16,color:'var(--dark)'}}>Everything you need.<br/><em>Nothing you don't.</em></h2>
+            <p style={{color:'var(--muted)',fontSize:16,maxWidth:480,margin:'0 auto'}}>Four powerful tools that cover your entire freelance workflow from prospecting to closing.</p>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))',gap:24}}>
+            {features.map((f,i) => (
+              <div key={i} style={{background:'var(--cream)',borderRadius:16,padding:28,border:'1px solid var(--border)',transition:'transform 0.2s,box-shadow 0.2s'}} onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 12px 32px rgba(0,0,0,0.08)'}} onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='none'}}>
+                <div style={{fontSize:28,marginBottom:16}}>{f.icon}</div>
+                <h3 style={{fontSize:20,marginBottom:10,color:'var(--dark)'}}>{f.title}</h3>
+                <p style={{color:'var(--muted)',fontSize:14,lineHeight:1.7}}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section id="how" style={{padding:'96px 24px'}}>
+        <div style={{maxWidth:1120,margin:'0 auto'}}>
+          <div style={{textAlign:'center',marginBottom:60}}>
+            <h2 style={{fontSize:'clamp(32px,4vw,52px)',marginBottom:16}}>From scroll to signed client<br/><em>in three steps.</em></h2>
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:32}}>
+            {steps.map((s,i) => (
+              <div key={i} style={{position:'relative'}}>
+                <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:48,fontWeight:500,color:'var(--border)',marginBottom:16,lineHeight:1}}>{s.n}</div>
+                <h3 style={{fontSize:22,marginBottom:12,color:'var(--dark)'}}>{s.title}</h3>
+                <p style={{color:'var(--muted)',lineHeight:1.7}}>{s.desc}</p>
+                {i < steps.length-1 && <div style={{position:'absolute',top:24,right:-16,fontSize:24,color:'var(--border)',display:'none'}}>→</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING PREVIEW */}
+      <section id="pricing-section" style={{background:'white',padding:'96px 24px'}}>
+        <div style={{maxWidth:880,margin:'0 auto',textAlign:'center'}}>
+          <h2 style={{fontSize:'clamp(32px,4vw,52px)',marginBottom:16}}>Simple, honest pricing.</h2>
+          <p style={{color:'var(--muted)',marginBottom:40,fontSize:16}}>Start free for 7 days. No credit card required.</p>
+
+          <div style={{display:'inline-flex',background:'var(--cream2)',borderRadius:12,padding:4,marginBottom:48}}>
+            {['monthly','yearly'].map(b => (
+              <button key={b} onClick={()=>setBilling(b)} style={{padding:'10px 24px',borderRadius:9,border:'none',background:billing===b?'white':'transparent',fontWeight:600,fontSize:14,color:billing===b?'var(--text)':'var(--muted)',boxShadow:billing===b?'0 2px 8px rgba(0,0,0,0.1)':'none',position:'relative'}}>
+                {b==='yearly'?'Yearly (save 35%)':'Monthly'}
+              </button>
+            ))}
+          </div>
+
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))',gap:24,textAlign:'left'}}>
+            {/* Free Trial */}
+            <div style={{borderRadius:16,padding:32,border:'1.5px solid var(--border)',background:'var(--cream)'}}>
+              <h3 style={{fontSize:22,marginBottom:6}}>Free Trial</h3>
+              <p style={{color:'var(--muted)',fontSize:14,marginBottom:20}}>Test drive everything for 7 days</p>
+              <div style={{fontSize:42,fontWeight:700,marginBottom:24}}>$0<span style={{fontSize:16,fontWeight:400,color:'var(--muted)'}}>/7 days</span></div>
+              {['Full dashboard access','All 4 automation tools','AI-powered outreach','Client onboarding'].map(f=>(
+                <div key={f} style={{display:'flex',gap:10,alignItems:'center',marginBottom:12}}>
+                  <span style={{color:'#10B981'}}><Icon.check/></span><span style={{fontSize:14}}>{f}</span>
+                </div>
+              ))}
+              <button onClick={()=>onShowAuth('signup')} style={{width:'100%',padding:'13px',borderRadius:10,border:'1.5px solid var(--border)',background:'white',fontWeight:600,marginTop:24}}>Start free trial</button>
+            </div>
+
+            {/* Pro */}
+            <div style={{borderRadius:16,padding:32,border:'2px solid var(--accent)',background:'white',position:'relative',boxShadow:'0 12px 40px rgba(22,163,74,0.252)'}}>
+              <div style={{position:'absolute',top:-14,left:'50%',transform:'translateX(-50%)',background:'var(--accent)',color:'white',borderRadius:20,padding:'4px 14px',fontSize:12,fontWeight:600,whiteSpace:'nowrap'}}>Most Popular</div>
+              <h3 style={{fontSize:22,marginBottom:6}}>Pro</h3>
+              <p style={{color:'var(--muted)',fontSize:14,marginBottom:20}}>{billing==='yearly'?'Best value — billed yearly':'Flexible monthly billing'}</p>
+              <div style={{fontSize:42,fontWeight:700,marginBottom:billing==='yearly'?4:24}}>
+                ${billing==='yearly'?CONFIG.PLANS.yearly.price:CONFIG.PLANS.monthly.price}
+                <span style={{fontSize:16,fontWeight:400,color:'var(--muted)'}}>{billing==='yearly'?'/year':'/month'}</span>
+              </div>
+              {billing==='yearly' && <p style={{color:'#10B981',fontSize:13,marginBottom:20,fontWeight:500}}>≈ ${CONFIG.PLANS.yearly.monthly_eq}/month</p>}
+              {['Everything in free trial','Unlimited leads','Priority AI generation','Scope PDF export','Email support'].map(f=>(
+                <div key={f} style={{display:'flex',gap:10,alignItems:'center',marginBottom:12}}>
+                  <span style={{color:'var(--accent)'}}><Icon.check/></span><span style={{fontSize:14}}>{f}</span>
+                </div>
+              ))}
+              <button onClick={()=>window.open(billing==='yearly'?CONFIG.LEMON_YEARLY_LINK:CONFIG.LEMON_MONTHLY_LINK,'_blank')} style={{width:'100%',padding:'13px',borderRadius:10,border:'none',background:'var(--accent)',color:'white',fontWeight:600,marginTop:24,fontSize:15}}>
+                Get Pro →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BOTTOM CTA */}
+      <section style={{padding:'80px 24px',textAlign:'center'}}>
+        <div style={{maxWidth:600,margin:'0 auto'}}>
+          <h2 style={{fontSize:'clamp(32px,4vw,48px)',marginBottom:16}}>Ready to work smarter?</h2>
+          <p style={{color:'var(--muted)',marginBottom:36,fontSize:16}}>Join freelancers who automated the boring stuff and got their time back.</p>
+          <button onClick={()=>onShowAuth('signup')} style={{background:'var(--accent)',color:'white',border:'none',borderRadius:12,padding:'16px 40px',fontSize:16,fontWeight:600,boxShadow:'0 8px 24px rgba(22, 163, 74, 0.25)'}}>
+            Start your 7-day free trial →
+          </button>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{borderTop:'1px solid var(--border)',padding:'32px 24px',textAlign:'center'}}>
+        <div style={{maxWidth:1120,margin:'0 auto',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:16}}>
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            <div><img style={{width:45,height:45,marginRight:8}} src="https://cdn.jsdelivr.net/gh/ShadyLabs-Web/shadylabs-assets@main/IMG-20260223-WA0003-removebg-preview.png" alt="ShadyLabs Image"></img> </div>
+            <span style={{fontFamily:"'Instrument Serif',serif",fontSize:18}}>Katalyst</span>
+          </div>
+          <p style={{color:'var(--muted)',fontSize:13,}}>Built for student freelancers. © 2025 Katalyst (an authentic SaaS from ShadyLabs Web).</p>
+          <div style={{display:'flex',gap:20}}>
+            <a href="#" style={{color:'var(--muted)',fontSize:13,textDecoration:'none'}}>Privacy</a>
+            <a href="#" style={{color:'var(--muted)',fontSize:13,textDecoration:'none'}}>Terms</a>
+            <button onClick={()=>onShowAuth('login')} style={{background:'none',border:'none',color:'var(--muted)',fontSize:13}}>Login</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+     
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+//  PRICING PAGE (full page)
+// ═══════════════════════════════════════════════════════
+function PricingPage({ onShowAuth, onBack, profile }) {
+  const [billing, setBilling] = useState('yearly');
+  const daysLeft = trialDaysLeft(profile);
+
+  return (
+    <div style={{background:'var(--cream)',minHeight:'100vh'}}>
+      <nav style={{background:'rgba(250,250,248,0.92)',backdropFilter:'blur(12px)',borderBottom:'1px solid var(--border)',position:'sticky',top:0,zIndex:100}}>
+        <div style={{maxWidth:1120,margin:'0 auto',padding:'0 24px',height:64,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+          <button onClick={onBack} style={{display:'flex',alignItems:'center',gap:8,background:'none',border:'none',fontSize:14,color:'var(--muted)'}}>
+            ← Back
+          </button>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <div><img style={{width:45,height:45,marginRight:8}} src="https://cdn.jsdelivr.net/gh/ShadyLabs-Web/shadylabs-assets@main/IMG-20260223-WA0003-removebg-preview.png" alt="ShadyLabs Image"></img> </div>
+            <span style={{fontFamily:"'Instrument Serif',serif",fontSize:20}}>Katalyst</span>
+          </div>
+          <button onClick={()=>onShowAuth('login')} style={{background:'none',border:'none',fontSize:14,color:'var(--muted)'}}>Log in</button>
+        </div>
+      </nav>
+
+      <div style={{maxWidth:920,margin:'0 auto',padding:'72px 24px'}}>
+        <div style={{textAlign:'center',marginBottom:56}}>
+          {profile && <div style={{background:'#FEF3C7',border:'1px solid #FDE68A',borderRadius:10,padding:'12px 20px',marginBottom:32,display:'inline-flex',gap:10,alignItems:'center',fontSize:14,color:'#92400E'}}>
+            <Icon.clock/> {daysLeft > 0 ? `${daysLeft} days left on your free trial` : 'Your free trial has ended'} — upgrade to keep access
+          </div>}
+          <h1 style={{fontSize:'clamp(36px,5vw,60px)',marginBottom:16}}>Choose your plan.</h1>
+          <p style={{color:'var(--muted)',fontSize:17}}>Lock in a plan that keeps your business running on autopilot.</p>
+        </div>
+
+        <div style={{display:'inline-flex',background:'var(--cream2)',borderRadius:12,padding:4,marginBottom:48,display:'flex',justifyContent:'center',marginBottom:48}}>
+          <div style={{display:'inline-flex',background:'var(--cream2)',borderRadius:12,padding:4}}>
+            {['monthly','yearly'].map(b => (
+              <button key={b} onClick={()=>setBilling(b)} style={{padding:'10px 28px',borderRadius:9,border:'none',background:billing===b?'white':'transparent',fontWeight:600,fontSize:14,color:billing===b?'var(--text)':'var(--muted)',boxShadow:billing===b?'0 2px 8px rgba(0,0,0,0.1)':'none'}}>
+                {b==='yearly'?'Yearly  🎉 Save 35%':'Monthly'}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))',gap:24}}>
+          {/* Free Trial Card */}
+          <div style={{borderRadius:20,padding:36,border:'1.5px solid var(--border)',background:'white'}}>
+            <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:11,color:'var(--muted)',letterSpacing:1,textTransform:'uppercase',marginBottom:12}}>Free</div>
+            <h2 style={{fontSize:32,marginBottom:4}}>Trial</h2>
+            <p style={{color:'var(--muted)',fontSize:14,marginBottom:24}}>Experience everything, risk-free.</p>
+            <div style={{fontSize:48,fontWeight:700,color:'var(--dark)',marginBottom:4}}>$0</div>
+            <p style={{color:'var(--muted)',fontSize:14,marginBottom:32}}>7 days, no card needed</p>
+            <div style={{height:1,background:'var(--border)',marginBottom:24}}/>
+            {['Full dashboard access','All 4 automation tools','AI outreach generation','Client onboarding flow','Scope document builder'].map(f=>(
+              <div key={f} style={{display:'flex',gap:12,alignItems:'flex-start',marginBottom:14}}>
+                <span style={{color:'#9CA3AF',marginTop:1}}><Icon.check/></span>
+                <span style={{fontSize:14,color:'var(--muted)'}}>{f}</span>
+              </div>
+            ))}
+            <button onClick={()=>onShowAuth('signup')} style={{width:'100%',marginTop:28,padding:'13px',borderRadius:12,border:'1.5px solid var(--border)',background:'var(--cream)',fontWeight:600,fontSize:15}}>
+              Start free trial
+            </button>
+          </div>
+
+          {/* Pro Card */}
+          <div style={{borderRadius:20,padding:36,border:'2.5px solid var(--accent)',background:'white',position:'relative',boxShadow:'0 20px 60px rgba(22,163,74,0.25)'}}>
+            <div style={{position:'absolute',top:-16,left:'50%',transform:'translateX(-50%)',background:'var(--accent)',color:'white',borderRadius:20,padding:'5px 16px',fontSize:13,fontWeight:600,whiteSpace:'nowrap',display:'flex',alignItems:'center',gap:6}}>
+              <Icon.star/> Most Popular
+            </div>
+            <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:11,color:'var(--accent)',letterSpacing:1,textTransform:'uppercase',marginBottom:12}}>Pro</div>
+            <h2 style={{fontSize:32,marginBottom:4}}>Pro</h2>
+            <p style={{color:'var(--muted)',fontSize:14,marginBottom:24}}>
+              {billing==='yearly'?'Best value for committed freelancers':'Full access, month-to-month.'}
+            </p>
+            <div style={{fontSize:48,fontWeight:700,color:'var(--dark)',marginBottom:4}}>
+              ${billing==='yearly'?CONFIG.PLANS.yearly.price:CONFIG.PLANS.monthly.price}
+            </div>
+            <p style={{color:'var(--muted)',fontSize:14,marginBottom: billing==='yearly'?8:32}}>
+              {billing==='yearly'?'per year':'per month'}
+            </p>
+            {billing==='yearly' && <p style={{color:'#10B981',fontSize:14,fontWeight:600,marginBottom:32}}>≈ ${CONFIG.PLANS.yearly.monthly_eq}/month — save $79 vs monthly</p>}
+            <div style={{height:1,background:'var(--border)',marginBottom:24}}/>
+            {['Everything in free trial','Unlimited lead storage','Unlimited AI generations','Scope PDF export (coming soon)','Priority email support','Early access to new features'].map(f=>(
+              <div key={f} style={{display:'flex',gap:12,alignItems:'flex-start',marginBottom:14}}>
+                <span style={{color:'var(--accent)',marginTop:1}}><Icon.check/></span>
+                <span style={{fontSize:14}}>{f}</span>
+              </div>
+            ))}
+            <button onClick={()=>window.open(billing==='yearly'?CONFIG.LEMON_YEARLY_LINK:CONFIG.LEMON_MONTHLY_LINK,'_blank')} style={{width:'100%',marginTop:28,padding:'14px',borderRadius:12,border:'none',background:'var(--accent)',color:'white',fontWeight:700,fontSize:16,boxShadow:'0 8px 24px rgba(22, 163, 74, 0.25)'}}>
+              Get Pro {billing==='yearly'?'(Yearly)':'(Monthly)'} →
+            </button>
+            <p style={{textAlign:'center',color:'var(--muted)',fontSize:12,marginTop:14}}>Secure checkout via Lemon Squeezy · Cancel anytime</p>
+          </div>
+        </div>
+
+        <div style={{textAlign:'center',marginTop:56,padding:32,background:'white',borderRadius:16,border:'1px solid var(--border)'}}>
+          <h3 style={{fontSize:22,marginBottom:10}}>Got questions?</h3>
+          <p style={{color:'var(--muted)',marginBottom:20}}>We're real people. Reach out and we'll get back to you fast.</p>
+          <a href="mailto:info.katalystos@gmail.com" style={{color:'var(--accent)',fontWeight:600,fontSize:15}}>info@katalyst.app</a>
+        </div>
+      </div>
+    </div> 
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+//  DASHBOARD TABS
+// ═══════════════════════════════════════════════════════
+const SERVICES = ['Web Design','Social Media Management','Copywriting','Video Editing','SEO','Branding','App Development','Other'];
+const TAGS = ['Hot Lead','Follow Up','Interested','Not Ready','Converted'];
+const TAG_COLORS = {'Hot Lead':'#ef4444','Follow Up':'#f59e0b','Interested':'#10b981','Not Ready':'#6b7280','Converted':'#3b82f6'};
+
+const dInp = {background:'#0C0F14',border:'1px solid #1E2433',borderRadius:8,color:'#E8EAF0',padding:'10px 14px',fontSize:13,fontFamily:"'Poppins',sans-serif",outline:'none',width:'100%',boxSizing:'border-box'};
+const dCard = {background:'#111520',border:'1px solid #1E2433',borderRadius:12,padding:18,marginBottom:4};
+const dBtn = {background:'#16A34A',border:'none',borderRadius:8,color:'#0C0F14',padding:'9px 18px',fontSize:13,fontFamily:"'Poppins',sans-serif",fontWeight:600,cursor:'pointer'};
+const dLabel = {color:'#4B5563',fontFamily:"Instrument serif",fontSize:11,letterSpacing:1,textTransform:'uppercase',marginBottom:6,marginTop:0,display:'block'};
+
+function LeadsTab({ user }) {
+  const [leads, setLeads] = useState([]);
+  const [form, setForm] = useState({name:'',handle:'',niche:'',pain:'',service:SERVICES[0],tag:TAGS[0],notes:''});
+  const [adding, setAdding] = useState(false);
+  const [search, setSearch] = useState('');
+  const [filterTag, setFilterTag] = useState('All');
+  const [dbLoading, setDbLoading] = useState(true);
+
+  useEffect(() => {
+    loadLeads();
+  }, []);
+
+  const loadLeads = async () => {
+    setDbLoading(true);
+    const { data } = await sb.from('leads').select('*').eq('user_id', user.id).order('created_at', { ascending: false });
+    setLeads(data || []);
+    setDbLoading(false);
+  };
+
+  const addLead = async () => {
+    if (!form.name || !form.handle) return;
+    const { data, error } = await sb.from('leads').insert([{ ...form, user_id: user.id }]).select();
+    if (!error && data) { setLeads(p => [data[0], ...p]); setForm({name:'',handle:'',niche:'',pain:'',service:SERVICES[0],tag:TAGS[0],notes:''}); setAdding(false); }
+  };
+
+  const updateTag = async (id, tag) => {
+    await sb.from('leads').update({ tag }).eq('id', id);
+    setLeads(p => p.map(l => l.id === id ? { ...l, tag } : l));
+  };
+
+  const deleteLead = async (id) => {
+    await sb.from('leads').delete().eq('id', id);
+    setLeads(p => p.filter(l => l.id !== id));
+  };
+
+  const filtered = leads.filter(l => (filterTag==='All'||l.tag===filterTag) && (l.name?.toLowerCase().includes(search.toLowerCase())||l.handle?.toLowerCase().includes(search.toLowerCase())));
+
+  return (
+    <div>
+      <div style={{display:'flex',gap:10,marginBottom:18,flexWrap:'wrap',alignItems:'center'}}>
+        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search leads..." style={{...dInp,width:200}}/>
+        <select value={filterTag} onChange={e=>setFilterTag(e.target.value)} style={{...dInp,width:'auto'}}>
+          <option>All</option>{TAGS.map(t=><option key={t}>{t}</option>)}
+        </select>
+        <button onClick={()=>setAdding(!adding)} style={dBtn}>{adding?'✕ Cancel':'+ Add Lead'}</button>
+      </div>
+
+      {adding && (
+        <div style={{...dCard,marginBottom:16}}>
+          <p style={dLabel}>New Lead</p>
+          <div className="r-grid2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10}}>
+            <input value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} placeholder="Full Name *" style={dInp}/>
+            <input value={form.handle} onChange={e=>setForm(f=>({...f,handle:e.target.value}))} placeholder="@threads_handle *" style={dInp}/>
+            <input value={form.niche} onChange={e=>setForm(f=>({...f,niche:e.target.value}))} placeholder="Niche (e.g. Fitness)" style={dInp}/>
+            <input value={form.pain} onChange={e=>setForm(f=>({...f,pain:e.target.value}))} placeholder="Pain point observed" style={dInp}/>
+            <select value={form.service} onChange={e=>setForm(f=>({...f,service:e.target.value}))} style={dInp}>{SERVICES.map(s=><option key={s}>{s}</option>)}</select>
+            <select value={form.tag} onChange={e=>setForm(f=>({...f,tag:e.target.value}))} style={dInp}>{TAGS.map(t=><option key={t}>{t}</option>)}</select>
+          </div>
+          <textarea value={form.notes} onChange={e=>setForm(f=>({...f,notes:e.target.value}))} placeholder="Notes (optional)" rows={2} style={{...dInp,resize:'vertical'}}/>
+          <button onClick={addLead} style={{...dBtn,marginTop:10}}>Save Lead</button>
+        </div>
+      )}
+
+      {dbLoading && <div style={{color:'#4B5563',fontSize:13,fontFamily:"'IBM Plex Mono',monospace",padding:'20px 0'}}>Loading leads...</div>}
+
+      <div style={{display:'flex',flexDirection:'column',gap:10}}>
+        {!dbLoading && filtered.length===0 && <p style={{color:'#4B5563',fontFamily:"'IBM Plex Mono',monospace",fontSize:13,padding:'20px 0'}}>No leads yet. Add your first prospect from Threads.</p>}
+        {filtered.map(lead => (
+          <div key={lead.id} style={{...dCard,display:'flex',gap:14,alignItems:'flex-start',flexWrap:'wrap'}}>
+            <div style={{width:40,height:40,borderRadius:'50%',background:'#1E2433',display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,flexShrink:0,color:'#9CA3AF',border:'1.5px solid #2D3748'}}>{lead.name?.[0]}</div>
+            <div style={{flex:1,minWidth:0,width:'100%'}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',flexWrap:'wrap',gap:6}}>
+                <div>
+                  <span style={{fontFamily:"'Instrument Serif',serif",fontSize:16,color:'#F3F4F6'}}>{lead.name}</span>
+                  <span style={{color:'#6B7280',fontFamily:"'IBM Plex Mono',monospace",fontSize:12,marginLeft:8}}>{lead.handle}</span>
+                </div>
+                <div style={{display:'flex',gap:6,alignItems:'center'}}>
+                  <span style={{background:TAG_COLORS[lead.tag]+'22',color:TAG_COLORS[lead.tag],border:`1px solid ${TAG_COLORS[lead.tag]}55`,borderRadius:4,padding:'2px 8px',fontSize:11,fontFamily:"'IBM Plex Mono',monospace"}}>{lead.tag}</span>
+                  <button onClick={()=>deleteLead(lead.id)} style={{background:'none',border:'none',color:'#4B5563',cursor:'pointer',fontSize:18,lineHeight:1}}>×</button>
+                </div>
+              </div>
+              <div style={{display:'flex',gap:8,marginTop:6,flexWrap:'wrap'}}>
+                {lead.niche && <span style={{background:'#1E2433',color:'#9CA3AF',borderRadius:4,padding:'2px 8px',fontSize:11,fontFamily:"'IBM Plex Mono',monospace"}}>{lead.niche}</span>}
+                <span style={{background:'#1e3a5f22',color:'#60a5fa',borderRadius:4,padding:'2px 8px',fontSize:11,fontFamily:"'IBM Plex Mono',monospace"}}>{lead.service}</span>
+              </div>
+              {lead.pain && <p style={{color:'#6B7280',fontSize:13,marginTop:6,fontStyle:'italic'}}>"{lead.pain}"</p>}
+              <select value={lead.tag} onChange={e=>updateTag(lead.id,e.target.value)} style={{...dInp,fontSize:12,padding:'4px 8px',width:'auto',marginTop:8}}>
+                {TAGS.map(t=><option key={t}>{t}</option>)}
+              </select>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function OutreachTab({ user,profile }) {
+  const [leads, setLeads] = useState([]);
+  const [selectedId, setSelectedId] = useState('');
+  const [mode, setMode] = useState('DM');
+  const [tone, setTone] = useState('Friendly & Conversational');
+  const [myService, setMyService] = useState('');
+  const [output, setOutput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(()=>{
+    sb.from('leads').select('*').eq('user_id',user.id).order('created_at',{ascending:false}).then(({data})=>{
+      setLeads(data||[]);
+      if(data?.length) setSelectedId(data[0].id);
+    });
+  },[]);
+
+  const lead = leads.find(l=>l.id===selectedId);
+  
+  
+  const generate = async () => {
+    if(!lead) return;
+    setLoading(true); setOutput('');
+     const { allowed, used } = await checkAndIncrementUsage(user.id, profile?.plan);
+     if (!allowed) {
+    setOutput(`You've used all ${TRIAL_LIMIT} free generations. Upgrade to Pro for unlimited access.`);
+    setLoading(false);
+    return;
+    }
+    const sys = `You are an expert outreach copywriter for a freelance service business. Write highly personalized, authentic ${mode==='DM'?'direct messages':'cold emails'} that don't sound spammy or templated. Each message should feel hand-crafted, reference the prospect's specific context, niche, and pain point. Never use cringe openers like "I hope this message finds you well." Keep DMs under 120 words. Emails under 220 words. Tone: ${tone}. Output ONLY the message, no labels, no subject lines for DMs.`;
+    const usr = `Prospect: ${lead.name} (${lead.handle})\nNiche: ${lead.niche||'unknown'}\nPain point observed: ${lead.pain||'general improvement needed'}\nMy service: ${myService||lead.service}\n\nWrite a compelling, personalized ${mode}.`;
+    const r = await callClaude(sys, usr, 400);
+    setOutput(r); setLoading(false);
+    // Track this outreach event
+  await sb.from('outreach_events').insert([{
+    user_id: user.id,
+    type: mode === 'DM' ? 'dm' : 'email',
+    lead_id: lead?.id || null,
+  }]);
+
+  };
+
+
+  const copy = () => { navigator.clipboard.writeText(output); setCopied(true); setTimeout(()=>setCopied(false),2000); };
+
+  const toggleStyle = (active) => ({...active?{background:'rgba(245,158,11,0.15)',border:'1px solid #F59E0B',color:'#F59E0B'}:{background:'#0C0F14',border:'1px solid #1E2433',color:'#6B7280'},padding:'7px 16px',borderRadius:8,fontSize:12,fontFamily:"'IBM Plex Mono',monospace",cursor:'pointer'});
+
+  return (
+    <div>
+      <div className="r-grid2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:16}}>
+        <div>
+          <label style={dLabel}>Select Lead</label>
+          <select value={selectedId} onChange={e=>setSelectedId(e.target.value)} style={dInp}>
+            {leads.map(l=><option key={l.id} value={l.id}>{l.name} — {l.handle}</option>)}
+          </select>
+        </div>
+        <div>
+          <label style={dLabel}>Your Service (override)</label>
+          <input value={myService} onChange={e=>setMyService(e.target.value)} placeholder={lead?.service||'Service type'} style={dInp}/>
+        </div>
+        <div>
+          <label style={dLabel}>Type</label>
+          <div style={{display:'flex',gap:8}}>
+            {['DM','Cold Email'].map(m=><button key={m} onClick={()=>setMode(m)} style={toggleStyle(mode===m)}>{m}</button>)}
+          </div>
+        </div>
+        <div>
+          <label style={dLabel}>Tone</label>
+          <select value={tone} onChange={e=>setTone(e.target.value)} style={dInp}>
+            {['Friendly & Conversational','Professional & Confident','Bold & Direct','Warm & Empathetic'].map(t=><option key={t}>{t}</option>)}
+          </select>
+        </div>
+      </div>
+
+      {lead && (
+        <div style={{...dCard,background:'#0C0F14',marginBottom:14,display:'flex',gap:12,alignItems:'flex-start'}}>
+          <div style={{width:36,height:36,borderRadius:'50%',background:'#1E2433',display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,color:'#9CA3AF'}}>{lead.name?.[0]}</div>
+          <div>
+            <span style={{fontFamily:"'Instrument Serif',serif",fontSize:15,color:'#F3F4F6'}}>{lead.name}</span>
+            <span style={{color:'#4B5563',fontFamily:"'IBM Plex Mono',monospace",fontSize:12,marginLeft:8}}>{lead.handle}</span>
+            <p style={{color:'#6B7280',fontSize:12,marginTop:4}}>{lead.niche} · {lead.service}</p>
+            {lead.pain && <p style={{color:'#4B5563',fontSize:12,marginTop:2,fontStyle:'italic'}}>"{lead.pain}"</p>}
+          </div>
+        </div>
+      )}
+
+      {leads.length===0 && <p style={{color:'#4B5563',fontSize:13,fontFamily:"'IBM Plex Mono',monospace",marginBottom:16}}>Add leads in the Leads tab first.</p>}
+
+      <button onClick={generate} disabled={loading||!lead} style={{...dBtn,marginBottom:16,opacity:(!lead||loading)?0.5:1}}>
+        {loading?'Generating...':'⚡ Generate '+mode}
+      </button>
+      {loading && <Spinner/>}
+
+      {output && (
+        <div style={dCard}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+            <label style={{...dLabel,margin:0}}>Generated {mode}</label>
+            <button onClick={copy} style={{...dBtn,fontSize:11,padding:'5px 12px',display:'flex',alignItems:'center',gap:6}}>
+              {copied?<><Icon.check/> Copied!</>:<><Icon.copy/> Copy</>}
+            </button>
+          </div>
+          <textarea value={output} onChange={e=>setOutput(e.target.value)} rows={8} style={{...dInp,resize:'vertical',lineHeight:1.7}}/>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function OnboardingTab({user,profile}) {
+  const [clientName, setClientName] = useState('');
+  const [service, setService] = useState(SERVICES[0]);
+  const [ctx, setCtx] = useState('');
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const generate = async () => {
+    setLoading(true); setQuestions([]); setAnswers({});
+    const { allowed, used } = await checkAndIncrementUsage(user.id, profile?.plan);
+     if (!allowed) {
+    setOutput(`You've used all ${TRIAL_LIMIT} free generations. Upgrade to Pro for unlimited access.`);
+    setLoading(false);
+    return;
+    }
+    const sys = `You are a professional freelance consultant. Generate a concise onboarding questionnaire. Output ONLY a JSON array of 7 question strings. No intro, no markdown, no explanation. Raw JSON array only.`;
+    const usr = `Service: ${service}\nClient: ${clientName||'the client'}\nContext: ${ctx||'none'}\n\nGenerate 7 smart onboarding questions to accurately scope the project.`;
+    const r = await callClaude(sys, usr, 500);
+    try {
+      const clean = r.replace(/```json|```/g,'').trim();
+      setQuestions(JSON.parse(clean));
+    } catch {
+      const lines = r.split('\n').filter(l=>l.trim().length>10).map(l=>l.replace(/^\d+\.\s*/,'').replace(/^[-•"]\s*/,'').replace(/"$/,''));
+      setQuestions(lines.slice(0,8));
+    }
+    setLoading(false);
+  };
+
+  const copyQ = () => {
+    const t = `Hi ${clientName||'there'}! To kick off your project, could you answer these quick questions?\n\n` + questions.map((q,i)=>`${i+1}. ${q}`).join('\n');
+    navigator.clipboard.writeText(t); setCopied(true); setTimeout(()=>setCopied(false),2000);
+  };
+
+  return (
+    <div>
+      <div className="r-grid2" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:12}}>
+        <div>
+          <label style={dLabel}>Client Name</label>
+          <input value={clientName} onChange={e=>setClientName(e.target.value)} placeholder="e.g. Sarah Johnson" style={dInp}/>
+        </div>
+        <div>
+          <label style={dLabel}>Service Type</label>
+          <select value={service} onChange={e=>setService(e.target.value)} style={dInp}>{SERVICES.map(s=><option key={s}>{s}</option>)}</select>
+        </div>
+      </div>
+      <label style={dLabel}>Extra Context (optional)</label>
+      <textarea value={ctx} onChange={e=>setCtx(e.target.value)} placeholder="e.g. They sell handmade jewelry and want to grow on social media" rows={2} style={{...dInp,resize:'vertical',marginBottom:14}}/>
+      <button onClick={generate} disabled={loading} style={{...dBtn,marginBottom:16}}>
+        {loading?'Generating...':'✦ Generate Questions'}
+      </button>
+      {loading && <Spinner/>}
+      {questions.length>0 && (
+        <div style={dCard}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
+            <label style={{...dLabel,margin:0}}>Onboarding Questions for {clientName||'Client'}</label>
+            <button onClick={copyQ} style={{...dBtn,fontSize:11,padding:'5px 12px',display:'flex',alignItems:'center',gap:6}}>
+              {copied?<><Icon.check/>Copied!</>:'Copy to Send'}
+            </button>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:14}}>
+            {questions.map((q,i)=>(
+              <div key={i}>
+                <p style={{color:'#E5E7EB',fontSize:13,marginBottom:6,fontFamily:"'IBM Plex Mono',monospace"}}>
+                  <span style={{color:'#F59E0B'}}>{String(i+1).padStart(2,'0')}.</span> {q}
+                </p>
+                <textarea value={answers[i]||''} onChange={e=>setAnswers(p=>({...p,[i]:e.target.value}))} placeholder="Client's answer goes here..." rows={2} style={{...dInp,resize:'vertical',fontSize:12,lineHeight:1.6}}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ScopeTab({user,profile}) {
+  const [service, setService] = useState(SERVICES[0]);
+  const [clientName, setClientName] = useState('');
+  const [budget, setBudget] = useState('');
+  const [timeline, setTimeline] = useState('');
+  const [pairs, setPairs] = useState([{q:'',a:''},{q:'',a:''},{q:'',a:''}]);
+  const [scope, setScope] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const generate = async () => {
+    setLoading(true); setScope('');
+    const { allowed, used } = await checkAndIncrementUsage(user.id, profile?.plan);
+     if (!allowed) {
+    setOutput(`You've used all ${TRIAL_LIMIT} free generations. Upgrade to Pro for unlimited access.`);
+    setLoading(false);
+    return;
+    }
+    const filled = pairs.filter(p=>p.q.trim()||p.a.trim());
+    const sys = `You are a professional freelance project manager. Generate a clear, structured project scope document. Use plain text with section headers (no asterisks or markdown). Be specific, professional and thorough. Sections: Project Overview, Objectives, Deliverables, Timeline, Investment, What's Included, What's NOT Included, Next Steps.`;
+    const usr = `Service: ${service}\nClient: ${clientName||'Client'}\nBudget: ${budget||'TBD'}\nTimeline: ${timeline||'TBD'}\n\nQ&A from onboarding:\n${filled.map((p,i)=>`Q${i+1}: ${p.q}\nA: ${p.a}`).join('\n\n')}\n\nGenerate a professional project scope document.`;
+    const r = await callClaude(sys, usr, 1200);
+    setScope(r); setLoading(false);
+  };
+
+  return (
+    <div>
+      <div className="r-grid4" style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr 1fr',gap:10,marginBottom:14}}>
+        <div>
+          <label style={dLabel}>Client Name</label>
+          <input value={clientName} onChange={e=>setClientName(e.target.value)} placeholder="Client name" style={dInp}/>
+        </div>
+        <div>
+          <label style={dLabel}>Service</label>
+          <select value={service} onChange={e=>setService(e.target.value)} style={dInp}>{SERVICES.map(s=><option key={s}>{s}</option>)}</select>
+        </div>
+        <div>
+          <label style={dLabel}>Budget</label>
+          <input value={budget} onChange={e=>setBudget(e.target.value)} placeholder="e.g. $500" style={dInp}/>
+        </div>
+        <div>
+          <label style={dLabel}>Timeline</label>
+          <input value={timeline} onChange={e=>setTimeline(e.target.value)} placeholder="e.g. 2 weeks" style={dInp}/>
+        </div>
+      </div>
+
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
+        <label style={{...dLabel,margin:0}}>Q&A from Onboarding</label>
+        <button onClick={()=>setPairs(p=>[...p,{q:'',a:''}])} style={{...dBtn,fontSize:11,padding:'5px 12px'}}>+ Add Row</button>
+      </div>
+      <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:16}}>
+        {pairs.map((pair,i)=>(
+          <div className="r-grid2" key={i} style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+            <input value={pair.q} onChange={e=>setPairs(p=>p.map((x,idx)=>idx===i?{...x,q:e.target.value}:x))} placeholder={`Question ${i+1}`} style={{...dInp,fontSize:12}}/>
+            <input value={pair.a} onChange={e=>setPairs(p=>p.map((x,idx)=>idx===i?{...x,a:e.target.value}:x))} placeholder={`Answer ${i+1}`} style={{...dInp,fontSize:12}}/>
+          </div>
+        ))}
+      </div>
+
+      <button onClick={generate} disabled={loading} style={{...dBtn,marginBottom:16}}>
+        {loading?'Generating...':'◈ Generate Project Scope'}
+      </button>
+      {loading && <Spinner/>}
+
+      {scope && (
+        <div style={dCard}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
+            <label style={{...dLabel,margin:0}}>Project Scope — {clientName||'Client'}</label>
+            <button onClick={()=>{navigator.clipboard.writeText(scope);setCopied(true);setTimeout(()=>setCopied(false),2000);}} style={{...dBtn,fontSize:11,padding:'5px 12px',display:'flex',alignItems:'center',gap:6}}>
+              {copied?<><Icon.check/>Copied!</>:<><Icon.copy/>Copy</>}
+            </button>
+          </div>
+          <textarea value={scope} onChange={e=>setScope(e.target.value)} rows={20} style={{...dInp,resize:'vertical',lineHeight:1.8,fontSize:13}}/>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+// ─── ANALYTICS ICONS (add to existing Icon object or use standalone) ───────
+const AnalyticsIcons = {
+  chart:   () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>,
+  trend:   () => <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>,
+  dollar:  () => <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>,
+  funnel:  () => <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/></svg>,
+  lock:    () => <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>,
+  send:    () => <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>,
+  reply:   () => <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polyline points="9,17 4,12 9,7"/><path d="M20 18v-2a4 4 0 00-4-4H4"/></svg>,
+  add:     () => <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+};
+
+// ─── MINI BAR CHART (pure CSS, no library needed) ──────────────────────────
+function MiniBarChart({ data, color = '#16A34A', label = 'Value' }) {
+  const max = Math.max(...data.map(d => d.value), 1);
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 80 }}>
+      {data.map((d, i) => (
+        <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, height: '100%', justifyContent: 'flex-end' }}>
+          <div
+            style={{
+              width: '100%', borderRadius: '4px 4px 0 0',
+              background: color,
+              height: `${Math.max((d.value / max) * 64, d.value > 0 ? 6 : 2)}px`,
+              opacity: d.value === 0 ? 0.2 : 0.9,
+              transition: 'height 0.4s ease',
+              position: 'relative',
+            }}
+            title={`${d.label}: ${d.value}`}
+          />
+          <span style={{ fontSize: 9, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace", whiteSpace: 'nowrap' }}>{d.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── MINI LINE CHART (SVG sparkline) ───────────────────────────────────────
+function SparkLine({ data, color = '#16A34A', height = 60 }) {
+  if (!data || data.length < 2) return <div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4B5563', fontSize: 12 }}>Not enough data yet</div>;
+  const max = Math.max(...data, 1);
+  const w = 300; const h = height;
+  const pts = data.map((v, i) => {
+    const x = (i / (data.length - 1)) * w;
+    const y = h - (v / max) * (h - 8) - 4;
+    return `${x},${y}`;
+  }).join(' ');
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} style={{ width: '100%', height }} preserveAspectRatio="none">
+      <defs>
+        <linearGradient id={`sg-${color.replace('#','')}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.25" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <polyline fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" points={pts} />
+      <polygon fill={`url(#sg-${color.replace('#','')})`} points={`0,${h} ${pts} ${w},${h}`} />
+    </svg>
+  );
+}
+
+// ─── STAT CARD ──────────────────────────────────────────────────────────────
+function StatCard({ label, value, sub, icon, color = '#16A34A', blurred = false }) {
+  return (
+    <div style={{ background: '#111520', borderRadius: 12, padding: '18px 20px', border: '1px solid #1A2030', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+        <span style={{ fontSize: 11, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1, textTransform: 'uppercase' }}>{label}</span>
+        <span style={{ color }}>{icon}</span>
+      </div>
+      <div style={{ filter: blurred ? 'blur(8px)' : 'none', userSelect: blurred ? 'none' : 'auto' }}>
+        <div style={{ fontSize: 30, fontFamily: "'Instrument Serif', serif", color: '#E8EAF0', lineHeight: 1, marginBottom: 4 }}>{value}</div>
+        {sub && <div style={{ fontSize: 12, color: '#6B7280' }}>{sub}</div>}
+      </div>
+    </div>
+  );
+}
+
+// ─── FUNNEL STAGE ───────────────────────────────────────────────────────────
+function FunnelStage({ label, count, pct, color, isLast, dropOff }) {
+  const width = Math.max(pct, 8);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+      <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+        <div style={{ flex: 1, height: 44, background: color, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', width: `${width}%`, margin: '0 auto', transition: 'width 0.5s ease' }}>
+          <span style={{ fontSize: 13, fontWeight: 600, color: '#0B0F17', fontFamily: "'Poppins', sans-serif" }}>{label}</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#0B0F17', fontFamily: "'IBM Plex Mono', monospace" }}>{count}</span>
+        </div>
+        <div style={{ width: 60, textAlign: 'right' }}>
+          <span style={{ fontSize: 13, color: '#E8EAF0', fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600 }}>{pct}%</span>
+        </div>
+      </div>
+      {!isLast && dropOff !== null && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0', width: '100%' }}>
+          <div style={{ flex: 1, height: 1, background: '#1A2030' }} />
+          <span style={{ fontSize: 11, color: '#EF4444', fontFamily: "'IBM Plex Mono', monospace", whiteSpace: 'nowrap' }}>↓ {dropOff}% drop-off</span>
+          <div style={{ flex: 1, height: 1, background: '#1A2030' }} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── CLOSE DEAL MODAL ───────────────────────────────────────────────────────
+function CloseDealModal({ leads, userId, onClose, onSaved }) {
+  const [selectedId, setSelectedId] = useState(leads[0]?.id || '');
+  const [value, setValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const openLeads = leads.filter(l => l.tag !== 'Converted');
+
+  const save = async () => {
+    if (!selectedId || !value || isNaN(parseFloat(value))) {
+      setError('Select a lead and enter a valid deal value.'); return;
+    }
+    setLoading(true);
+    const { error: err } = await sb.from('leads').update({
+      tag: 'Converted',
+      deal_value: parseFloat(value),
+      closed_at: new Date().toISOString(),
+    }).eq('id', selectedId).eq('user_id', userId);
+    if (err) { setError(err.message); setLoading(false); return; }
+    onSaved(); onClose();
+  };
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, backdropFilter: 'blur(4px)' }} onClick={onClose}>
+      <div style={{ background: '#111520', border: '1px solid #1A2030', borderRadius: 16, padding: 28, width: '100%', maxWidth: 400 }} onClick={e => e.stopPropagation()}>
+        <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#E8EAF0', marginBottom: 6 }}>Mark Deal Closed</h3>
+        <p style={{ color: '#6B7280', fontSize: 13, marginBottom: 20 }}>This will tag the lead as Converted and log the revenue.</p>
+        <label style={dLabel}>Lead</label>
+        <select value={selectedId} onChange={e => setSelectedId(e.target.value)} style={{ ...dInp, marginBottom: 14 }}>
+          {openLeads.map(l => <option key={l.id} value={l.id}>{l.name} — {l.handle}</option>)}
+          {leads.filter(l => l.tag === 'Converted').map(l => <option key={l.id} value={l.id} disabled>✓ {l.name} (already closed)</option>)}
+        </select>
+        <label style={dLabel}>Deal Value (USD)</label>
+        <input value={value} onChange={e => setValue(e.target.value)} placeholder="e.g. 350" type="number" min="0" style={{ ...dInp, marginBottom: 14 }} />
+        {error && <p style={{ color: '#EF4444', fontSize: 12, marginBottom: 10, background: '#1A0808', padding: '8px 12px', borderRadius: 6 }}>{error}</p>}
+        <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>
+          <button onClick={onClose} style={{ flex: 1, padding: '10px', borderRadius: 8, border: '1px solid #1A2030', background: 'transparent', color: '#9CA3AF', fontSize: 14 }}>Cancel</button>
+          <button onClick={save} disabled={loading} style={{ ...dBtn, flex: 1, padding: '10px', fontSize: 14, opacity: loading ? 0.6 : 1 }}>
+            {loading ? 'Saving...' : '✓ Confirm Close'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── REPLY TRACKER MODAL ────────────────────────────────────────────────────
+function ReplyTrackerModal({ leads, userId, onClose, onSaved }) {
+  const [selectedId, setSelectedId] = useState(leads[0]?.id || '');
+  const [isPositive, setIsPositive] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const save = async () => {
+    if (!selectedId) return;
+    setLoading(true);
+    await sb.from('leads').update({
+      has_replied: true,
+      is_positive_reply: isPositive,
+    }).eq('id', selectedId).eq('user_id', userId);
+    onSaved(); onClose();
+  };
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, backdropFilter: 'blur(4px)' }} onClick={onClose}>
+      <div style={{ background: '#111520', border: '1px solid #1A2030', borderRadius: 16, padding: 28, width: '100%', maxWidth: 400 }} onClick={e => e.stopPropagation()}>
+        <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#E8EAF0', marginBottom: 6 }}>Log a Reply</h3>
+        <p style={{ color: '#6B7280', fontSize: 13, marginBottom: 20 }}>Track when a prospect replies to your outreach.</p>
+        <label style={dLabel}>Lead who replied</label>
+        <select value={selectedId} onChange={e => setSelectedId(e.target.value)} style={{ ...dInp, marginBottom: 14 }}>
+          {leads.map(l => <option key={l.id} value={l.id}>{l.name} — {l.handle}</option>)}
+        </select>
+        <label style={dLabel}>Reply type</label>
+        <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
+          <button onClick={() => setIsPositive(true)} style={{ flex: 1, padding: '10px', borderRadius: 8, border: `1.5px solid ${isPositive ? '#16A34A' : '#1A2030'}`, background: isPositive ? '#16A34A18' : 'transparent', color: isPositive ? '#16A34A' : '#6B7280', fontSize: 13, fontWeight: 600 }}>
+            👍 Positive
+          </button>
+          <button onClick={() => setIsPositive(false)} style={{ flex: 1, padding: '10px', borderRadius: 8, border: `1.5px solid ${!isPositive ? '#EF4444' : '#1A2030'}`, background: !isPositive ? '#EF444418' : 'transparent', color: !isPositive ? '#EF4444' : '#6B7280', fontSize: 13, fontWeight: 600 }}>
+            👎 Negative
+          </button>
+        </div>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button onClick={onClose} style={{ flex: 1, padding: '10px', borderRadius: 8, border: '1px solid #1A2030', background: 'transparent', color: '#9CA3AF', fontSize: 14 }}>Cancel</button>
+          <button onClick={save} disabled={loading} style={{ ...dBtn, flex: 1, padding: '10px', fontSize: 14 }}>
+            {loading ? 'Saving...' : 'Log Reply'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+//  MAIN ANALYTICS TAB COMPONENT
+// ═══════════════════════════════════════════════════════
+function AnalyticsTab({ user, profile, onShowPricing }) {
+  const isPro = profile?.plan === 'monthly' || profile?.plan === 'yearly';
+
+  const [leads, setLeads] = useState([]);
+  const [outreachEvents, setOutreachEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showCloseDeal, setShowCloseDeal] = useState(false);
+  const [showReplyTracker, setShowReplyTracker] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    if (!isPro) { setLoading(false); return; }
+    loadData();
+  }, [isPro, refreshKey]);
+
+  const loadData = async () => {
+    setLoading(true);
+    const [leadsRes, eventsRes] = await Promise.all([
+      sb.from('leads').select('*').eq('user_id', user.id).order('created_at', { ascending: false }),
+      sb.from('outreach_events').select('*').eq('user_id', user.id).order('sent_at', { ascending: false }),
+    ]);
+    setLeads(leadsRes.data || []);
+    setOutreachEvents(eventsRes.data || []);
+    setLoading(false);
+  };
+
+  const refresh = () => setRefreshKey(k => k + 1);
+
+  // ── OUTREACH METRICS ────────────────────────────────
+  const totalSent = outreachEvents.filter(e => e.type === 'dm' || e.type === 'email').length;
+  const totalFollowUps = outreachEvents.filter(e => e.type === 'followup').length;
+  const totalReplies = leads.filter(l => l.has_replied).length;
+  const positiveReplies = leads.filter(l => l.is_positive_reply).length;
+  const replyRate = totalSent > 0 ? ((totalReplies / totalSent) * 100).toFixed(1) : '0.0';
+
+  // ── WEEKLY CHART (last 7 days) ───────────────────────
+  const weeklyData = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    const dayStr = d.toISOString().split('T')[0];
+    const label = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getDay()];
+    const value = outreachEvents.filter(e => e.sent_at?.startsWith(dayStr)).length;
+    return { label, value };
+  });
+
+  // ── MONTHLY REVENUE CHART (last 6 months) ───────────
+  const monthlyRevenue = Array.from({ length: 6 }, (_, i) => {
+    const d = new Date();
+    d.setMonth(d.getMonth() - (5 - i));
+    const y = d.getFullYear();
+    const m = d.getMonth() + 1;
+    const label = d.toLocaleString('default', { month: 'short' });
+    const value = leads
+      .filter(l => l.closed_at && l.deal_value)
+      .filter(l => {
+        const cd = new Date(l.closed_at);
+        return cd.getFullYear() === y && (cd.getMonth() + 1) === m;
+      })
+      .reduce((sum, l) => sum + (l.deal_value || 0), 0);
+    return { label, value };
+  });
+
+  // ── REVENUE METRICS ──────────────────────────────────
+  const closedLeads = leads.filter(l => l.closed_at && l.deal_value);
+  const totalRevenue = closedLeads.reduce((s, l) => s + (l.deal_value || 0), 0);
+  const now = new Date();
+  const thisMonthRevenue = closedLeads
+    .filter(l => {
+      const d = new Date(l.closed_at);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    })
+    .reduce((s, l) => s + (l.deal_value || 0), 0);
+  const avgDealSize = closedLeads.length > 0 ? (totalRevenue / closedLeads.length).toFixed(0) : 0;
+
+  // ── FUNNEL DATA ──────────────────────────────────────
+  const totalLeads = leads.length;
+  const repliedLeads = leads.filter(l => l.has_replied).length;
+  const dealsClosedCount = leads.filter(l => l.tag === 'Converted').length;
+
+  const funnelStages = [
+    {
+      label: 'Total Leads',
+      count: totalLeads,
+      pct: 100,
+      color: '#16A34A',
+    },
+    {
+      label: 'Replied',
+      count: repliedLeads,
+      pct: totalLeads > 0 ? Math.round((repliedLeads / totalLeads) * 100) : 0,
+      color: '#2563EB',
+      dropOff: totalLeads > 0 ? Math.round(((totalLeads - repliedLeads) / totalLeads) * 100) : 0,
+    },
+    {
+      label: 'Deals Closed',
+      count: dealsClosedCount,
+      pct: totalLeads > 0 ? Math.round((dealsClosedCount / totalLeads) * 100) : 0,
+      color: '#7C3AED',
+      dropOff: repliedLeads > 0 ? Math.round(((repliedLeads - dealsClosedCount) / repliedLeads) * 100) : 0,
+    },
+  ];
+
+  // ── LOCKED STATE ─────────────────────────────────────
+  if (!isPro) {
+    return (
+      <div style={{ position: 'relative', minHeight: 500 }}>
+        {/* Blurred preview behind lock */}
+        <div style={{ filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none', opacity: 0.4 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 20 }}>
+            {['Total Sent', 'Reply Rate', 'Deals Closed', 'Revenue'].map(l => (
+              <StatCard key={l} label={l} value="—" color="#16A34A" icon={<AnalyticsIcons.chart />} />
+            ))}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+            <div style={{ background: '#111520', borderRadius: 12, padding: 20, border: '1px solid #1A2030', height: 160 }} />
+            <div style={{ background: '#111520', borderRadius: 12, padding: 20, border: '1px solid #1A2030', height: 160 }} />
+          </div>
+        </div>
+
+        {/* Lock overlay */}
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+          <div style={{ background: '#111520', border: '1px solid #1A2030', borderRadius: 20, padding: '40px 48px', textAlign: 'center', maxWidth: 380 }}>
+            <div style={{ color: '#16A34A', marginBottom: 16 }}><AnalyticsIcons.lock /></div>
+            <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 24, color: '#E8EAF0', marginBottom: 8 }}>Analytics (Pro)</h3>
+            <p style={{ color: '#6B7280', fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>
+              Upgrade to Pro to unlock your outreach metrics, sales funnel, and revenue tracker.
+            </p>
+            <button onClick={onShowPricing} style={{ ...dBtn, width: '100%', padding: '13px', fontSize: 15 }}>
+              Upgrade to Pro →
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 60, gap: 12, color: '#6B7280', fontSize: 14 }}>
+      <div style={{ width: 18, height: 18, border: '2px solid #16A34A', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
+      Loading analytics...
+    </div>
+  );
+
+  return (
+    <div>
+      {/* ── ACTION BUTTONS ── */}
+      <div style={{ display: 'flex', gap: 10, marginBottom: 24, flexWrap: 'wrap' }}>
+        <button onClick={() => setShowReplyTracker(true)} style={{ ...dBtn, background: '#2563EB', display: 'flex', alignItems: 'center', gap: 7, fontSize: 13 }}>
+          <AnalyticsIcons.reply /> Log Reply
+        </button>
+        <button onClick={() => setShowCloseDeal(true)} style={{ ...dBtn, background: '#16A34A', display: 'flex', alignItems: 'center', gap: 7, fontSize: 13 }}>
+          <AnalyticsIcons.dollar /> Mark Deal Closed
+        </button>
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6, color: '#4B5563', fontSize: 12, fontFamily: "'IBM Plex Mono', monospace" }}>
+          <span style={{ width: 8, height: 8, background: '#16A34A', borderRadius: '50%', display: 'inline-block', boxShadow: '0 0 6px #16A34A' }} />
+          Live data
+        </div>
+      </div>
+
+      {/* ── TOP STAT CARDS ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, marginBottom: 24 }}>
+        <StatCard label="Total Sent" value={totalSent} sub={`${totalFollowUps} follow-ups`} icon={<AnalyticsIcons.send />} color="#16A34A" />
+        <StatCard label="Replies" value={totalReplies} sub={`${positiveReplies} positive`} icon={<AnalyticsIcons.reply />} color="#2563EB" />
+        <StatCard label="Reply Rate" value={`${replyRate}%`} sub={`${totalSent} outreach sent`} icon={<AnalyticsIcons.trend />} color="#F59E0B" />
+        <StatCard label="Deals Closed" value={dealsClosedCount} sub={`Avg $${avgDealSize}`} icon={<AnalyticsIcons.funnel />} color="#7C3AED" />
+        <StatCard label="Total Revenue" value={`$${totalRevenue.toLocaleString()}`} sub={`$${thisMonthRevenue.toLocaleString()} this month`} icon={<AnalyticsIcons.dollar />} color="#16A34A" />
+      </div>
+
+      {/* ── MIDDLE ROW: Funnel + Weekly Chart ── */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 16, marginBottom: 16 }}>
+
+        {/* Sales Funnel */}
+        <div style={{ background: '#111520', borderRadius: 12, padding: 20, border: '1px solid #1A2030' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <div>
+              <p style={{ ...dLabel, margin: 0 }}>Sales Funnel</p>
+              <p style={{ color: '#6B7280', fontSize: 12, marginTop: 3 }}>Lead → Reply → Closed</p>
+            </div>
+            <span style={{ color: '#16A34A' }}><AnalyticsIcons.funnel /></span>
+          </div>
+          {totalLeads === 0 ? (
+            <div style={{ textAlign: 'center', padding: '32px 0', color: '#4B5563', fontSize: 13, fontFamily: "'IBM Plex Mono', monospace" }}>
+              Add leads to see your funnel
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {funnelStages.map((stage, i) => (
+                <FunnelStage
+                  key={stage.label}
+                  label={stage.label}
+                  count={stage.count}
+                  pct={stage.pct}
+                  color={stage.color}
+                  isLast={i === funnelStages.length - 1}
+                  dropOff={stage.dropOff ?? null}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Weekly Outreach Chart */}
+        <div style={{ background: '#111520', borderRadius: 12, padding: 20, border: '1px solid #1A2030' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <div>
+              <p style={{ ...dLabel, margin: 0 }}>Weekly Outreach</p>
+              <p style={{ color: '#6B7280', fontSize: 12, marginTop: 3 }}>DMs + emails sent (last 7 days)</p>
+            </div>
+            <span style={{ color: '#F59E0B' }}><AnalyticsIcons.chart /></span>
+          </div>
+          <SparkLine data={weeklyData.map(d => d.value)} color="#F59E0B" height={70} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
+            {weeklyData.map(d => (
+              <span key={d.label} style={{ fontSize: 9, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace", flex: 1, textAlign: 'center' }}>{d.label}</span>
+            ))}
+          </div>
+          <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid #1A2030', display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: 12, color: '#6B7280' }}>This week total</span>
+            <span style={{ fontSize: 14, color: '#E8EAF0', fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600 }}>
+              {weeklyData.reduce((s, d) => s + d.value, 0)} sent
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ── BOTTOM: Monthly Revenue Chart ── */}
+      <div style={{ background: '#111520', borderRadius: 12, padding: 20, border: '1px solid #1A2030', marginBottom: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <div>
+            <p style={{ ...dLabel, margin: 0 }}>Monthly Revenue</p>
+            <p style={{ color: '#6B7280', fontSize: 12, marginTop: 3 }}>Closed deals — last 6 months</p>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#16A34A', lineHeight: 1 }}>${totalRevenue.toLocaleString()}</p>
+            <p style={{ fontSize: 11, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace" }}>total revenue</p>
+          </div>
+        </div>
+        {closedLeads.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '32px 0', color: '#4B5563', fontSize: 13, fontFamily: "'IBM Plex Mono', monospace" }}>
+            Close your first deal to see revenue charts →{' '}
+            <button onClick={() => setShowCloseDeal(true)} style={{ background: 'none', border: 'none', color: '#16A34A', cursor: 'pointer', fontSize: 13, textDecoration: 'underline' }}>
+              Mark deal closed
+            </button>
+          </div>
+        ) : (
+          <MiniBarChart data={monthlyRevenue} color="#16A34A" />
+        )}
+
+        {/* Monthly summary row */}
+        {closedLeads.length > 0 && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginTop: 16, paddingTop: 16, borderTop: '1px solid #1A2030' }}>
+            <div>
+              <p style={{ fontSize: 11, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace", marginBottom: 4 }}>THIS MONTH</p>
+              <p style={{ fontSize: 18, fontFamily: "'Instrument Serif', serif", color: '#E8EAF0' }}>${thisMonthRevenue.toLocaleString()}</p>
+            </div>
+            <div>
+              <p style={{ fontSize: 11, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace", marginBottom: 4 }}>AVG DEAL SIZE</p>
+              <p style={{ fontSize: 18, fontFamily: "'Instrument Serif', serif", color: '#E8EAF0' }}>${avgDealSize}</p>
+            </div>
+            <div>
+              <p style={{ fontSize: 11, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace", marginBottom: 4 }}>DEALS CLOSED</p>
+              <p style={{ fontSize: 18, fontFamily: "'Instrument Serif', serif", color: '#E8EAF0' }}>{dealsClosedCount}</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ── RECENT CLOSED DEALS TABLE ── */}
+      {closedLeads.length > 0 && (
+        <div style={{ background: '#111520', borderRadius: 12, padding: 20, border: '1px solid #1A2030' }}>
+          <p style={{ ...dLabel, marginBottom: 14 }}>Recent Closed Deals</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {closedLeads.slice(0, 5).map(lead => (
+              <div key={lead.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: '#0B0F17', borderRadius: 8, border: '1px solid #1A2030' }}>
+                <div>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 14, color: '#E8EAF0', marginBottom: 2 }}>{lead.name}</p>
+                  <p style={{ fontSize: 11, color: '#4B5563', fontFamily: "'IBM Plex Mono', monospace" }}>
+                    {lead.service} · {lead.closed_at ? new Date(lead.closed_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}
+                  </p>
+                </div>
+                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 15, color: '#16A34A', fontWeight: 600 }}>
+                  ${lead.deal_value?.toLocaleString()}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Modals */}
+      {showCloseDeal && (
+        <CloseDealModal
+          leads={leads}
+          userId={user.id}
+          onClose={() => setShowCloseDeal(false)}
+          onSaved={refresh}
+        />
+      )}
+      {showReplyTracker && (
+        <ReplyTrackerModal
+          leads={leads}
+          userId={user.id}
+          onClose={() => setShowReplyTracker(false)}
+          onSaved={refresh}
+        />
+      )}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════
+function Dashboard({ user, profile, onLogout, onUpgrade, onShowPricing }) {
+  const [tab, setTab] = useState('leads');
+  const [showBanner, setShowBanner] = useState(false);
+
+  const daysLeft = trialDaysLeft(profile);
+  const isPaid = profile?.plan === 'monthly' || profile?.plan === 'yearly';
+  const isExpired = !isPaid && daysLeft === 0;
+
+  useEffect(() => {
+    // Show trial countdown banner once per session
+    const shown = sessionStorage.getItem('banner_shown');
+    if (!shown && !isPaid) {
+      setShowBanner(true);
+      sessionStorage.setItem('banner_shown', '1');
+    }
+  }, []);
+
+  const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'there';
+  const tabs = [
+    { id:'leads', label:'Leads', icon:<Icon.leads/> },
+    { id:'outreach', label:'Outreach', icon:<Icon.outreach/> },
+    { id:'onboarding', label:'Onboard', icon:<Icon.onboard/> },
+    { id:'scope', label:'Scope Builder', icon:<Icon.scope/> },
+    { id:'analytics', label:'Analytics (Pro)', icon:<Icon.analytics/> },
+  ];
+
+  if (isExpired) {
+    return (
+      <div style={{minHeight:'100vh',background:'var(--dash-bg)',display:'flex',alignItems:'center',justifyContent:'center',padding:24}}>
+        <div style={{textAlign:'center',maxWidth:480}}>
+          <div style={{fontSize:48,marginBottom:16}}>⏰</div>
+          <h2 style={{fontFamily:"'Instrument Serif',serif",fontSize:36,color:'#F3F4F6',marginBottom:12}}>Your free trial has ended.</h2>
+          <p style={{color:'#6B7280',marginBottom:32,fontSize:16,lineHeight:1.6}}>You had a great run! Upgrade to Pro to keep your leads, outreach tools, and scope builder fully active.</p>
+          <button onClick={onShowPricing} style={{...dBtn,padding:'14px 36px',fontSize:16,marginRight:12}}>See Plans →</button>
+          <button onClick={onLogout} style={{background:'none',border:'1px solid #374151',borderRadius:8,color:'#9CA3AF',padding:'14px 24px',fontSize:14}}>Log out</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{minHeight:'100vh',background:'var(--dash-bg)',display:'flex',flexDirection:'column'}}>
+      {/* Trial Banner (once per session) */}
+      {showBanner && !isPaid && (
+        <div className="r-banner" style={{background:daysLeft<=2?'#7F1D1D':'#1C1500',borderBottom:`1px solid ${daysLeft<=2?'#991B1B':'#374151'}`,padding:'10px 24px',display:'flex',alignItems:'center',justifyContent:'space-between',animation:'slideDown 0.3s ease'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <span style={{color:daysLeft<=2?'#FCA5A5':'#F59E0B'}}><Icon.clock/></span>
+            <span style={{color:daysLeft<=2?'#FCA5A5':'#FDE68A',fontSize:13,fontWeight:500}}>
+              {daysLeft} day{daysLeft!==1?'s':''} left on your free trial.{' '}
+              <button onClick={()=>{setShowBanner(false);onShowPricing();}} style={{background:'none',border:'none',color:daysLeft<=2?'#F87171':'#F59E0B',fontWeight:600,fontSize:13,cursor:'pointer',textDecoration:'underline'}}>Upgrade to Pro →</button>
+            </span>
+          </div>
+          <button onClick={()=>setShowBanner(false)} style={{background:'none',border:'none',color:'#6B7280',cursor:'pointer'}}><Icon.x/></button>
+        </div>
+      )}
+
+      {/* Top Nav */}
+      <nav className="r-nav" style={{background:'#0C0F14',borderBottom:'1px solid #1E2433',padding:'0 24px',display:'flex',alignItems:'center',justifyContent:'space-between',flexShrink:0}}>
+        <div className="r-logo" style={{display:'flex',alignItems:'center',gap:12,height:60}}>
+          <div><img style={{width:45,height:45,marginRight:8}} src="https://cdn.jsdelivr.net/gh/ShadyLabs-Web/shadylabs-assets@main/IMG-20260223-WA0003-removebg-preview.png" alt="ShadyLabs Image"></img> </div>
+          <span style={{fontFamily:"'Instrument Serif',serif",fontSize:22,color:'#F3F4F6'}}>Katalyst</span>
+        </div>
+
+        <div className="r-tabs" style={{display:'flex',gap:2}}>
+          {tabs.map(t=>(
+            <button key={t.id} onClick={()=>setTab(t.id)} style={{display:'flex',alignItems:'center',gap:7,padding:'8px 14px',borderRadius:8,border:'none',background:tab===t.id?'rgba(245,158,11,0.12)':'transparent',color:tab===t.id?'#F59E0B':'#6B7280',fontSize:13,fontWeight:500,borderBottom:`2px solid ${tab===t.id?'#F59E0B':'transparent'}`,cursor:'pointer',transition:'all 0.15s'}}>
+              {t.icon} {t.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="r-right" style={{display:'flex',alignItems:'center',gap:10}}>
+          {!isPaid && (
+            <button onClick={onShowPricing} style={{...dBtn,fontSize:12,padding:'6px 14px',display:'flex',alignItems:'center',gap:6}}>
+              <Icon.zap/> Upgrade
+            </button>
+          )}
+          {isPaid && <span className="r-probadge" style={{background:'rgba(16,185,129,0.12)',color:'#10B981',border:'1px solid rgba(16,185,129,0.3)',borderRadius:6,padding:'4px 10px',fontSize:11,fontFamily:"'IBM Plex Mono',monospace"}}>{profile.plan === 'monthly' ? 'PRO MONTHLY' : 'PRO YEARLY'}</span>}
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            <div style={{width:32,height:32,borderRadius:'50%',background:'#1E2433',display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,color:'#9CA3AF',border:'1px solid #2D3748'}}>{userName[0]?.toUpperCase()}</div>
+            <span className="r-uname" style={{color:'#9CA3AF',fontSize:13,maxWidth:120,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{userName}</span>
+          </div>
+          <button onClick={onLogout} style={{background:'none',border:'none',color:'#4B5563',cursor:'pointer',display:'flex',alignItems:'center',gap:5,fontSize:13}} title="Log out">
+            <Icon.logout/>
+          </button>
+        </div>
+      </nav>
+
+      {/* Content */}
+      <div className="r-content" style={{flex:1,padding:'28px 32px',maxWidth:1000,width:'100%',margin:'0 auto'}}>
+        <div style={{marginBottom:24}}>
+          <h1 style={{fontFamily:"'Instrument Serif',serif",fontSize:28,color:'#F3F4F6',marginBottom:4}}>
+             {{ leads:'Lead Pipeline', outreach:'AI Outreach', onboarding:'Client Onboarding', scope:'Scope Builder', analytics:'Analytics (Pro)' }[tab]}
+          </h1>
+          <p style={{color:'#4B5563',fontSize:13}}>
+             {{ leads:'Track & tag your Threads prospects', outreach:'Generate personalized DMs and cold emails', onboarding:'Create smart onboarding questionnaires', scope:'Build polished project scopes from client answers', analytics:'Your outreach performance, sales funnel, and revenue — in one view.' }[tab]}
+          </p>
+        </div>
+
+        <div className="r-card" style={{background:'#111520',borderRadius:16,padding:24,border:'1px solid #1E2433',minHeight:400}}>
+          {tab==='leads' && <LeadsTab user={user}/>}
+          {tab==='outreach' && <OutreachTab user={user} profile={profile}/>}
+          {tab==='onboarding' && <OnboardingTab user={user} profile={profile}/>}
+          {tab==='scope' && <ScopeTab user={user} profile={profile}/>}
+          {tab==='analytics' && <AnalyticsTab user={user} profile={profile} onShowPricing={onShowPricing}/>}
+        </div>
+
+        {!isPaid && daysLeft > 0 && (
+          <div className="r-trialbar" style={{marginTop:16,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'12px 16px',background:'#111520',borderRadius:10,border:'1px solid #1E2433'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10}}>
+              <div style={{display:'flex',gap:3}}>
+                {Array.from({length:7}).map((_,i)=>(
+                  <div key={i} style={{width:18,height:6,borderRadius:3,background:i<(7-daysLeft)?'#1E2433':'#F59E0B'}}/>
+                ))}
+              </div>
+              <span style={{color:'#6B7280',fontSize:12,fontFamily:"'IBM Plex Mono',monospace"}}>{daysLeft} of {CONFIG.TRIAL_DAYS} days remaining</span>
+            </div>
+            <button onClick={onShowPricing} style={{background:'none',border:'1px solid #374151',borderRadius:6,color:'#9CA3AF',padding:'6px 14px',fontSize:12,cursor:'pointer'}}>View plans →</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════
+//  APP ROOT
+// ═══════════════════════════════════════════════════════
+function App() {
+  const [page, setPage] = useState('landing');
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [authMode, setAuthMode] = useState(null); // null | 'login' | 'signup'
+  const [loading, setLoading] = useState(true);
+
+      // In your main App or a suitable useEffect hook where you manage user state
+    useEffect(() => {
+      const { data: { subscription } } = sb.auth.onAuthStateChange((event, session) => {
+        // Store the session token globally or pass it down
+        currentToken = session?.access_token || null;
+        // You might also want to update your UI state (e.g., set user, profile) here
+      });
+      // Initial check for session on load
+      sb.auth.getSession().then(({ data: { session } }) => {
+        currentToken = session?.access_token || null;
+        // Also update UI state here if needed
+      });
+
+      return () => subscription.unsubscribe();
+    }, []);
+    
+
+ const handleUserSession = async (u) => {
+  setUser(u);
+  const timeout = new Promise((_, reject) => setTimeout(() => reject('timeout'), 4000));
+  try {
+    let { data: prof } = await Promise.race([
+      sb.from('profiles').select('*').eq('id', u.id).single(),
+      timeout
+    ]);
+    if (!prof) {
+      const { data: newProf } = await Promise.race([
+        sb.from('profiles').insert([{ id: u.id, email: u.email, full_name: u.user_metadata?.full_name, trial_start: new Date().toISOString(), plan: 'trial' }]).select().single(),
+        timeout
+      ]);
+      prof = newProf;
+    }
+    setProfile(prof);
+    setPage('dashboard');
+  } catch(e) {
+    await sb.auth.signOut();
+    setUser(null);
+    setProfile(null);
+    setPage('landing');
+  }
+  setLoading(false);
+};
+
+  
+const handleLogout = async () => {
+  try {
+    setUser(null);
+    setProfile(null);
+    setPage('landing');
+    sessionStorage.removeItem('banner_shown');
+    try {await sb.auth.signOut();} catch (e) {}
+  } catch (error) {
+    console.error('Logout error:', error);
+    // Force it anyway
+    setUser(null);
+    setProfile(null);
+    setPage('landing');
+  }
+};
+
+  const showAuth = (mode) => { setAuthMode(mode); };
+
+  if (loading) return (
+    <div style={{minHeight:'100vh',background:'var(--dash-bg)',display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:16}}>
+      <div style={{width:36,height:36,background:'var(--accent)',borderRadius:9,display:'flex',alignItems:'center',justifyContent:'center',color:'white',fontSize:20}}><img style={{width:45,height:45}} src="https://cdn.jsdelivr.net/gh/ShadyLabs-Web/shadylabs-assets@main/IMG-20260223-WA0003-removebg-preview.png" alt="ShadyLabs Image"></img> </div>
+      <div style={{width:24,height:24,border:'2px solid #F59E0B',borderTopColor:'transparent',borderRadius:'50%',animation:'spin 0.7s linear infinite'}}/>
+    </div>
+  );
+
+  return (
+    <>
+      {page==='landing' && <LandingPage onShowAuth={showAuth} onShowPricing={()=>setPage('pricing')}/>}
+      {page==='pricing' && <PricingPage onShowAuth={showAuth} onBack={()=>setPage(user?'dashboard':'landing')} profile={profile}/>}
+      {page==='dashboard' && user && <Dashboard user={user} profile={profile} onLogout={handleLogout} onShowPricing={()=>setPage('pricing')}/>}
+      {authMode && <AuthModal mode={authMode} onClose={()=>setAuthMode(null)}/>}
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
