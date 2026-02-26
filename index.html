@@ -1815,6 +1815,11 @@ function App() {
   const [authMode, setAuthMode] = useState(null); // null | 'login' | 'signup'
   const [loading, setLoading] = useState(true);
 
+useEffect(() => {
+  const fallback = setTimeout(() => setLoading(false), 5000);
+  return () => clearTimeout(fallback);
+}, []);
+
       // In your main App or a suitable useEffect hook where you manage user state
     useEffect(() => {
       const { data: { subscription } } = sb.auth.onAuthStateChange((event, session) => {
