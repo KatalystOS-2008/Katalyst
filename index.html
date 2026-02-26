@@ -1028,7 +1028,7 @@ function OnboardingTab({user,profile}) {
     setLoading(true); setQuestions([]); setAnswers({});
     const { allowed, used } = await checkAndIncrementUsage(user.id, profile?.plan);
      if (!allowed) {
-    setOutput(`You've used all ${TRIAL_LIMIT} free generations. Upgrade to Pro for unlimited access.`);
+    alert(`You've used all ${TRIAL_LIMIT} free generations. Upgrade to Pro for unlimited access.`);
     setLoading(false);
     return;
     }
@@ -1106,7 +1106,7 @@ function ScopeTab({user,profile}) {
     setLoading(true); setScope('');
     const { allowed, used } = await checkAndIncrementUsage(user.id, profile?.plan);
      if (!allowed) {
-    setOutput(`You've used all ${TRIAL_LIMIT} free generations. Upgrade to Pro for unlimited access.`);
+    alert(`You've used all ${TRIAL_LIMIT} free generations. Upgrade to Pro for unlimited access.`);
     setLoading(false);
     return;
     }
@@ -1838,11 +1838,13 @@ useEffect(() => {
       await handleUserSession(session.user);
       setAuthMode(null);
     } else if (event === 'SIGNED_OUT') {
-      setUser(null);
-      setProfile(null);
-      setPage('landing');
-      setLoading(false);
-    }
+  setUser(null);
+  setProfile(null);
+  setPage('landing');
+  setLoading(false);
+} else if (event === 'TOKEN_REFRESHED') {
+  currentToken = session?.access_token || null;
+}
   });
 
   return () => {
