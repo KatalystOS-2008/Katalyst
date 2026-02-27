@@ -286,12 +286,14 @@ const hasAccess = (profile) => {
   return trialDaysLeft(profile) > 0;
 };
 
-const TRIAL_LIMIT = 10;
+const TRIAL_LIMIT = 5;
 
 async function checkAndIncrementUsage(userId, plan) {
-  if (plan === 'monthly' || plan === 'yearly') return { allowed: true };
   try {
-    const { data, error } = await sb.rpc('increment_usage', { user_id_input: userId, limit_input: TRIAL_LIMIT });
+    const { data, error } = await sb.rpc('increment_usage_with_plan', {
+      user_id_input: userId,
+      plan_input: plan || 'trial'
+    });
     if (error) return { allowed: true };
     return { allowed: data !== false };
   } catch(e) {
