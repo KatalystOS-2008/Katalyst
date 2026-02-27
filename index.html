@@ -301,56 +301,45 @@ async function checkAndIncrementUsage(userId, plan) {
 
 async function callClaude(system, user, maxTokens = 900) {
   try {
-    const { data: sessionData, error: sessionError } = await sb.auth.getSession();
-
+    const { data: sessionData } = await sb.auth.getSession();
     let session = sessionData?.session;
-
     if (!session) {
-      const { data: refreshData, error: refreshError } = await sb.auth.refreshSession();
-
-      if (refreshError || !refreshData?.session) {
-        return "Your session expired. Please login again.";
-      }
-
-      session = refreshData.session;
+      const { data: refreshData } = await sb.auth.refreshSession();
+      session = refreshData?.session;
     }
+    const token = session?.access_token;
+    if (!token) return 'Please log in to use AI features.';
 
-    const token = session.access_token;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
 
     const res = await fetch(CONFIG.CLAUDE_API_URL, {
-      method: "POST",
+      method: 'POST',
+      signal: controller.signal,
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-        
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        system,
-        user,
-        maxTokens,
-      }),
+      body: JSON.stringify({ system, user, maxTokens }),
     });
+
+    clearTimeout(timeout);
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error("Edge function error:", errorText);
-
-      if (res.status === 401) {
-        return "Your session expired. Please login again.";
-      }
-
       return `Error from AI: ${errorText}`;
     }
 
     const data = await res.json();
-    return data.content?.[0]?.text || "";
+    return data.content?.[0]?.text || 'No response received.';
 
-  } catch (e) {
-    console.error("Error calling Claude:", e);
-    return "Error connecting to AI. Please check your configuration.";
+  } catch(e) {
+    if (e.name === 'AbortError') return 'Request timed out. Please try again.';
+    console.error('Error calling Claude:', e);
+    return 'Error connecting to AI. Please try again.';
   }
 }
-    
+   
 // ─── Icons ────────────────────────────────────────────
 const Icon = {
   leads: () => <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
@@ -929,13 +918,12 @@ function OutreachTab({ user,profile }) {
     const usr = `Prospect: ${lead.name} (${lead.handle})\nNiche: ${lead.niche||'unknown'}\nPain point observed: ${lead.pain||'general improvement needed'}\nMy service: ${myService||lead.service}\n\nWrite a compelling, personalized ${mode}.`;
     const r = await callClaude(sys, usr, 400);
     setOutput(r); setLoading(false);
-    // Track this outreach event
-  await sb.from('outreach_events').insert([{
-    user_id: user.id,
-    type: mode === 'DM' ? 'dm' : 'email',
-    lead_id: lead?.id || null,
-  }]);
-
+// Fire and forget — don't await
+sb.from('outreach_events').insert([{
+  user_id: user.id,
+  type: mode === 'DM' ? 'dm' : 'email',
+  lead_id: lead?.id || null,
+}]);
   };
 
 
