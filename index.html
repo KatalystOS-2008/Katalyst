@@ -289,26 +289,14 @@ const hasAccess = (profile) => {
 const TRIAL_LIMIT = 10;
 
 async function checkAndIncrementUsage(userId, plan) {
-  // Paid users have no limits
   if (plan === 'monthly' || plan === 'yearly') return { allowed: true };
-
-  const { data: prof } = await sb.from('profiles').select('generations_used, generations_reset_at').eq('id', userId).single();
-
-  // Reset counter if it's been over 30 days
-  const resetDate = new Date(prof.generations_reset_at);
-  const daysSinceReset = (Date.now() - resetDate.getTime()) / 86400000;
-  if (daysSinceReset > 30) {
-    await sb.from('profiles').update({ generations_used: 0, generations_reset_at: new Date().toISOString() }).eq('id', userId);
-    prof.generations_used = 0;
+  try {
+    const { data, error } = await sb.rpc('increment_usage', { user_id_input: userId, limit_input: TRIAL_LIMIT });
+    if (error) return { allowed: true };
+    return { allowed: data !== false };
+  } catch(e) {
+    return { allowed: true };
   }
-
-  if (prof.generations_used >= TRIAL_LIMIT) {
-    return { allowed: false, used: prof.generations_used };
-  }
-
-  // Increment the counter
-  await sb.from('profiles').update({ generations_used: prof.generations_used + 1 }).eq('id', userId);
-  return { allowed: true, used: prof.generations_used + 1 };
 }
 
 async function callClaude(system, user, maxTokens = 900) {
