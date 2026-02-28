@@ -285,8 +285,8 @@ const CONFIG = {
  LEMON_YEARLY_LINK: 'https://yourstore.lemonsqueezy.com/checkout/buy/YOUR_YEARLY_ID',
   TRIAL_DAYS: 7,
   PLANS: {
-    monthly: { price: 9, label: 'Monthly', period: '/month' },
-    yearly:  { price: 69, label: 'Yearly',  period: '/year', monthly_eq: '5.75' },
+    monthly: { price: 12, label: 'Monthly', period: '/month' },
+    yearly:  { price: 99, label: 'Yearly',  period: '/year', monthly_eq: '8.25' },
   }
 };
 // ═══════════════════════════════════════════════════════
@@ -637,7 +637,7 @@ function LandingPage({ onShowAuth, onShowPricing }) {
               <h3 style={{fontSize:22,marginBottom:6}}>Free Trial</h3>
               <p style={{color:'var(--muted)',fontSize:14,marginBottom:20}}>Test drive everything for 7 days</p>
               <div style={{fontSize:42,fontWeight:700,marginBottom:24}}>$0<span style={{fontSize:16,fontWeight:400,color:'var(--muted)'}}>/7 days</span></div>
-              {['Full dashboard access','All 4 automation tools','AI-powered outreach','Client onboarding'].map(f=>(
+              {['All 4 automation tools','AI-powered outreach','Client onboarding'].map(f=>(
                 <div key={f} style={{display:'flex',gap:10,alignItems:'center',marginBottom:12}}>
                   <span style={{color:'#10B981'}}><Icon.check/></span><span style={{fontSize:14}}>{f}</span>
                 </div>
@@ -655,7 +655,7 @@ function LandingPage({ onShowAuth, onShowPricing }) {
                 <span style={{fontSize:16,fontWeight:400,color:'var(--muted)'}}>{billing==='yearly'?'/year':'/month'}</span>
               </div>
               {billing==='yearly' && <p style={{color:'#10B981',fontSize:13,marginBottom:20,fontWeight:500}}>≈ ${CONFIG.PLANS.yearly.monthly_eq}/month</p>}
-              {['Everything in free trial','Unlimited leads','Priority AI generation','Scope PDF export','Email support'].map(f=>(
+              {['Everything in free trial','Unlimited leads','Priority AI generation','Analytics dashboard','1500 generations/month','Email support'].map(f=>(
                 <div key={f} style={{display:'flex',gap:10,alignItems:'center',marginBottom:12}}>
                   <span style={{color:'var(--accent)'}}><Icon.check/></span><span style={{fontSize:14}}>{f}</span>
                 </div>
@@ -686,7 +686,7 @@ function LandingPage({ onShowAuth, onShowPricing }) {
             <div><img style={{width:45,height:45,marginRight:8}} src="https://cdn.jsdelivr.net/gh/ShadyLabs-Web/shadylabs-assets@main/IMG-20260223-WA0003-removebg-preview.png" alt="ShadyLabs Image"></img> </div>
             <span style={{fontFamily:"'Instrument Serif',serif",fontSize:18}}>Katalyst</span>
           </div>
-          <p style={{color:'var(--muted)',fontSize:13,}}>Built for student freelancers. © 2025 Katalyst (an authentic SaaS from ShadyLabs Web).</p>
+          <p style={{color:'var(--muted)',fontSize:13,}}>Built for student freelancers. © 2026 Katalyst (an authentic SaaS from ShadyLabs Web).</p>
           <div style={{display:'flex',gap:20}}>
             <a href="#" style={{color:'var(--muted)',fontSize:13,textDecoration:'none'}}>Privacy</a>
             <a href="#" style={{color:'var(--muted)',fontSize:13,textDecoration:'none'}}>Terms</a>
@@ -749,7 +749,7 @@ function PricingPage({ onShowAuth, onBack, profile }) {
             <div style={{fontSize:48,fontWeight:700,color:'var(--dark)',marginBottom:4}}>$0</div>
             <p style={{color:'var(--muted)',fontSize:14,marginBottom:32}}>7 days, no card needed</p>
             <div style={{height:1,background:'var(--border)',marginBottom:24}}/>
-            {['Full dashboard access','All 4 automation tools','AI outreach generation','Client onboarding flow','Scope document builder'].map(f=>(
+            {['All 4 automation tools','AI outreach generation','Client onboarding flow','Scope document builder'].map(f=>(
               <div key={f} style={{display:'flex',gap:12,alignItems:'flex-start',marginBottom:14}}>
                 <span style={{color:'#9CA3AF',marginTop:1}}><Icon.check/></span>
                 <span style={{fontSize:14,color:'var(--muted)'}}>{f}</span>
@@ -778,7 +778,7 @@ function PricingPage({ onShowAuth, onBack, profile }) {
             </p>
             {billing==='yearly' && <p style={{color:'#10B981',fontSize:14,fontWeight:600,marginBottom:32}}>≈ ${CONFIG.PLANS.yearly.monthly_eq}/month — save $79 vs monthly</p>}
             <div style={{height:1,background:'var(--border)',marginBottom:24}}/>
-            {['Everything in free trial','Unlimited lead storage','Unlimited AI generations','Scope PDF export (coming soon)','Priority email support','Early access to new features'].map(f=>(
+            {['Everything in free trial','Unlimited lead storage','1500 generations/month','Analytics dashboard','Priority email support','Early access to new features'].map(f=>(
               <div key={f} style={{display:'flex',gap:12,alignItems:'flex-start',marginBottom:14}}>
                 <span style={{color:'var(--accent)',marginTop:1}}><Icon.check/></span>
                 <span style={{fontSize:14}}>{f}</span>
