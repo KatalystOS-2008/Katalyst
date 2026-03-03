@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Performance Comparison</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f4f1ec;
+    font-family: 'EB Garamond', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .report-card {
+    background: #fffdf8;
+    border: 1px solid #c8bfae;
+    border-top: 4px solid #1a3a2a;
+    max-width: 900px;
+    width: 100%;
+    padding: 44px 52px 40px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .header {
+    border-bottom: 1px solid #c8bfae;
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+
+  .institution {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6b5f4e;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1a1209;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #7a6e5e;
+    font-style: italic;
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 420px;
+    margin-bottom: 32px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    border-top: 1px solid #c8bfae;
+    padding-top: 24px;
+  }
+
+  .stat-block {
+    padding: 16px 20px;
+    border: 1px solid #ddd5c5;
+    background: #faf7f2;
+  }
+
+  .stat-block .label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-i  { background: #1a3a2a; }
+  .dot-ii { background: #b85c1a; }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #3d3020;
+    padding: 3px 0;
+    border-bottom: 1px dotted #ddd5c5;
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-row span:last-child {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+  }
+
+  .footer-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #9a8e7e;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+<div class="report-card">
+  <div class="header">
+    <div class="institution">Academic Performance Report</div>
+    <h1>Student Performance Comparison</h1>
+    <div class="subtitle">Paper I vs Paper II — Papers 16, 18, 19, 20, 21 &amp; 22</div>
+  </div>
+
+  <div class="chart-wrap">
+    <canvas id="perfChart"></canvas>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-block">
+      <div class="label"><span class="dot dot-i"></span>Paper I — Summary</div>
+      <div class="stat-row"><span>Average</span><span>82.3</span></div>
+      <div class="stat-row"><span>Highest</span><span>90</span></div>
+      <div class="stat-row"><span>Lowest</span><span>48</span></div>
+    </div>
+    <div class="stat-block">
+      <div class="label"><span class="dot dot-ii"></span>Paper II — Summary</div>
+      <div class="stat-row"><span>Average</span><span>86.3</span></div>
+      <div class="stat-row"><span>Highest</span><span>93</span></div>
+      <div class="stat-row"><span>Lowest</span><span>69</span></div>
+    </div>
+  </div>
+
+  <div class="footer-note">All marks are out of 100 · X-axis: Paper Number · Y-axis: Marks Obtained</div>
+</div>
+
+<script>
+const labels = [16, 18, 19, 20, 21, 22];
+const paper1 = [88, 90, 48, 90, 88, 90];
+const paper2 = [88, 93, 69, 85, 91, 92];
+
+const ctx = document.getElementById('perfChart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      {
+        label: 'Paper I',
+        data: paper1,
+        borderColor: '#1a3a2a',
+        backgroundColor: 'rgba(26,58,42,0.07)',
+        pointBackgroundColor: '#1a3a2a',
+        pointBorderColor: '#fffdf8',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        pointStyle: 'circle',
+        borderWidth: 2.3,
+        tension: 0.3,
+        fill: false,
+      },
+      {
+        label: 'Paper II',
+        data: paper2,
+        borderColor: '#b85c1a',
+        backgroundColor: 'rgba(184,92,26,0.07)',
+        pointBackgroundColor: '#b85c1a',
+        pointBorderColor: '#fffdf8',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        pointStyle: 'rectRot',
+        borderWidth: 2.3,
+        tension: 0.3,
+        fill: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+        align: 'end',
+        labels: {
+          font: { family: "'EB Garamond', Georgia, serif", size: 14 },
+          color: '#1a1209',
+          usePointStyle: true,
+          padding: 20,
+          boxWidth: 10,
+          boxHeight: 10,
+        }
+      },
+      tooltip: {
+        backgroundColor: '#1a1209',
+        titleFont: { family: "'DM Mono', monospace", size: 11 },
+        bodyFont: { family: "'EB Garamond', Georgia, serif", size: 13 },
+        padding: 12,
+        callbacks: {
+          title: ctx => `Paper ${ctx[0].label}`,
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} / 100`
+        }
+      },
+      // Custom data labels plugin
+      datalabels: false
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Paper Number',
+          font: { family: "'EB Garamond', Georgia, serif", size: 14, weight: '600' },
+          color: '#1a1209',
+          padding: { top: 12 }
+        },
+        ticks: {
+          font: { family: "'DM Mono', monospace", size: 11 },
+          color: '#6b5f4e',
+        },
+        grid: { color: 'rgba(0,0,0,0.06)' },
+        border: { color: '#c8bfae' }
+      },
+      y: {
+        min: 0,
+        max: 100,
+        title: {
+          display: true,
+          text: 'Marks',
+          font: { family: "'EB Garamond', Georgia, serif", size: 14, weight: '600' },
+          color: '#1a1209',
+          padding: { bottom: 12 }
+        },
+        ticks: {
+          stepSize: 10,
+          font: { family: "'DM Mono', monospace", size: 11 },
+          color: '#6b5f4e',
+        },
+        grid: { color: 'rgba(0,0,0,0.06)' },
+        border: { color: '#c8bfae' }
+      }
+    }
+  },
+  plugins: [{
+    // Inline data label plugin
+    id: 'dataLabels',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      chart.data.datasets.forEach((dataset, i) => {
+        const meta = chart.getDatasetMeta(i);
+        meta.data.forEach((point, j) => {
+          const value = dataset.data[j];
+          const color = dataset.borderColor;
+          const x = point.x;
+          const y = point.y;
+          ctx.save();
+          ctx.font = "bold 10px 'DM Mono', monospace";
+          ctx.fillStyle = color;
+          ctx.textAlign = 'center';
+          // Offset: Paper I labels above, Paper II labels below
+          const offsetY = i === 0 ? -14 : 20;
+          ctx.fillText(value, x, y + offsetY);
+          ctx.restore();
+        });
+      });
+    }
+  }]
+});
+</script>
+</body>
+</html>
