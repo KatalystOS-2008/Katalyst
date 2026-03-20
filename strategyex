@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Strategex Hussain — Meta Ads Performance Marketer</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+  :root {
+    --black:    #080810;
+    --deep:     #0d0d18;
+    --card:     #11111e;
+    --blue:     #1877F2;
+    --blue-glow:#4a9eff;
+    --yellow:   #FFD600;
+    --white:    #f4f4ee;
+    --muted:    #7a7a90;
+    --border:   rgba(255,255,255,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--deep);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── CURSOR ─────────────────────────── */
+  #cursor {
+    width: 10px; height: 10px;
+    background: var(--yellow); border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width .3s, height .3s, background .3s;
+  }
+  #cursor-ring {
+    width: 34px; height: 34px;
+    border: 1.5px solid var(--blue-glow); border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+  }
+
+  /* ── NAV ─────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    padding: 22px 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(8,8,16,0.75);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem; color: var(--white); text-decoration: none;
+  }
+  .nav-logo span { color: var(--yellow); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; font-weight: 500;
+    transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--yellow); color: var(--black);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 700; padding: 11px 26px; border-radius: 4px;
+    border: none; cursor: none;
+    transition: transform .25s, box-shadow .3s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,214,0,.28); }
+
+  /* ── HERO ────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 140px 56px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 55% 55% at 72% 50%, rgba(24,119,242,.13) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 40% at 15% 75%, rgba(255,214,0,.07) 0%, transparent 55%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.68rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--blue-glow);
+    border: 1px solid rgba(74,158,255,.28);
+    padding: 8px 18px; border-radius: 100px;
+    margin-bottom: 36px;
+    animation: fadeUp .8s ease both;
+  }
+  .hero-badge i { font-size: 0.55rem; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(3.4rem, 6.5vw, 6.5rem);
+    line-height: 1.06; letter-spacing: -1px;
+    animation: fadeUp .9s .08s ease both;
+  }
+  h1 em { font-style: italic; color: var(--yellow); }
+  h1 .outline { -webkit-text-stroke: 1.5px var(--white); color: transparent; }
+
+  .hero-sub {
+    margin-top: 26px;
+    font-size: .93rem; color: var(--muted); line-height: 1.85;
+    max-width: 500px; font-weight: 400;
+    animation: fadeUp .9s .16s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap;
+    animation: fadeUp .9s .24s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--yellow); color: var(--black);
+    font-size: .75rem; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 700; padding: 15px 30px; border-radius: 5px;
+    text-decoration: none; border: none; cursor: none;
+    transition: transform .25s, box-shadow .3s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(255,214,0,.3); }
+  .btn-primary i { transition: transform .3s; }
+  .btn-primary:hover i { transform: translate(3px,-3px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent; color: var(--white);
+    font-size: .75rem; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 600; padding: 15px 30px; border-radius: 5px;
+    text-decoration: none; border: 1px solid rgba(255,255,255,.18);
+    cursor: none; transition: border-color .3s, background .3s;
+  }
+  .btn-outline:hover { border-color: var(--blue-glow); background: rgba(74,158,255,.07); }
+
+  .hero-stats {
+    display: flex; gap: 0; margin-top: 64px;
+    animation: fadeUp .9s .32s ease both;
+  }
+  .stat {
+    padding: 0 44px 0 0; margin-right: 44px;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+  .stat-val {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem; line-height: 1; color: var(--white);
+  }
+  .stat-val em { color: var(--yellow); font-style: normal; }
+  .stat-lbl { font-size: .62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+
+  /* hero right card */
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; justify-content: flex-end; align-items: center;
+  }
+  .hero-card-main {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; padding: 44px; width: 340px;
+    position: relative; box-shadow: 0 32px 80px rgba(0,0,0,.5);
+    animation: fadeUp .9s .2s ease both;
+  }
+  .hero-card-main::before {
+    content: ''; position: absolute; top: 0; left: 24px; right: 24px; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--yellow));
+    border-radius: 0 0 4px 4px;
+  }
+  .hcard-label { font-size: .62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+  .hcard-big { font-family: 'Instrument Serif', serif; font-size: 3.8rem; color: var(--yellow); line-height: 1; }
+  .hcard-sub { font-size: .85rem; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+  .hcard-divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .hcard-row { display: flex; justify-content: space-between; }
+  .hcard-mini-val { font-family: 'Instrument Serif', serif; font-size: 1.6rem; color: var(--white); }
+  .hcard-mini-lbl { font-size: .65rem; color: var(--muted); margin-top: 2px; }
+
+  .hero-card-float {
+    position: absolute; bottom: -32px; left: -60px;
+    background: var(--card); border: 1px solid rgba(255,214,0,.2);
+    border-radius: 14px; padding: 20px 24px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.4);
+    animation: fadeUp 1s .4s ease both;
+  }
+  .float-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(255,214,0,.12);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--yellow); font-size: 1rem;
+  }
+  .float-text { font-size: .78rem; font-weight: 600; }
+  .float-sub { font-size: .65rem; color: var(--muted); margin-top: 2px; }
+
+  /* ── TICKER ──────────────────────────── */
+  .ticker { background: var(--yellow); padding: 13px 0; overflow: hidden; }
+  .ticker-track { display: flex; animation: ticker 24s linear infinite; white-space: nowrap; }
+  .ticker-item {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 1.05rem; padding: 0 48px; flex-shrink: 0; color: var(--black);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ticker-item i { font-size: .55rem; color: rgba(0,0,0,.38); font-style: normal; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ── SECTIONS ────────────────────────── */
+  section { padding: 110px 56px; }
+  .sec-label { font-size: .62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--blue-glow); margin-bottom: 14px; }
+  .sec-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.4rem, 4.5vw, 4rem); line-height: 1.1; margin-bottom: 18px;
+  }
+  .sec-title em { font-style: italic; color: var(--yellow); }
+  .sec-title .dim { color: rgba(255,255,255,.25); }
+  .sec-title .outline { -webkit-text-stroke: 1.5px var(--white); color: transparent; }
+
+  /* ── RESULTS ─────────────────────────── */
+  .results { background: var(--black); }
+  .results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 60px; }
+  .res-card {
+    background: var(--card); padding: 48px 40px;
+    position: relative; overflow: hidden; transition: transform .3s;
+  }
+  .res-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--yellow));
+    transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+  }
+  .res-card:hover::after { transform: scaleX(1); }
+  .res-card:hover { transform: translateY(-5px); }
+  .res-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: rgba(24,119,242,.1); border: 1px solid rgba(74,158,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue-glow); font-size: 1.1rem; margin-bottom: 28px;
+  }
+  .res-big { font-family: 'Instrument Serif', serif; font-size: 3.6rem; color: var(--yellow); line-height: 1; }
+  .res-desc { font-size: .88rem; color: var(--muted); margin-top: 14px; line-height: 1.75; }
+  .res-pill {
+    display: inline-block; margin-top: 22px;
+    font-size: .6rem; letter-spacing: 2px; text-transform: uppercase;
+    background: rgba(24,119,242,.1); color: var(--blue-glow);
+    border: 1px solid rgba(74,158,255,.2); padding: 6px 14px; border-radius: 100px;
+  }
+
+  /* ── SERVICES ────────────────────────── */
+  .services-wrap { display: grid; grid-template-columns: 1fr 1.7fr; gap: 80px; align-items: start; margin-top: 60px; }
+  .svc-list { display: flex; flex-direction: column; gap: 4px; }
+  .svc-item {
+    padding: 22px 26px; border: 1px solid var(--border); border-radius: 8px;
+    cursor: none; transition: border-color .3s, background .3s;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .svc-item:hover, .svc-item.active { border-color: var(--blue-glow); background: rgba(24,119,242,.05); }
+  .svc-item.active .svc-num { color: var(--yellow); }
+  .svc-num { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: rgba(255,255,255,.12); transition: color .3s; min-width: 38px; }
+  .svc-name { font-size: .92rem; font-weight: 600; }
+  .svc-name i { margin-right: 10px; font-size: .8rem; color: var(--muted); transition: color .3s; }
+  .svc-item.active .svc-name i, .svc-item:hover .svc-name i { color: var(--blue-glow); }
+
+  .svc-detail {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 52px;
+    position: sticky; top: 110px; min-height: 360px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .svc-detail-icon {
+    width: 60px; height: 60px; border-radius: 14px;
+    background: rgba(74,158,255,.1); border: 1px solid rgba(74,158,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue-glow); font-size: 1.4rem; margin-bottom: 28px;
+  }
+  .svc-detail-title { font-family: 'Instrument Serif', serif; font-size: 2rem; margin-bottom: 16px; }
+  .svc-detail-desc { color: var(--muted); font-size: .9rem; line-height: 1.85; }
+  .svc-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .stag {
+    font-size: .6rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+    background: rgba(255,214,0,.08); color: var(--yellow);
+    border: 1px solid rgba(255,214,0,.18); padding: 6px 14px; border-radius: 100px;
+  }
+
+  /* ── WHY ME ──────────────────────────── */
+  .why { background: var(--black); }
+  .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; margin-top: 60px; }
+  .why-card {
+    padding: 44px; border: 1px solid var(--border); border-radius: 14px;
+    transition: transform .3s, border-color .3s; position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, var(--blue), transparent);
+    transform: scaleY(0); transform-origin: top; transition: transform .4s ease;
+  }
+  .why-card:hover { transform: translateY(-5px); border-color: rgba(74,158,255,.25); }
+  .why-card:hover::before { transform: scaleY(1); }
+  .why-ico {
+    width: 50px; height: 50px; border-radius: 12px;
+    background: rgba(24,119,242,.1); border: 1px solid rgba(74,158,255,.18);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue-glow); font-size: 1.1rem; margin-bottom: 24px;
+  }
+  .why-title { font-size: .98rem; font-weight: 700; margin-bottom: 12px; }
+  .why-desc { color: var(--muted); font-size: .87rem; line-height: 1.8; }
+
+  /* ── VS SECTION ──────────────────────── */
+  .vs-section { position: relative; overflow: hidden; }
+  .vs-watermark {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-family: 'Instrument Serif', serif;
+    font-size: 20vw; color: rgba(255,255,255,.018); white-space: nowrap; pointer-events: none;
+  }
+  .vs-grid {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 32px; align-items: center; margin-top: 60px; position: relative; z-index: 2;
+  }
+  .vs-box { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 48px 40px; }
+  .vs-box.bad { opacity: .55; }
+  .vs-box.good { border-color: rgba(255,214,0,.22); background: rgba(255,214,0,.03); }
+  .vs-box-lbl { font-size: .6rem; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .vs-box.bad .vs-box-lbl { color: #ff6b6b; }
+  .vs-box.good .vs-box-lbl { color: var(--yellow); }
+  .vs-box-title { font-family: 'Instrument Serif', serif; font-size: 1.9rem; margin-bottom: 20px; }
+  .vs-box.bad .vs-box-title { text-decoration: line-through; color: var(--muted); }
+  .vs-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+  .vs-list li { font-size: .88rem; color: var(--muted); display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
+  .vs-list li i { margin-top: 3px; flex-shrink: 0; }
+  .vs-sep { font-family: 'Instrument Serif', serif; font-size: 2.8rem; font-style: italic; color: var(--yellow); text-align: center; }
+
+  /* ── PROCESS ─────────────────────────── */
+  .process-bg { background: var(--black); }
+  .process-steps { display: flex; gap: 0; margin-top: 60px; position: relative; }
+  .process-steps::before {
+    content: ''; position: absolute; top: 34px; left: 64px; right: 64px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue-glow) 30%, var(--yellow) 70%, transparent);
+  }
+  .step { flex: 1; padding: 28px 24px; text-align: center; position: relative; }
+  .step-num {
+    width: 68px; height: 68px; background: var(--card); border: 1px solid var(--border); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Instrument Serif', serif; font-size: 1.6rem; color: var(--yellow);
+    margin: 0 auto 24px; position: relative; z-index: 2;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .step:hover .step-num { border-color: var(--yellow); box-shadow: 0 0 28px rgba(255,214,0,.25); }
+  .step-title { font-size: .9rem; font-weight: 700; margin-bottom: 10px; }
+  .step-icon { color: var(--blue-glow); margin-right: 7px; font-size: .8rem; }
+  .step-desc { font-size: .82rem; color: var(--muted); line-height: 1.75; }
+
+  /* ── CTA ─────────────────────────────── */
+  .cta-sec {
+    background: var(--yellow); color: var(--black);
+    text-align: center; padding: 110px 56px;
+    position: relative; overflow: hidden;
+  }
+  .cta-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .cta-inner { position: relative; z-index: 2; }
+  .cta-sec .sec-label { color: rgba(0,0,0,.45); }
+  .cta-sec .sec-title { color: var(--black); }
+  .cta-sec .sec-title .outline { -webkit-text-stroke: 1.5px var(--black); color: transparent; }
+  .cta-sub { color: rgba(0,0,0,.55); font-size: .92rem; line-height: 1.8; max-width: 460px; margin: 14px auto 0; }
+  .cta-form { display: flex; gap: 10px; max-width: 480px; margin: 36px auto 0; }
+  .cta-input {
+    flex: 1; padding: 15px 20px;
+    background: rgba(0,0,0,.1); border: 1.5px solid rgba(0,0,0,.18);
+    border-radius: 5px; font-family: 'Poppins', sans-serif;
+    font-size: .9rem; color: var(--black); outline: none; transition: border-color .3s;
+  }
+  .cta-input::placeholder { color: rgba(0,0,0,.38); }
+  .cta-input:focus { border-color: var(--black); }
+  .btn-dark {
+    background: var(--black); color: var(--yellow);
+    font-family: 'Poppins', sans-serif;
+    font-size: .72rem; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 700; padding: 15px 26px; border-radius: 5px;
+    border: none; cursor: none; white-space: nowrap;
+    display: flex; align-items: center; gap: 8px;
+    transition: transform .2s, box-shadow .3s;
+  }
+  .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.3); }
+  .cta-note { margin-top: 18px; font-size: .62rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(0,0,0,.38); }
+
+  /* ── FOOTER ──────────────────────────── */
+  footer {
+    background: var(--black); padding: 48px 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+  }
+  .footer-logo { font-family: 'Instrument Serif', serif; font-size: 1.3rem; }
+  .footer-logo span { color: var(--yellow); }
+  .footer-tagline { font-size: .62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .footer-links { display: flex; gap: 32px; list-style: none; }
+  .footer-links a {
+    font-size: .65rem; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color .3s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: .65rem; color: var(--muted); }
+
+  /* ── ANIMATIONS ──────────────────────── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
+  .reveal { opacity:0; transform:translateY(36px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+  .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s}
+
+  /* ── RESPONSIVE ──────────────────────── */
+  @media(max-width:900px){
+    nav{padding:16px 24px} .nav-links{display:none}
+    section{padding:80px 24px}
+    .hero{grid-template-columns:1fr;padding:130px 24px 60px;gap:56px}
+    .hero-right{justify-content:flex-start}
+    .results-grid{grid-template-columns:1fr}
+    .services-wrap{grid-template-columns:1fr;gap:36px}
+    .why-grid{grid-template-columns:1fr}
+    .vs-grid{grid-template-columns:1fr} .vs-sep{display:none}
+    .process-steps{flex-direction:column} .process-steps::before{display:none}
+    .hero-stats{flex-direction:column;gap:24px}
+    .stat{border-right:none;padding:0;margin:0}
+    footer{flex-direction:column;gap:28px;text-align:center}
+    .cta-form{flex-direction:column}
+    .hero-card-float{left:0;bottom:-20px}
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Strategex<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#results">Results</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Me</a></li>
+    <li><a href="#process">Process</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+    <i class="fa-regular fa-calendar-check" style="margin-right:7px"></i>Book a Call
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-left">
+    <div class="hero-badge">
+      <i class="fa-solid fa-circle fa-2xs"></i> Meta Ads Performance Marketer
+    </div>
+    <h1>
+      Turning<br><em>Ads</em> into<br><span class="outline">Sales.</span>
+    </h1>
+    <p class="hero-sub">Forget vanity metrics — likes don't pay bills. I build data-driven Meta campaigns that scale brands, lower acquisition costs, and drive real revenue.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Scale My Brand <i class="fa-solid fa-arrow-up-right"></i></a>
+      <a href="#results" class="btn-outline"><i class="fa-solid fa-chart-line"></i> See Results</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-val" id="s1">0<em>x</em></div><div class="stat-lbl">Avg ROAS Delivered</div></div>
+      <div class="stat"><div class="stat-val" id="s2">$0<em>K</em></div><div class="stat-lbl">Revenue from $40K Spend</div></div>
+      <div class="stat"><div class="stat-val" id="s3">0<em>+</em></div><div class="stat-lbl">Brands Scaled</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div style="position:relative;">
+      <div class="hero-card-main">
+        <div class="hcard-label"><i class="fa-brands fa-meta" style="margin-right:8px;color:var(--blue-glow)"></i>Campaign Performance</div>
+        <div class="hcard-big">10x</div>
+        <div class="hcard-sub">Return on ad spend — $40K in spend converted to $400K+ in revenue.</div>
+        <div class="hcard-divider"></div>
+        <div class="hcard-row">
+          <div><div class="hcard-mini-val">−62%</div><div class="hcard-mini-lbl">Cost Per Lead</div></div>
+          <div><div class="hcard-mini-val">1.8%</div><div class="hcard-mini-lbl">Avg CTR</div></div>
+          <div><div class="hcard-mini-val">45d</div><div class="hcard-mini-lbl">To Optimise</div></div>
+        </div>
+      </div>
+      <div class="hero-card-float">
+        <div class="float-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div>
+          <div class="float-text">New Campaign Live</div>
+          <div class="float-sub">ROAS climbing &nbsp;<i class="fa-solid fa-arrow-trend-up" style="color:var(--yellow);font-size:.65rem"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Meta Ads <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Performance Marketing <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">ROI Focused <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Scaling Brands <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Likes Don't Pay Bills <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Dominate Meta <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Meta Ads <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Performance Marketing <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">ROI Focused <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Scaling Brands <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Likes Don't Pay Bills <i class="fa-solid fa-diamond"></i></span>
+    <span class="ticker-item">Dominate Meta <i class="fa-solid fa-diamond"></i></span>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<section class="results" id="results">
+  <div class="sec-label reveal"><i class="fa-solid fa-chart-bar" style="margin-right:8px"></i>Proven Track Record</div>
+  <div class="sec-title reveal d1">Real Results.<br><span class="dim">Real Money.</span></div>
+  <div class="results-grid">
+    <div class="res-card reveal d1">
+      <div class="res-icon"><i class="fa-solid fa-rocket"></i></div>
+      <div class="res-big">10x</div>
+      <div class="res-desc">$40,000 in Meta ad spend scaled to over $400,000 in direct revenue for an e-commerce client in under 90 days.</div>
+      <div class="res-pill"><i class="fa-solid fa-store" style="margin-right:6px"></i>E-Commerce Scale</div>
+    </div>
+    <div class="res-card reveal d2">
+      <div class="res-icon"><i class="fa-solid fa-bullseye"></i></div>
+      <div class="res-big">1.8%</div>
+      <div class="res-desc">Average CTR delivered — 3× above Meta's industry benchmark of 0.6%, driving qualified, high-intent traffic at scale.</div>
+      <div class="res-pill"><i class="fa-solid fa-crosshairs" style="margin-right:6px"></i>Audience Precision</div>
+    </div>
+    <div class="res-card reveal d3">
+      <div class="res-icon"><i class="fa-solid fa-arrow-trend-down"></i></div>
+      <div class="res-big">−62%</div>
+      <div class="res-desc">Cost-per-lead reduced by 62% within 45 days of campaign restructuring for a lead generation brand.</div>
+      <div class="res-pill"><i class="fa-solid fa-user-plus" style="margin-right:6px"></i>Lead Generation</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-label reveal"><i class="fa-solid fa-layer-group" style="margin-right:8px"></i>What I Do</div>
+  <div class="sec-title reveal d1">Services That<br><em>Move Money.</em></div>
+  <div class="services-wrap">
+    <div class="svc-list" id="svcList">
+      <div class="svc-item active reveal" data-i="0"><span class="svc-num">01</span><span class="svc-name"><i class="fa-brands fa-meta"></i>Meta Ads Strategy</span></div>
+      <div class="svc-item reveal d1" data-i="1"><span class="svc-num">02</span><span class="svc-name"><i class="fa-solid fa-gears"></i>Campaign Management</span></div>
+      <div class="svc-item reveal d2" data-i="2"><span class="svc-num">03</span><span class="svc-name"><i class="fa-solid fa-flask"></i>Creative Testing</span></div>
+      <div class="svc-item reveal d3" data-i="3"><span class="svc-num">04</span><span class="svc-name"><i class="fa-solid fa-users-viewfinder"></i>Audience Research</span></div>
+      <div class="svc-item reveal d4" data-i="4"><span class="svc-num">05</span><span class="svc-name"><i class="fa-solid fa-filter-circle-dollar"></i>Funnel Optimisation</span></div>
+    </div>
+    <div class="svc-detail reveal">
+      <div class="svc-detail-icon" id="detailIcon"><i class="fa-brands fa-meta"></i></div>
+      <div class="svc-detail-title" id="detailTitle">Meta Ads Strategy</div>
+      <div class="svc-detail-desc" id="detailDesc">Full-stack Meta advertising strategy built around your revenue goals — not impressions. I map the buying journey, identify the highest-intent audiences, and build a campaign architecture designed to scale profitably.</div>
+      <div class="svc-tags" id="detailTags">
+        <span class="stag">Facebook Ads</span><span class="stag">Instagram Ads</span><span class="stag">Reels Ads</span><span class="stag">Retargeting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section class="why" id="why">
+  <div class="sec-label reveal"><i class="fa-solid fa-star" style="margin-right:8px"></i>Why Choose Me</div>
+  <div class="sec-title reveal d1">Brands Win<br><span class="dim">When We Partner.</span></div>
+  <div class="why-grid">
+    <div class="why-card reveal d1">
+      <div class="why-ico"><i class="fa-solid fa-database"></i></div>
+      <div class="why-title">Data-Driven, Not Guesswork</div>
+      <div class="why-desc">Every decision is backed by campaign data. I track metrics that actually drive revenue — ROAS, CPA, LTV — not vanity numbers that look good in screenshots.</div>
+    </div>
+    <div class="why-card reveal d2">
+      <div class="why-ico"><i class="fa-solid fa-vials"></i></div>
+      <div class="why-title">Iterative Creative Testing</div>
+      <div class="why-desc">Systematic A/B tests on creatives, copy, and audiences to find the winning combinations that compound returns month over month.</div>
+    </div>
+    <div class="why-card reveal d3">
+      <div class="why-ico"><i class="fa-solid fa-sitemap"></i></div>
+      <div class="why-title">Full-Funnel Thinking</div>
+      <div class="why-desc">From cold audience awareness to warm retargeting to loyal repeat buyers — campaigns that capture value at every stage of your funnel.</div>
+    </div>
+    <div class="why-card reveal d4">
+      <div class="why-ico"><i class="fa-brands fa-square-instagram"></i></div>
+      <div class="why-title">Meta-Native Expertise</div>
+      <div class="why-desc">Deep platform knowledge across Facebook, Instagram, Reels, and Advantage+ campaigns. I stay ahead of algorithm changes so your ads never fall behind.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VANITY VS MONEY -->
+<section class="vs-section">
+  <div class="vs-watermark">Results</div>
+  <div class="sec-label reveal" style="text-align:center"><i class="fa-solid fa-scale-unbalanced" style="margin-right:8px"></i>The Hard Truth</div>
+  <div class="sec-title reveal d1" style="text-align:center">Likes Don't<br><span class="outline">Pay Bills.</span></div>
+  <div class="vs-grid">
+    <div class="vs-box bad reveal d1">
+      <div class="vs-box-lbl"><i class="fa-solid fa-ban" style="margin-right:6px"></i>What most agencies chase</div>
+      <div class="vs-box-title">Vanity Metrics</div>
+      <ul class="vs-list">
+        <li><i class="fa-solid fa-xmark" style="color:#ff6b6b"></i> Likes &amp; follows</li>
+        <li><i class="fa-solid fa-xmark" style="color:#ff6b6b"></i> Reach &amp; impressions</li>
+        <li><i class="fa-solid fa-xmark" style="color:#ff6b6b"></i> Click-through rates only</li>
+        <li><i class="fa-solid fa-xmark" style="color:#ff6b6b"></i> Pretty reports, no revenue</li>
+        <li><i class="fa-solid fa-xmark" style="color:#ff6b6b"></i> "Brand awareness" with no ROI</li>
+      </ul>
+    </div>
+    <div class="vs-sep reveal">vs</div>
+    <div class="vs-box good reveal d2">
+      <div class="vs-box-lbl"><i class="fa-solid fa-circle-check" style="margin-right:6px"></i>What I deliver</div>
+      <div class="vs-box-title">Money Metrics</div>
+      <ul class="vs-list">
+        <li><i class="fa-solid fa-check" style="color:var(--yellow)"></i> Revenue &amp; ROAS</li>
+        <li><i class="fa-solid fa-check" style="color:var(--yellow)"></i> Cost per acquisition</li>
+        <li><i class="fa-solid fa-check" style="color:var(--yellow)"></i> Customer lifetime value</li>
+        <li><i class="fa-solid fa-check" style="color:var(--yellow)"></i> Profitable ad spend</li>
+        <li><i class="fa-solid fa-check" style="color:var(--yellow)"></i> Scalable growth systems</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-bg" id="process">
+  <div class="sec-label reveal"><i class="fa-solid fa-route" style="margin-right:8px"></i>My Process</div>
+  <div class="sec-title reveal d1">How We<br><em>Go to Work.</em></div>
+  <div class="process-steps">
+    <div class="step reveal d1">
+      <div class="step-num">01</div>
+      <div class="step-title"><i class="fa-solid fa-phone-volume step-icon"></i>Discovery Call</div>
+      <div class="step-desc">Understand your brand, goals, current ad spend, and what has worked — or hasn't — before we touch a single campaign.</div>
+    </div>
+    <div class="step reveal d2">
+      <div class="step-num">02</div>
+      <div class="step-title"><i class="fa-solid fa-magnifying-glass-chart step-icon"></i>Audit &amp; Strategy</div>
+      <div class="step-desc">Deep-dive into your ad account. Identify leaks, gaps, and high-value opportunities worth exploiting immediately.</div>
+    </div>
+    <div class="step reveal d3">
+      <div class="step-num">03</div>
+      <div class="step-title"><i class="fa-solid fa-bolt step-icon"></i>Launch &amp; Test</div>
+      <div class="step-desc">Build campaigns with a structured creative testing framework. Launch fast, learn fast, and iterate ruthlessly.</div>
+    </div>
+    <div class="step reveal d4">
+      <div class="step-num">04</div>
+      <div class="step-title"><i class="fa-solid fa-arrow-trend-up step-icon"></i>Scale Profitably</div>
+      <div class="step-desc">Once winning ad sets are confirmed, we scale them with structured budget increases — no guesswork, no wasted spend.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="contact">
+  <div class="cta-overlay"></div>
+  <div class="cta-inner">
+    <div class="sec-label"><i class="fa-solid fa-fire" style="margin-right:8px"></i>Ready to Dominate?</div>
+    <div class="sec-title">Your Brand.<br><span class="outline">Next Level.</span></div>
+    <p class="cta-sub">Drop your email and I'll send a free Meta Ads audit — no strings attached. Let's find exactly where your money is leaking.</p>
+    <div class="cta-form">
+      <input type="email" class="cta-input" placeholder="Your business email" id="emailInput"/>
+      <button class="btn-dark" onclick="handleCTA()"><i class="fa-solid fa-paper-plane"></i> Get Free Audit</button>
+    </div>
+    <p class="cta-note"><i class="fa-solid fa-shield-halved" style="margin-right:6px"></i>No spam. No fluff. Just results.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Strategex<span>.</span></div>
+    <div class="footer-tagline">Hussain — Performance Marketer</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#"><i class="fa-solid fa-briefcase" style="margin-right:6px"></i>Portfolio</a></li>
+    <li><a href="#"><i class="fa-brands fa-linkedin" style="margin-right:6px"></i>LinkedIn</a></li>
+    <li><a href="#"><i class="fa-brands fa-instagram" style="margin-right:6px"></i>Instagram</a></li>
+    <li><a href="#contact"><i class="fa-regular fa-calendar" style="margin-right:6px"></i>Book a Call</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Strategex Hussain</div>
+</footer>
+
+<script>
+/* Cursor */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.svc-item,.why-card,.res-card,.step').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='22px';cur.style.height='22px';cur.style.background='var(--blue-glow)';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';cur.style.background='var(--yellow)';});
+});
+
+/* Scroll reveal */
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* Services */
+const svcData=[
+  {icon:'fa-brands fa-meta',title:'Meta Ads Strategy',desc:"Full-stack Meta advertising strategy built around your revenue goals — not impressions. I map the buying journey, identify the highest-intent audiences, and build a campaign architecture designed to scale profitably.",tags:['Facebook Ads','Instagram Ads','Reels Ads','Retargeting']},
+  {icon:'fa-solid fa-gears',title:'Campaign Management',desc:'Day-to-day campaign management with proactive optimisation. I monitor performance hourly, adjust bids and budgets, pause underperformers, and scale winners — so your account always runs at peak efficiency.',tags:['Daily Optimisation','Budget Control','Bid Strategy','Performance Reporting']},
+  {icon:'fa-solid fa-flask',title:'Creative Testing',desc:'Systematic creative testing using a proven framework. I test hooks, visuals, CTAs, and formats — static, video, carousel, Reels — to find the combinations that stop the scroll and convert browsers to buyers.',tags:['A/B Testing','Video Ads','Static Creatives','UGC Strategy']},
+  {icon:'fa-solid fa-users-viewfinder',title:'Audience Research',desc:'Precision audience segmentation using interest stacking, behavioural targeting, lookalike modelling, and first-party data. I find the people most likely to buy and put your offer directly in front of them.',tags:['Lookalike Audiences','Interest Targeting','Custom Audiences','Retargeting Lists']},
+  {icon:'fa-solid fa-filter-circle-dollar',title:'Funnel Optimisation',desc:"Meta ads don't work in a vacuum. I optimise the entire post-click experience — landing pages, offers, and conversion flows — to ensure every click has the highest possible chance of turning into revenue.",tags:['Landing Page CRO','Offer Structuring','Pixel Setup','Attribution']}
+];
+document.querySelectorAll('.svc-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    document.querySelectorAll('.svc-item').forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+    const d=svcData[parseInt(item.dataset.i)];
+    document.getElementById('detailIcon').innerHTML=`<i class="${d.icon}"></i>`;
+    document.getElementById('detailTitle').textContent=d.title;
+    document.getElementById('detailDesc').textContent=d.desc;
+    document.getElementById('detailTags').innerHTML=d.tags.map(t=>`<span class="stag">${t}</span>`).join('');
+  });
+});
+
+/* Counters */
+function countTo(el,end,dur,pre,suf){
+  let t=null;
+  (function step(ts){
+    if(!t)t=ts;
+    const p=Math.min((ts-t)/dur,1);
+    el.innerHTML=`${pre}${Math.floor(p*end)}<em>${suf}</em>`;
+    if(p<1)requestAnimationFrame(step);
+  })(performance.now());
+}
+const so=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      countTo(document.getElementById('s1'),10,1400,'','x');
+      countTo(document.getElementById('s2'),400,1500,'$','K');
+      countTo(document.getElementById('s3'),50,1200,'','+');
+      so.disconnect();
+    }
+  });
+},{threshold:.5});
+const hs=document.querySelector('.hero-stats');
+if(hs)so.observe(hs);
+
+/* CTA */
+function handleCTA(){
+  const inp=document.getElementById('emailInput');
+  if(inp.value&&inp.value.includes('@')){inp.value='';inp.placeholder='Received — I\'ll be in touch shortly.';}
+  else{inp.style.borderColor='#e55';inp.placeholder='Please enter a valid email.';setTimeout(()=>{inp.style.borderColor='';inp.placeholder='Your business email';},2200);}
+}
+</script>
+</body>
+</html>
