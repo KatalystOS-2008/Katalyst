@@ -243,20 +243,6 @@ img { display: block; width: 100%; }
   color: var(--white);
 }
 
-.hero__small-img {
-  width: 180px;
-  height: 130px;
-  object-fit: cover;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.hero__small-img img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.hero__small-img:hover img { transform: scale(1.05); }
 
 .hero__right {
   display: flex;
@@ -1271,8 +1257,6 @@ img { display: block; width: 100%; }
         <span class="hero__cta-label">View New Collection SS '22</span>
         <button class="hero__cta-circle" id="hero-shop-btn">→</button>
       </div>
-      <div class="hero__small-img">
-        <img src="https://gpubgxknzrsqduenhscj.supabase.co/storage/v1/object/public/product-images/hero.jpg" alt="Winged Nikka Jewelry">
       </div>
     </div>
     <div class="hero__right">
