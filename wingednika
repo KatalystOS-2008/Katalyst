@@ -1276,7 +1276,7 @@ img { display: block; width: 100%; }
         <img src="https://gpubgxknzrsqduenhscj.supabase.co/storage/v1/object/public/product-images/hero.jpg" alt="Wedding Jewelry">
       </div>
       <div class="category-card__brand">Winged Nikka</div>
-      <h3 class="category-card__title">Wedding Jewelry</h3>
+      <h3 class="category-card__title">Necklaces & Bracelets</h3>
       <button class="category-card__btn">Shop Now</button>
     </div>
     <div class="category-card" id="cat-custom">
