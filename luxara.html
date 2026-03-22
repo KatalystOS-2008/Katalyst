@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Luxara — Beyond the Ordinary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100;0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,100;1,9..144,200;1,9..144,300;1,9..144,400&family=Outfit:wght@100;200;300;400&display=swap" rel="stylesheet"/>
+<style>
+/* ═══ RESET ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#080604;color:#F5F0E8;font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+img{display:block;width:100%;height:100%;object-fit:cover}
+button,a{font-family:'Outfit',sans-serif;cursor:none}
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#C9A96E55;border-radius:2px}
+
+/* ═══ VARIABLES ═══ */
+:root{
+  --obsidian:#080604;
+  --smoke:#100D09;
+  --charcoal:#1C1610;
+  --gold:#C9A96E;
+  --gold-bright:#E2C080;
+  --gold-dim:#8B7040;
+  --ivory:#F5F0E8;
+  --ivory-dim:rgba(245,240,232,0.55);
+  --ivory-ghost:rgba(245,240,232,0.08);
+  --gold-ghost:rgba(201,169,110,0.12);
+}
+
+/* ═══ GRAIN OVERLAY ═══ */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size:160px 160px;opacity:1;
+}
+
+/* ═══ CUSTOM CURSOR ═══ */
+.cursor{
+  position:fixed;pointer-events:none;z-index:9999;
+  width:10px;height:10px;border-radius:50%;background:var(--gold);
+  transform:translate(-50%,-50%);transition:width .4s cubic-bezier(.32,.72,0,1),height .4s cubic-bezier(.32,.72,0,1),opacity .3s,background .3s;
+  mix-blend-mode:difference;
+}
+.cursor-ring{
+  position:fixed;pointer-events:none;z-index:9997;
+  width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,169,110,0.5);
+  transform:translate(-50%,-50%);transition:width .6s cubic-bezier(.32,.72,0,1),height .6s cubic-bezier(.32,.72,0,1),border-color .3s;
+}
+body.cursor-hover .cursor{width:6px;height:6px;background:var(--gold-bright)}
+body.cursor-hover .cursor-ring{width:56px;height:56px;border-color:rgba(201,169,110,0.9)}
+body.cursor-click .cursor{width:14px;height:14px}
+
+/* ═══ LOADER ═══ */
+#loader{
+  position:fixed;inset:0;z-index:9000;background:var(--obsidian);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:24px;
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-logo{
+  font-family:'Fraunces',serif;font-weight:200;font-size:clamp(32px,5vw,56px);
+  letter-spacing:0.3em;color:var(--ivory);overflow:hidden;
+}
+.loader-logo span{display:inline-block;transform:translateY(100%);animation:letterRise .8s cubic-bezier(.32,.72,0,1) forwards}
+.loader-line{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:lineExpand 1.4s ease forwards 0.6s}
+@keyframes letterRise{to{transform:translateY(0)}}
+@keyframes lineExpand{to{width:200px}}
+
+/* ═══ NAV ═══ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 56px;
+  background:transparent;
+  transition:padding .4s, background .4s, border-color .4s;
+}
+.nav.scrolled{padding:18px 56px;background:rgba(8,6,4,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,169,110,0.1)}
+.nav-logo{
+  font-family:'Fraunces',serif;font-weight:200;font-size:22px;
+  letter-spacing:0.28em;color:var(--ivory);
+  text-transform:uppercase;
+}
+.nav-logo .logo-dot{color:var(--gold)}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links li a{
+  font-size:9px;font-weight:400;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--ivory-dim);text-decoration:none;
+  transition:color .3s;position:relative;cursor:none;
+}
+.nav-links li a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .4s ease}
+.nav-links li a:hover{color:var(--ivory)}
+.nav-links li a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-cta{
+  background:transparent;border:1px solid rgba(201,169,110,0.4);color:var(--gold);
+  padding:10px 24px;font-size:9px;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;
+  transition:background .4s,border-color .4s,color .4s;
+}
+.nav-cta:hover{background:var(--gold);color:var(--obsidian);border-color:var(--gold)}
+.hamburger{display:none;background:none;border:none;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:20px;height:1px;background:var(--ivory-dim);transition:all .3s}
+.mobile-nav{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--obsidian);z-index:98;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transform:translateY(-100%);transition:transform .6s cubic-bezier(.32,.72,0,1)}
+.mobile-nav.open{transform:translateY(0)}
+.mobile-nav a{font-family:'Fraunces',serif;font-size:clamp(28px,6vw,52px);font-weight:200;letter-spacing:0.1em;color:var(--ivory-dim);text-decoration:none;padding:16px 0;transition:color .3s;cursor:none}
+.mobile-nav a:hover{color:var(--gold)}
+
+/* ═══ HERO ═══ */
+.hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;padding-bottom:80px;
+}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:heroZoom 12s ease forwards}
+@keyframes heroZoom{to{transform:scale(1)}}
+.hero-gradient{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(8,6,4,0.95) 0%, rgba(8,6,4,0.4) 50%, rgba(8,6,4,0.2) 100%);
+}
+.hero-gradient2{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, rgba(8,6,4,0.6) 0%, transparent 60%);
+}
+.hero-content{position:relative;z-index:2;padding:0 56px;max-width:900px}
+.hero-pre{
+  font-size:9px;font-weight:400;letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+  opacity:0;animation:fadeUp .8s ease forwards 1.4s;
+  display:flex;align-items:center;gap:16px;
+}
+.hero-pre-line{width:40px;height:1px;background:var(--gold);flex-shrink:0}
+.hero-title{
+  font-family:'Fraunces',serif;font-weight:100;
+  font-size:clamp(56px,9vw,130px);line-height:0.92;
+  color:var(--ivory);margin-bottom:36px;
+  opacity:0;animation:fadeUp .9s ease forwards 1.6s;
+}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-title .t-indent{padding-left:120px;display:block}
+.hero-sub{
+  font-size:14px;font-weight:300;line-height:1.9;
+  color:var(--ivory-dim);max-width:400px;margin-bottom:52px;
+  opacity:0;animation:fadeUp .8s ease forwards 1.8s;
+}
+.hero-actions{
+  display:flex;align-items:center;gap:32px;
+  opacity:0;animation:fadeUp .8s ease forwards 2s;
+}
+.btn-primary{
+  background:var(--gold);color:var(--obsidian);border:none;
+  padding:17px 44px;font-size:9px;font-weight:500;letter-spacing:0.28em;text-transform:uppercase;
+  transition:background .4s,transform .2s;
+}
+.btn-primary:hover{background:var(--gold-bright);transform:translateY(-2px)}
+.btn-ghost{
+  background:transparent;color:var(--ivory-dim);border:none;
+  font-size:9px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;transition:color .3s;padding:0;
+}
+.btn-ghost:hover{color:var(--ivory)}
+.btn-ghost-line{width:32px;height:1px;background:currentColor;transition:width .4s}
+.btn-ghost:hover .btn-ghost-line{width:48px}
+.hero-scroll-hint{
+  position:absolute;bottom:40px;right:56px;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,240,232,0.35);
+  opacity:0;animation:fadeUp .8s ease forwards 2.2s;
+}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom, var(--gold-dim), transparent);animation:scrollAnim 2s ease infinite}
+@keyframes scrollAnim{0%,100%{opacity:.3;transform:scaleY(.5) translateY(-50%)}50%{opacity:1;transform:scaleY(1) translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ MARQUEE STRIP ═══ */
+.marquee-strip{background:var(--gold);padding:14px 0;overflow:hidden}
+.marquee-inner{display:flex;white-space:nowrap;animation:mq 24s linear infinite}
+.mq-item{display:inline-flex;align-items:center;gap:28px;padding:0 20px;font-size:9px;font-weight:400;letter-spacing:0.28em;text-transform:uppercase;color:var(--obsidian);flex-shrink:0}
+.mq-diamond{font-size:7px;opacity:.5}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══ SECTION BASE ═══ */
+.section{padding:120px 56px}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.32,.72,0,1),transform .9s cubic-bezier(.32,.72,0,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .9s cubic-bezier(.32,.72,0,1),transform .9s cubic-bezier(.32,.72,0,1)}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .9s cubic-bezier(.32,.72,0,1),transform .9s cubic-bezier(.32,.72,0,1)}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.sec-label{font-size:8px;font-weight:400;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.sec-label-line{width:28px;height:1px;background:var(--gold);flex-shrink:0}
+.sec-title{font-family:'Fraunces',serif;font-weight:100;font-size:clamp(36px,4.5vw,68px);line-height:1.05;color:var(--ivory)}
+.sec-title em{font-style:italic;color:var(--gold)}
+
+/* ═══ BRAND STATEMENT ═══ */
+.statement{
+  padding:160px 56px;background:var(--smoke);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.statement-bg-text{
+  font-family:'Fraunces',serif;font-weight:100;font-style:italic;
+  font-size:clamp(120px,20vw,240px);color:rgba(201,169,110,0.04);
+  position:absolute;white-space:nowrap;user-select:none;pointer-events:none;
+  letter-spacing:-0.02em;
+}
+.statement-content{position:relative;z-index:1;text-align:center;max-width:900px}
+.statement-quote{
+  font-family:'Fraunces',serif;font-weight:100;font-style:italic;
+  font-size:clamp(28px,4vw,56px);line-height:1.3;color:var(--ivory);
+  margin-bottom:32px;
+}
+.statement-quote em{color:var(--gold);font-style:normal}
+.statement-attr{font-size:9px;font-weight:300;letter-spacing:0.28em;text-transform:uppercase;color:var(--ivory-dim)}
+
+/* ═══ EDITORIAL GRID ═══ */
+.editorial{background:var(--obsidian)}
+.editorial-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:auto auto;gap:3px;margin-top:64px}
+.ed-card{position:relative;overflow:hidden;cursor:none}
+.ed-card:first-child{grid-row:span 2;min-height:700px}
+.ed-card-img{width:100%;height:100%;min-height:320px;transition:transform .8s cubic-bezier(.32,.72,0,1)}
+.ed-card:hover .ed-card-img{transform:scale(1.06)}
+.ed-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,6,4,.9) 0%,rgba(8,6,4,.1) 50%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px}
+.ed-cat{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.ed-name{font-family:'Fraunces',serif;font-weight:200;font-size:clamp(18px,2.2vw,28px);color:var(--ivory);line-height:1.2;margin-bottom:10px}
+.ed-price{font-family:'Fraunces',serif;font-size:18px;font-weight:300;color:var(--gold-bright)}
+.ed-shop{margin-top:12px;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,240,232,0.5);display:flex;align-items:center;gap:9px;transition:color .3s}
+.ed-card:hover .ed-shop{color:var(--gold)}
+.ed-arrow{transition:transform .4s ease}
+.ed-card:hover .ed-arrow{transform:translateX(8px)}
+.ed-shop-line{width:20px;height:1px;background:currentColor;transition:width .4s}
+.ed-card:hover .ed-shop-line{width:32px}
+
+/* ═══ FEATURE ROW ═══ */
+.features{background:var(--charcoal);padding:100px 56px}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:64px}
+.feat-card{padding:48px 36px;background:var(--ivory-ghost);border:1px solid rgba(201,169,110,0.07);transition:background .4s,border-color .4s}
+.feat-card:hover{background:rgba(201,169,110,0.07);border-color:rgba(201,169,110,0.2)}
+.feat-icon{font-size:28px;margin-bottom:28px;opacity:.7}
+.feat-num{font-family:'Fraunces',serif;font-weight:100;font-size:52px;color:var(--gold);line-height:1;margin-bottom:12px;letter-spacing:-0.02em}
+.feat-label{font-size:9px;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;color:var(--ivory-dim);margin-bottom:10px}
+.feat-desc{font-size:12px;font-weight:300;line-height:1.8;color:rgba(245,240,232,0.38)}
+
+/* ═══ CAMPAIGN SPLIT ═══ */
+.campaign{display:grid;grid-template-columns:1fr 1fr;min-height:700px}
+.campaign-img{position:relative;overflow:hidden}
+.campaign-img img{height:100%;object-fit:cover;transition:transform .8s ease}
+.campaign:hover .campaign-img img{transform:scale(1.03)}
+.campaign-content{background:var(--smoke);display:flex;flex-direction:column;justify-content:center;padding:100px 80px 100px 72px}
+.campaign-label{font-size:8px;font-weight:400;letter-spacing:0.36em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.campaign-title{font-family:'Fraunces',serif;font-weight:100;font-size:clamp(36px,4vw,58px);line-height:1.1;color:var(--ivory);margin-bottom:28px}
+.campaign-title em{font-style:italic;color:var(--gold)}
+.campaign-text{font-size:13px;font-weight:300;line-height:1.95;color:var(--ivory-dim);max-width:380px;margin-bottom:44px}
+.campaign-stats{display:flex;gap:40px;margin-bottom:44px;padding-top:32px;border-top:1px solid rgba(201,169,110,0.12)}
+.cstat-num{font-family:'Fraunces',serif;font-weight:200;font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px}
+.cstat-lbl{font-size:8px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--ivory-dim)}
+
+/* ═══ PRESS LOGOS ═══ */
+.press{background:var(--obsidian);padding:80px 56px;border-top:1px solid rgba(201,169,110,0.08);border-bottom:1px solid rgba(201,169,110,0.08)}
+.press-label{text-align:center;font-size:8px;letter-spacing:0.36em;text-transform:uppercase;color:rgba(245,240,232,0.25);margin-bottom:48px}
+.press-logos{display:flex;align-items:center;justify-content:center;gap:64px;flex-wrap:wrap}
+.press-logo{
+  font-family:'Fraunces',serif;font-weight:200;font-style:italic;
+  font-size:clamp(14px,2vw,20px);letter-spacing:0.1em;
+  color:rgba(245,240,232,0.18);transition:color .4s;
+}
+.press-logo:hover{color:var(--gold)}
+
+/* ═══ TESTIMONIALS ═══ */
+.testimonials{background:var(--smoke)}
+.test-layout{display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;margin-top:64px}
+.test-sidebar{position:sticky;top:120px}
+.test-sidebar-title{font-family:'Fraunces',serif;font-weight:100;font-size:clamp(28px,3vw,44px);line-height:1.15;color:var(--ivory);margin-bottom:24px}
+.test-sidebar-title em{font-style:italic;color:var(--gold)}
+.test-sidebar-text{font-size:12px;font-weight:300;line-height:1.9;color:var(--ivory-dim)}
+.test-cards{display:flex;flex-direction:column;gap:2px}
+.test-card{background:var(--ivory-ghost);border:1px solid rgba(201,169,110,0.07);padding:40px 36px;transition:background .4s,border-color .4s}
+.test-card:hover{background:rgba(201,169,110,0.06);border-color:rgba(201,169,110,0.18)}
+.test-stars{color:var(--gold);font-size:12px;letter-spacing:4px;margin-bottom:20px}
+.test-text{font-family:'Fraunces',serif;font-weight:200;font-style:italic;font-size:clamp(15px,1.6vw,18px);line-height:1.7;color:var(--ivory);margin-bottom:24px}
+.test-author{display:flex;align-items:center;gap:14px}
+.test-author-line{width:20px;height:1px;background:var(--gold);flex-shrink:0}
+.test-author-name{font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ivory-dim)}
+
+/* ═══ CTA FULLBLEED ═══ */
+.cta-section{
+  min-height:80vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+}
+.cta-bg{position:absolute;inset:0}
+.cta-bg img{width:100%;height:100%;object-fit:cover}
+.cta-overlay{position:absolute;inset:0;background:rgba(8,6,4,0.72)}
+.cta-content{position:relative;z-index:2;max-width:700px;padding:0 32px}
+.cta-eyebrow{font-size:8px;font-weight:400;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:14px}
+.cta-title{font-family:'Fraunces',serif;font-weight:100;font-size:clamp(40px,7vw,96px);line-height:0.95;color:var(--ivory);margin-bottom:32px}
+.cta-title em{font-style:italic;color:var(--gold)}
+.cta-sub{font-size:13px;font-weight:300;line-height:1.9;color:var(--ivory-dim);max-width:400px;margin:0 auto 48px}
+.cta-form{display:flex;gap:0;max-width:440px;margin:0 auto}
+.cta-input{flex:1;background:rgba(245,240,232,0.08);border:1px solid rgba(201,169,110,0.3);border-right:none;color:var(--ivory);padding:16px 22px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:300;outline:none}
+.cta-input::placeholder{color:rgba(245,240,232,0.3)}
+.cta-btn{background:var(--gold);color:var(--obsidian);border:none;padding:16px 28px;font-size:9px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;transition:background .3s;white-space:nowrap}
+.cta-btn:hover{background:var(--gold-bright)}
+
+/* ═══ FOOTER ═══ */
+.footer{background:var(--obsidian);padding:100px 56px 44px;border-top:1px solid rgba(201,169,110,0.1)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:80px}
+.footer-brand{}
+.footer-brand-logo{font-family:'Fraunces',serif;font-weight:200;font-size:28px;letter-spacing:0.24em;color:var(--ivory);margin-bottom:20px}
+.footer-brand-logo span{color:var(--gold)}
+.footer-brand-text{font-size:12px;font-weight:300;line-height:1.9;color:rgba(245,240,232,0.35);max-width:240px;margin-bottom:32px}
+.footer-social{display:flex;gap:16px}
+.footer-social a{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.28);text-decoration:none;transition:color .3s;cursor:none}
+.footer-social a:hover{color:var(--gold)}
+.footer-col h4{font-size:8px;font-weight:400;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-col ul li a{font-size:12px;font-weight:300;color:rgba(245,240,232,0.38);text-decoration:none;cursor:none;transition:color .3s;letter-spacing:0.04em}
+.footer-col ul li a:hover{color:var(--ivory)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:1px solid rgba(245,240,232,0.05);flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:10px;font-weight:300;color:rgba(245,240,232,0.2);letter-spacing:0.06em}
+.footer-legal{display:flex;gap:24px}
+.footer-legal a{font-size:9px;font-weight:300;letter-spacing:0.1em;color:rgba(245,240,232,0.2);text-decoration:none;transition:color .3s;cursor:none}
+.footer-legal a:hover{color:var(--gold)}
+
+/* ═══ GOLD SHIMMER DIVIDER ═══ */
+.gold-divider{height:1px;background:linear-gradient(90deg,transparent 0%,var(--gold-dim) 30%,var(--gold) 50%,var(--gold-dim) 70%,transparent 100%);margin:0}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1100px){
+  .editorial-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .ed-card:first-child{grid-row:span 1;grid-column:span 2}
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+  .test-layout{grid-template-columns:1fr;gap:40px}
+  .test-sidebar{position:static}
+  .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+  .footer-brand{grid-column:span 2}
+}
+@media(max-width:900px){
+  .nav{padding:20px 24px}
+  .nav.scrolled{padding:16px 24px}
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .hamburger{display:flex}
+  .section{padding:80px 24px}
+  .hero-content{padding:0 24px}
+  .hero-title .t-indent{padding-left:40px}
+  .statement{padding:100px 24px}
+  .campaign{grid-template-columns:1fr}
+  .campaign-img{min-height:400px}
+  .campaign-content{padding:60px 24px}
+  .campaign-stats{gap:24px}
+  .editorial-grid{grid-template-columns:1fr;gap:3px}
+  .ed-card:first-child{grid-column:span 1}
+  .press-logos{gap:32px}
+  .features{padding:80px 24px}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .footer{padding:72px 24px 36px}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .footer-brand{grid-column:span 2}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:600px){
+  body{cursor:auto}
+  .cursor,.cursor-ring{display:none}
+  .hamburger{display:flex}
+  .hero-title .t-indent{padding-left:0}
+  .features-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .footer-brand{grid-column:span 1}
+  .cta-form{flex-direction:column}
+  .cta-input{border-right:1px solid rgba(201,169,110,0.3);border-bottom:none}
+  .cta-btn{padding:14px}
+  .press-logos{gap:20px}
+  .editorial-grid{gap:2px}
+  .hero-scroll-hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">
+    <span style="animation-delay:.1s">L</span><span style="animation-delay:.18s">U</span><span style="animation-delay:.26s">X</span><span style="animation-delay:.34s">A</span><span style="animation-delay:.42s">R</span><span style="animation-delay:.5s">A</span>
+  </div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">Luxa<span class="logo-dot">r</span>a</div>
+  <ul class="nav-links">
+    <li><a onclick="scrollTo('collections')">Collections</a></li>
+    <li><a onclick="scrollTo('atelier')">Atelier</a></li>
+    <li><a onclick="scrollTo('journal')">Journal</a></li>
+    <li><a onclick="scrollTo('about')">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-cta">Reserve a Consultation</button>
+    <button class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a onclick="closeNav()">Collections</a>
+  <a onclick="closeNav()">Atelier</a>
+  <a onclick="closeNav()">Journal</a>
+  <a onclick="closeNav()">About</a>
+  <a onclick="closeNav()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=2000&q=85&fit=crop" alt="Luxara" loading="eager"/>
+  </div>
+  <div class="hero-gradient"></div>
+  <div class="hero-gradient2"></div>
+  <div class="hero-content">
+    <div class="hero-pre"><span class="hero-pre-line"></span>The New Standard of Luxury</div>
+    <h1 class="hero-title">
+      Where<br>
+      <em>Desire</em>
+      <span class="t-indent">Meets</span>
+      Craft
+    </h1>
+    <p class="hero-sub">Luxara is the convergence of artistry and obsession — objects of impossible beauty, created for those who understand the language of excellence.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollTo('collections')">Explore Collections</button>
+      <button class="btn-ghost"><span class="btn-ghost-line"></span>Our Story</button>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner" id="marquee"></div>
+</div>
+
+<!-- BRAND STATEMENT -->
+<section class="statement" id="about">
+  <div class="statement-bg-text">Luxara</div>
+  <div class="statement-content reveal">
+    <p class="statement-quote">
+      "We don't create products.<br>
+      We craft <em>heirlooms</em> for the living."
+    </p>
+    <p class="statement-attr">— Elara Voss, Founder &amp; Creative Director</p>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- EDITORIAL GRID / COLLECTIONS -->
+<section class="section editorial" id="collections">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px">
+    <div class="reveal-left">
+      <div class="sec-label"><span class="sec-label-line"></span>Curated Collections</div>
+      <h2 class="sec-title">Each piece,<br>a <em>statement</em></h2>
+    </div>
+    <div class="reveal-right" style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ivory-dim);cursor:none;border-bottom:1px solid rgba(245,240,232,0.2);padding-bottom:2px">View All →</div>
+  </div>
+  <div class="editorial-grid">
+    <div class="ed-card reveal">
+      <img class="ed-card-img" src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=80&fit=crop" alt="Noir Éternel"/>
+      <div class="ed-overlay">
+        <div class="ed-cat">Signature Series</div>
+        <div class="ed-name">Noir Éternel<br>Collection</div>
+        <div class="ed-price">From $1,200</div>
+        <div class="ed-shop"><span class="ed-shop-line"></span>Discover <span class="ed-arrow">→</span></div>
+      </div>
+    </div>
+    <div class="ed-card reveal" style="transition-delay:.1s">
+      <img class="ed-card-img" src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&q=80&fit=crop" alt="Lumière"/>
+      <div class="ed-overlay">
+        <div class="ed-cat">Gold Atelier</div>
+        <div class="ed-name">Lumière<br>Parure</div>
+        <div class="ed-price">From $3,400</div>
+        <div class="ed-shop"><span class="ed-shop-line"></span>Discover <span class="ed-arrow">→</span></div>
+      </div>
+    </div>
+    <div class="ed-card reveal" style="transition-delay:.2s">
+      <img class="ed-card-img" src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=700&q=80&fit=crop" alt="Sable"/>
+      <div class="ed-overlay">
+        <div class="ed-cat">Evening</div>
+        <div class="ed-name">Sable<br>Séduction</div>
+        <div class="ed-price">From $890</div>
+        <div class="ed-shop"><span class="ed-shop-line"></span>Discover <span class="ed-arrow">→</span></div>
+      </div>
+    </div>
+    <div class="ed-card reveal" style="transition-delay:.1s">
+      <img class="ed-card-img" src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=700&q=80&fit=crop" alt="Céleste"/>
+      <div class="ed-overlay">
+        <div class="ed-cat">Limited Edition</div>
+        <div class="ed-name">Céleste<br>Nocturne</div>
+        <div class="ed-price">From $2,100</div>
+        <div class="ed-shop"><span class="ed-shop-line"></span>Discover <span class="ed-arrow">→</span></div>
+      </div>
+    </div>
+    <div class="ed-card reveal" style="transition-delay:.2s">
+      <img class="ed-card-img" src="https://images.unsplash.com/photo-1573408301185-9519f94815b4?w=700&q=80&fit=crop" alt="Velvet"/>
+      <div class="ed-overlay">
+        <div class="ed-cat">Everyday Luxury</div>
+        <div class="ed-name">Velvet<br>Essentials</div>
+        <div class="ed-price">From $650</div>
+        <div class="ed-shop"><span class="ed-shop-line"></span>Discover <span class="ed-arrow">→</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES / NUMBERS -->
+<section class="features" id="atelier">
+  <div style="max-width:560px" class="reveal">
+    <div class="sec-label"><span class="sec-label-line"></span>Why Luxara</div>
+    <h2 class="sec-title">Numbers that<br>tell the <em>truth</em></h2>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon">✦</div>
+      <div class="feat-num" data-count="18">0</div>
+      <div class="feat-label">Years of Mastery</div>
+      <div class="feat-desc">Rooted in craft since 2006, every technique refined over nearly two decades of obsessive dedication.</div>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.1s">
+      <div class="feat-icon">◈</div>
+      <div class="feat-num" data-count="4200">0</div>
+      <div class="feat-label">Pieces Created</div>
+      <div class="feat-desc">Each one an original — no two exactly alike. Every piece carries the fingerprint of its maker.</div>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.2s">
+      <div class="feat-icon">⬡</div>
+      <div class="feat-num" data-count="62">0</div>
+      <div class="feat-label">Countries Reached</div>
+      <div class="feat-desc">From Paris to Tokyo, the language of Luxara is spoken by those with an eye for the extraordinary.</div>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.3s">
+      <div class="feat-icon">❋</div>
+      <div class="feat-num" data-count="100">0</div>
+      <div class="feat-label">% Handmade</div>
+      <div class="feat-desc">No automation. No shortcuts. Every stitch, setting, and stroke placed by human hands with intention.</div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- CAMPAIGN SPLIT -->
+<section class="campaign" id="journal">
+  <div class="campaign-img reveal-left">
+    <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=80&fit=crop&crop=left" alt="The Luxara Atelier"/>
+  </div>
+  <div class="campaign-content reveal-right">
+    <div class="campaign-label"><span style="width:28px;height:1px;background:var(--gold);display:inline-block;flex-shrink:0"></span>The Atelier</div>
+    <h2 class="campaign-title">Born in a<br><em>studio,</em><br>worn by legacy</h2>
+    <p class="campaign-text">Our atelier in the 8th arrondissement of Paris is where raw materials meet relentless vision. Every piece begins as a sketch — hand-drawn at dawn — and ends as something that will outlive its owner.</p>
+    <div class="campaign-stats">
+      <div>
+        <div class="cstat-num">72h</div>
+        <div class="cstat-lbl">Per Piece, Minimum</div>
+      </div>
+      <div>
+        <div class="cstat-num">3</div>
+        <div class="cstat-lbl">Master Artisans Per Object</div>
+      </div>
+      <div>
+        <div class="cstat-num">0</div>
+        <div class="cstat-lbl">Compromises Made</div>
+      </div>
+    </div>
+    <button class="btn-primary" style="width:fit-content">Visit the Atelier →</button>
+  </div>
+</section>
+
+<!-- PRESS -->
+<div class="press">
+  <p class="press-label">As seen in</p>
+  <div class="press-logos">
+    <span class="press-logo">Vogue</span>
+    <span class="press-logo">Harpers Bazaar</span>
+    <span class="press-logo">Financial Times</span>
+    <span class="press-logo">Le Monde</span>
+    <span class="press-logo">Wallpaper*</span>
+    <span class="press-logo">Architectural Digest</span>
+    <span class="press-logo">WSJ. Magazine</span>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials">
+  <div class="test-layout">
+    <div class="test-sidebar reveal-left">
+      <div class="sec-label"><span class="sec-label-line"></span>Voices</div>
+      <h2 class="test-sidebar-title">What our<br><em>clients</em><br>say</h2>
+      <p class="test-sidebar-text" style="margin-top:20px">We measure our success not in sales, but in the moments our pieces become part of someone's story.</p>
+    </div>
+    <div class="test-cards">
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"I have worn couture from every major house. Nothing has ever made me feel the way my Luxara piece does the first time I put it on. It is not jewellery. It is armour."</p>
+        <div class="test-author"><span class="test-author-line"></span><span class="test-author-name">Margaux D. — Paris</span></div>
+      </div>
+      <div class="test-card reveal" style="transition-delay:.12s">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"I commissioned a piece for my wife's 40th birthday. Three months later, she still can't stop looking at it. Neither can I. The craftsmanship is simply from another era."</p>
+        <div class="test-author"><span class="test-author-line"></span><span class="test-author-name">James K. — London</span></div>
+      </div>
+      <div class="test-card reveal" style="transition-delay:.24s">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Every investment I have ever made depreciates. Luxara is the exception. But more than the value — it is the feeling of holding something that was made with absolute devotion."</p>
+        <div class="test-author"><span class="test-author-line"></span><span class="test-author-name">Yuki T. — Tokyo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FULLBLEED -->
+<section class="cta-section">
+  <div class="cta-bg">
+    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=2000&q=85&fit=crop" alt=""/>
+  </div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content reveal">
+    <div class="cta-eyebrow"><span style="width:28px;height:1px;background:var(--gold);display:block"></span>Join the Inner Circle<span style="width:28px;height:1px;background:var(--gold);display:block"></span></div>
+    <h2 class="cta-title">First to<br><em>know.</em><br>Always.</h2>
+    <p class="cta-sub">Private previews. Unreleased pieces. Invitations to atelier evenings. Reserved exclusively for those who sign below.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="email" placeholder="Your email address" id="nl-email"/>
+      <button class="cta-btn" onclick="handleNewsletter()">Join</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">Luxa<span>r</span>a</div>
+      <p class="footer-brand-text">Where desire meets craft. Fine objects created by obsessive hands, for those who know the difference.</p>
+      <div class="footer-social">
+        <a>Instagram</a><a>Pinterest</a><a>Linkedin</a><a>Wechat</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Collections</h4>
+      <ul>
+        <li><a>Noir Éternel</a></li><li><a>Lumière Parure</a></li><li><a>Sable Séduction</a></li><li><a>Céleste Nocturne</a></li><li><a>Velvet Essentials</a></li><li><a>Archive</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Maison</h4>
+      <ul>
+        <li><a>Our Story</a></li><li><a>The Atelier</a></li><li><a>Commissions</a></li><li><a>Press</a></li><li><a>Careers</a></li><li><a>Journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Service</h4>
+      <ul>
+        <li><a>Private Consultations</a></li><li><a>Bespoke Orders</a></li><li><a>Care &amp; Restoration</a></li><li><a>Authentication</a></li><li><a>Shipping</a></li><li><a>Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Luxara Maison. All rights reserved. Paris · London · Tokyo.</p>
+    <div class="footer-legal">
+      <a>Privacy Policy</a><a>Terms of Service</a><a>Cookie Preferences</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ─── LOADER ─── */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('hidden');
+  },2200);
+});
+
+/* ─── CUSTOM CURSOR ─── */
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('button,a,[class*="card"],[class*="btn"],[class*="link"],[class*="logo"]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+});
+document.addEventListener('mousedown',()=>document.body.classList.add('cursor-click'));
+document.addEventListener('mouseup',()=>document.body.classList.remove('cursor-click'));
+
+/* ─── NAV SCROLL ─── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>80);
+});
+
+/* ─── MOBILE NAV ─── */
+function toggleNav(){
+  document.getElementById('mobile-nav').classList.toggle('open');
+}
+function closeNav(){
+  document.getElementById('mobile-nav').classList.remove('open');
+}
+
+/* ─── SCROLL TO ─── */
+function scrollTo(id){
+  closeNav();
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+/* ─── MARQUEE ─── */
+(function(){
+  const items=["New Collection — SS25","Free Worldwide Shipping","Bespoke Commissions Open","Handcrafted in Paris","Limited Availability","Private Previews Available","Certified Provenance"];
+  const el=document.getElementById('marquee');
+  el.innerHTML=[...items,...items,...items].map(i=>`<span class="mq-item">${i}<span class="mq-diamond">◆</span></span>`).join('');
+})();
+
+/* ─── SCROLL REVEAL ─── */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      /* trigger counter if needed */
+      const num=e.target.querySelector('[data-count]');
+      if(num && !num.dataset.done){
+        animCount(num);
+        num.dataset.done='1';
+      }
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
+
+/* also observe feat-card for counts */
+document.querySelectorAll('.feat-card').forEach(el=>observer.observe(el));
+
+/* ─── COUNT ANIMATION ─── */
+function animCount(el){
+  const target=+el.dataset.count;
+  const dur=2000;
+  const start=performance.now();
+  const suffix=target===100?'%':'';
+  const prefix=target===4200?'4.2K':null;
+  (function tick(now){
+    const p=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-p,4);
+    if(prefix){el.textContent=p<1?(Math.round(ease*4200)).toLocaleString():prefix+suffix;} 
+    else{el.textContent=Math.round(ease*target)+suffix;}
+    if(p<1)requestAnimationFrame(tick);
+    else{if(prefix)el.textContent=prefix;else el.textContent=target+suffix;}
+  })(start);
+}
+
+/* ─── NEWSLETTER ─── */
+function handleNewsletter(){
+  const input=document.getElementById('nl-email');
+  if(input.value&&input.value.includes('@')){
+    input.value='';
+    input.placeholder='You are in. Welcome to Luxara. ✦';
+    input.style.color='var(--gold)';
+  } else {
+    input.placeholder='Please enter a valid email.';
+    input.style.borderColor='rgba(201,169,110,0.6)';
+    setTimeout(()=>{input.placeholder='Your email address';input.style.borderColor='';},2000);
+  }
+}
+
+/* ─── PARALLAX HERO ─── */
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  const heroImg=document.querySelector('.hero-bg img');
+  if(heroImg && y<window.innerHeight){
+    heroImg.style.transform=`scale(1) translateY(${y*0.3}px)`;
+  }
+});
+
+/* ─── STAGGER DELAYS ─── */
+document.querySelectorAll('.ed-card').forEach((c,i)=>{c.style.transitionDelay=(i*0.08)+'s'});
+document.querySelectorAll('.test-card').forEach((c,i)=>{c.style.transitionDelay=(i*0.12)+'s'});
+</script>
+</body>
+</html>
