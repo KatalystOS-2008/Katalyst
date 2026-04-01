@@ -1637,7 +1637,14 @@ function getCustomizerTotal() {
   getActiveSteps().forEach(step => {
     if (step.id === 'checkout') return;
     const sel = customizerSelections[step.id];
-    if (sel) {
+    if (!sel) return;
+    if (Array.isArray(sel)) {
+      // Multi-select step (plating) — sum all selected options
+      sel.forEach(id => {
+        const opt = step.options.find(o => o.id === id);
+        if (opt) total += opt.price;
+      });
+    } else {
       const opt = step.options.find(o => o.id === sel);
       if (opt) total += opt.price;
     }
