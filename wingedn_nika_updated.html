@@ -2150,4 +2150,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Newsletter form
   document.getElementById('newsletter-form').addEventListener('submit', e => {
     e.preventDefault();
-    const btn = e.t
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Thank you!';
+    btn.style.background = '#2d6a4f';
+    e.target.reset();
+    setTimeout(() => { btn.textContent = 'Subscribe'; btn.style.background = ''; }, 3000);
+  });
+
+});
+
+</script>
+</body>
+</html>
