@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDIO WARLOK — Visual Design for Fight Culture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Han+Sans&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C41E1E;
+    --red-dark: #8B0000;
+    --black: #000000;
+    --off-black: #0a0a0a;
+    --charcoal: #111111;
+    --white: #FAFAFA;
+    --gray: #888;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--red);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(196,30,30,0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 9990;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 48px;
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(0,0,0,0.92);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    padding: 16px 48px;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--red);
+    padding: 10px 24px;
+    text-decoration: none;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: #a01818; transform: skewX(-1deg) scale(1.03); }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg-lines {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 80px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 80px);
+    pointer-events: none;
+  }
+
+  .hero-accent {
+    position: absolute;
+    top: 20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(196,30,30,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+  }
+
+  .hero-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--red);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 14vw, 200px);
+    line-height: 0.88;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-title .outline {
+    -webkit-text-stroke: 2px rgba(255,255,255,0.15);
+    color: transparent;
+    display: block;
+  }
+  .hero-title .solid { color: var(--white); display: block; }
+  .hero-title .red { color: var(--red); display: block; }
+
+  .hero-bottom {
+    margin-top: 60px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-desc {
+    max-width: 380px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+  .hero-desc strong { color: var(--white); font-weight: 500; }
+
+  .hero-cta-group { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    padding: 16px 36px;
+    text-decoration: none;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #a01818; transform: scale(1.04); }
+  .btn-ghost {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .btn-ghost::after {
+    content: '→';
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+  .btn-ghost:hover::after { transform: translateX(6px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px; left: 48px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: rgba(255,255,255,0.2);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--red);
+    animation: scrollAnim 2s ease infinite;
+  }
+  @keyframes scrollAnim { 0% { left: -100%; } 100% { left: 100%; } }
+
+  /* MARQUEE */
+  .marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 18px 0;
+    background: var(--charcoal);
+  }
+  .marquee-track {
+    display: flex;
+    animation: marquee 18s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.2);
+    padding: 0 40px;
+    flex-shrink: 0;
+  }
+  .marquee-item.accent { color: var(--red); }
+  .marquee-sep { color: rgba(255,255,255,0.08); padding: 0 10px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION COMMON */
+  section { position: relative; }
+  .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 64px;
+  }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    margin-bottom: -20px;
+  }
+
+  /* SERVICES */
+  #services {
+    padding: 120px 48px;
+    background: var(--off-black);
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    background: var(--charcoal);
+    padding: 56px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { transform: translateY(-6px); }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    position: absolute;
+    top: 16px; right: 24px;
+  }
+  .service-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 32px;
+    color: var(--red);
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .service-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+  }
+  .service-list {
+    margin-top: 28px;
+    list-style: none;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .service-list li {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding-left: 16px;
+    position: relative;
+  }
+  .service-list li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--red);
+    font-size: 10px;
+    top: 1px;
+  }
+
+  /* WORK / PORTFOLIO */
+  #work {
+    padding: 120px 48px;
+    background: var(--black);
+  }
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 2px;
+  }
+  .work-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--charcoal);
+    cursor: none;
+  }
+  .work-item:nth-child(1) { grid-column: span 7; grid-row: span 2; aspect-ratio: unset; min-height: 480px; }
+  .work-item:nth-child(2) { grid-column: span 5; min-height: 235px; }
+  .work-item:nth-child(3) { grid-column: span 5; min-height: 235px; }
+  .work-item:nth-child(4) { grid-column: span 4; min-height: 280px; }
+  .work-item:nth-child(5) { grid-column: span 4; min-height: 280px; }
+  .work-item:nth-child(6) { grid-column: span 4; min-height: 280px; }
+
+  .work-item-inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .work-item:hover .work-item-inner { opacity: 1; }
+  .work-item-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.6s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .work-item:hover .work-item-bg { transform: scale(1.05); }
+
+  /* Work item visual backgrounds */
+  .work-item:nth-child(1) .work-item-bg { background: #0d0d0d; }
+  .work-item:nth-child(2) .work-item-bg { background: #1a0000; }
+  .work-item:nth-child(3) .work-item-bg { background: #0a0a0a; }
+  .work-item:nth-child(4) .work-item-bg { background: #111; }
+  .work-item:nth-child(5) .work-item-bg { background: #0d0d0d; }
+  .work-item:nth-child(6) .work-item-bg { background: #0a0000; }
+
+  .work-mockup {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  /* Mockup 1 - Tshirt */
+  .mock-shirt {
+    width: 200px; height: 220px;
+    position: relative;
+  }
+  .mock-shirt svg { width: 100%; height: 100%; }
+
+  /* Mockup 2 - Fight Poster */
+  .mock-poster {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #1a0000 0%, #000 100%);
+    text-align: center; padding: 20px;
+  }
+  .mock-poster-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .mock-poster-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red);
+    margin-top: 6px;
+  }
+  .mock-poster-line {
+    width: 40px; height: 2px;
+    background: var(--red);
+    margin: 10px auto;
+  }
+  .mock-poster-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--red);
+    margin-top: 8px;
+  }
+
+  /* Mock logo brand */
+  .mock-brand {
+    text-align: center;
+  }
+  .mock-brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    letter-spacing: 6px;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.6);
+    color: transparent;
+  }
+  .mock-brand-name.solid { color: var(--white); -webkit-text-stroke: none; }
+  .mock-brand-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red);
+    margin-top: 4px;
+  }
+
+  /* Mock apparel */
+  .mock-apparel {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+  }
+  .mock-apparel-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.15);
+  }
+  .mock-apparel-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    letter-spacing: 2px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .mock-apparel-line {
+    width: 60px; height: 1px;
+    background: var(--red);
+  }
+  .mock-apparel-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: 4px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* Mock pricing */
+  .mock-pricing {
+    padding: 20px;
+    width: 100%;
+  }
+  .mock-price-card {
+    background: rgba(196,30,30,0.1);
+    border: 1px solid rgba(196,30,30,0.3);
+    padding: 16px;
+    margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .mock-price-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--white);
+  }
+  .mock-price-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; color: var(--red);
+    letter-spacing: 2px;
+  }
+
+  /* Mock logos grid */
+  .mock-logos-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; width: 100%; height: 100%;
+  }
+  .mock-logo-cell {
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.02);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 4px;
+    color: rgba(255,255,255,0.3);
+  }
+  .mock-logo-cell.active {
+    background: rgba(196,30,30,0.08);
+    color: var(--white);
+  }
+
+  .work-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red); margin-bottom: 4px;
+  }
+  .work-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 2px;
+  }
+
+  /* ABOUT */
+  #about {
+    padding: 120px 48px;
+    background: var(--charcoal);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-box {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--off-black);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-box-inner {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 8vw, 110px);
+    letter-spacing: -2px;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+    color: transparent;
+    text-align: center;
+    line-height: 1;
+    user-select: none;
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 120px; height: 120px;
+    background: var(--red);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .badge-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; line-height: 1;
+    color: var(--white);
+  }
+  .badge-txt {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .about-content {}
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 5vw, 68px);
+    letter-spacing: 1px;
+    line-height: 1.05;
+    margin-bottom: 28px;
+  }
+  .about-title span { color: var(--red); }
+  .about-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px; border-top: 1px solid var(--border);
+    padding-top: 40px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; color: var(--white);
+    letter-spacing: 1px; line-height: 1;
+  }
+  .stat-num span { color: var(--red); }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-top: 4px;
+  }
+
+  /* PROCESS */
+  #process {
+    padding: 120px 48px;
+    background: var(--black);
+  }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  .process-step {
+    padding: 48px 36px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: rgba(196,30,30,0.04); }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .step-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .step-desc {
+    font-size: 13px; line-height: 1.75;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+  .step-arrow {
+    position: absolute;
+    top: 50%; right: -12px;
+    transform: translateY(-50%);
+    width: 24px; height: 24px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--red);
+    z-index: 1;
+  }
+  .process-step:last-child .step-arrow { display: none; }
+
+  /* TESTIMONIAL / CTA BANNER */
+  #cta {
+    padding: 120px 48px;
+    background: var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: 'WARLOK';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 300px;
+    color: rgba(0,0,0,0.1);
+    right: -40px; bottom: -60px;
+    letter-spacing: -4px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .cta-inner {
+    position: relative; z-index: 1;
+    max-width: 800px;
+  }
+  .cta-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 24px;
+  }
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 0.95;
+    color: var(--white);
+    margin-bottom: 40px;
+  }
+  .cta-title .outline {
+    -webkit-text-stroke: 2px rgba(255,255,255,0.4);
+    color: transparent;
+  }
+  .cta-actions { display: flex; gap: 20px; align-items: center; }
+  .btn-white {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red);
+    background: var(--white);
+    padding: 16px 40px;
+    text-decoration: none;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: all 0.25s;
+  }
+  .btn-white:hover { transform: scale(1.04); }
+  .btn-outline-white {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 13px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-outline-white:hover { color: var(--white); border-color: var(--white); }
+
+  /* FOOTER */
+  footer {
+    background: var(--off-black);
+    border-top: 1px solid var(--border);
+    padding: 60px 48px 40px;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px;
+  }
+  .footer-brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; letter-spacing: 4px;
+    margin-bottom: 12px;
+  }
+  .footer-brand-name span { color: var(--red); }
+  .footer-tagline {
+    font-size: 13px; line-height: 1.7;
+    color: rgba(255,255,255,0.3);
+    font-weight: 300;
+  }
+  .footer-col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: 4px;
+    text-transform: uppercase; color: rgba(255,255,255,0.25);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 14px; color: rgba(255,255,255,0.45);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-contact-item {
+    font-size: 13px; color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+    font-weight: 300;
+  }
+  .footer-contact-item strong { color: rgba(255,255,255,0.6); }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border); padding-top: 28px;
+  }
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; letter-spacing: 2px;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+  }
+  .footer-social { display: flex; gap: 20px; }
+  .social-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: rgba(255,255,255,0.25);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .social-link:hover { color: var(--red); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* Glitch effect */
+  .glitch {
+    position: relative;
+  }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute; top: 0; left: 0;
+    font-family: inherit; font-size: inherit;
+    color: inherit; letter-spacing: inherit;
+  }
+  .glitch::before {
+    color: var(--red);
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    animation: glitch1 4s infinite 1s;
+  }
+  .glitch::after {
+    color: #00ffff;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    animation: glitch2 4s infinite 1s;
+    opacity: 0.3;
+  }
+  @keyframes glitch1 {
+    0%, 90%, 100% { transform: none; opacity: 0; }
+    92% { transform: translate(-3px, 0); opacity: 1; }
+    94% { transform: translate(3px, 0); opacity: 1; }
+    96% { transform: translate(-2px, 0); opacity: 1; }
+    98% { transform: none; opacity: 0; }
+  }
+  @keyframes glitch2 {
+    0%, 90%, 100% { transform: none; opacity: 0; }
+    93% { transform: translate(3px, 0); opacity: 0.3; }
+    95% { transform: translate(-3px, 0); opacity: 0.3; }
+    97% { transform: translate(2px, 0); opacity: 0.3; }
+    99% { transform: none; opacity: 0; }
+  }
+
+  /* Noise animated texture on hero */
+  .hero-noise {
+    position: absolute; inset: 0;
+    opacity: 0.02;
+    background: repeating-conic-gradient(rgba(255,255,255,0.1) 0%, transparent 0.00003%);
+    animation: noise 0.5s steps(1) infinite;
+    pointer-events: none;
+  }
+  @keyframes noise {
+    0% { transform: translate(0,0) }
+    10% { transform: translate(-2%, -3%) }
+    20% { transform: translate(3%, 2%) }
+    30% { transform: translate(-1%, 4%) }
+    40% { transform: translate(2%, -1%) }
+    50% { transform: translate(-3%, 3%) }
+    60% { transform: translate(1%, -2%) }
+    70% { transform: translate(-2%, 1%) }
+    80% { transform: translate(3%, -3%) }
+    90% { transform: translate(-1%, 2%) }
+    100% { transform: translate(0,0) }
+  }
+
+  /* Red underline on hover for headings */
+  .underline-red {
+    position: relative; display: inline-block;
+  }
+  .underline-red::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 100%; height: 3px;
+    background: var(--red);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .underline-red:hover::after { transform: scaleX(1); }
+
+  /* Mobile nav toggle */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    #hero { padding: 100px 24px 60px; }
+    .hero-title { font-size: 72px; }
+    .hero-bottom { flex-direction: column; gap: 32px; align-items: flex-start; }
+    #services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; gap: 2px; }
+    #work { padding: 80px 24px; }
+    .work-grid { grid-template-columns: 1fr 1fr; }
+    .work-item:nth-child(1) { grid-column: span 2; }
+    .work-item:nth-child(2), .work-item:nth-child(3) { grid-column: span 1; }
+    .work-item:nth-child(4), .work-item:nth-child(5), .work-item:nth-child(6) { grid-column: span 2; }
+    #about { padding: 80px 24px; grid-template-columns: 1fr; gap: 48px; }
+    #process { padding: 80px 24px; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    #cta { padding: 80px 24px; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">WAR<span>LOK</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Start a Project</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-noise"></div>
+
+  <div class="hero-tag">Studio Warlok — Est. The Lab</div>
+
+  <h1 class="hero-title">
+    <span class="outline glitch" data-text="VISUAL">VISUAL</span>
+    <span class="solid">DESIGN</span>
+    <span class="red">AGENCY</span>
+  </h1>
+
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      <strong>Fight culture. Brand identity. Raw creation.</strong><br>
+      We build visual systems that hit hard — for fighters, brands, and movements that refuse to be ignored.
+    </p>
+    <div class="hero-cta-group">
+      <a href="#work" class="btn-primary">View Our Work</a>
+      <a href="#services" class="btn-ghost">Our Services</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">IDENTITY</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">GRAPHICS</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">APPAREL</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">FIGHT CULTURE</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">BRAND DESIGN</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">STUDIO WARLOK</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">IDENTITY</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">GRAPHICS</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">APPAREL</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">FIGHT CULTURE</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">BRAND DESIGN</span>
+    <span class="marquee-item accent">✦</span>
+    <span class="marquee-item">STUDIO WARLOK</span>
+    <span class="marquee-item accent">✦</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">OUR SERVICES</h2>
+    </div>
+    <div class="section-num">01</div>
+  </div>
+
+  <div class="services-grid">
+    <!-- Identity -->
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none">
+        <rect x="4" y="4" width="18" height="18" stroke="currentColor" stroke-width="2"/>
+        <rect x="26" y="4" width="18" height="18" stroke="currentColor" stroke-width="2" fill="currentColor" fill-opacity="0.2"/>
+        <rect x="4" y="26" width="18" height="18" stroke="currentColor" stroke-width="2" fill="currentColor" fill-opacity="0.1"/>
+        <circle cx="35" cy="35" r="9" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <div class="service-name">BRAND IDENTITY</div>
+      <p class="service-desc">We craft complete visual identities that embody the spirit of your brand — from the roots up. Every mark we create is built to last and built to dominate.</p>
+      <ul class="service-list">
+        <li>Logo Design & Logomarks</li>
+        <li>Brand Strategy</li>
+        <li>Visual Systems</li>
+        <li>Typography & Color</li>
+        <li>Brand Guidelines</li>
+      </ul>
+    </div>
+
+    <!-- Graphics -->
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <div class="service-num">02</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none">
+        <path d="M8 40L16 8L28 28L36 16L44 40H8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="36" cy="12" r="4" fill="currentColor" fill-opacity="0.4" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <div class="service-name">GRAPHICS</div>
+      <p class="service-desc">Event posters, social assets, fight promotions, merch graphics — we design for impact. Gritty, aggressive, unforgettable visuals for the culture.</p>
+      <ul class="service-list">
+        <li>Fight Event Posters</li>
+        <li>Social Media Content</li>
+        <li>Print & Digital Assets</li>
+        <li>UGC Content Design</li>
+        <li>Campaign Visuals</li>
+      </ul>
+    </div>
+
+    <!-- Apparel -->
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <div class="service-num">03</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none">
+        <path d="M16 6L6 14V20H12V42H36V20H42V14L32 6C32 6 30 10 24 10C18 10 16 6 16 6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M20 26H28M20 32H26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="service-name">APPAREL</div>
+      <p class="service-desc">From concept to wearable art. We design apparel graphics that fighters and fans actually want to wear — built for the gym, the street, the stage.</p>
+      <ul class="service-list">
+        <li>T-Shirt & Hoodie Graphics</li>
+        <li>Gi & Rashguard Design</li>
+        <li>Collection Concepts</li>
+        <li>Merchandise Lines</li>
+        <li>Streetwear Collab</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-header reveal" style="padding: 0;">
+    <div>
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">SELECTED WORK</h2>
+    </div>
+    <div class="section-num">02</div>
+  </div>
+
+  <div class="work-grid">
+    <!-- Item 1 - Apparel Hero -->
+    <div class="work-item">
+      <div class="work-item-bg">
+        <div class="work-mockup" style="background:#0a0a0a">
+          <div style="text-align:center;padding:40px">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:6px;color:var(--red);margin-bottom:20px;">LIMITED DROP</div>
+            <svg viewBox="0 0 200 200" width="180" height="180" style="display:block;margin:0 auto">
+              <!-- T-shirt shape -->
+              <path d="M60 30 L30 55 L20 55 L20 80 L50 80 L50 170 L150 170 L150 80 L180 80 L180 55 L170 55 L140 30 C140 30 130 45 100 45 C70 45 60 30 60 30Z" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+              <!-- Graphic on shirt -->
+              <text x="100" y="115" font-family="'Bebas Neue'" font-size="26" fill="rgba(255,255,255,0.5)" text-anchor="middle" letter-spacing="4">WARLOK</text>
+              <line x1="70" y1="125" x2="130" y2="125" stroke="var(--red)" stroke-width="1"/>
+              <text x="100" y="140" font-family="'Barlow Condensed'" font-size="9" fill="rgba(255,255,255,0.2)" text-anchor="middle" letter-spacing="3">THE LAB</text>
+            </svg>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:rgba(255,255,255,0.7);margin-top:20px;">100% COTTON</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,0.25);margin-top:4px;">NO COMPROMISE</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-item-inner">
+        <div class="work-tag">Apparel Design</div>
+        <div class="work-name">WARLOK DROP 001</div>
+      </div>
+    </div>
+
+    <!-- Item 2 - Fight Poster -->
+    <div class="work-item">
+      <div class="work-item-bg">
+        <div class="mock-poster" style="height:100%">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,0.3);margin-bottom:16px;">EVENT DESIGN</div>
+          <div class="mock-poster-title">JAYROD</div>
+          <div class="mock-poster-title" style="color:var(--red);">JAPAN TRIP</div>
+          <div class="mock-poster-line"></div>
+          <div class="mock-poster-sub">AVAILABLE FOR SEMINARS</div>
+          <div class="mock-poster-date">APR 18–26</div>
+        </div>
+      </div>
+      <div class="work-item-inner">
+        <div class="work-tag">Event Poster</div>
+        <div class="work-name">JAYROD JAPAN</div>
+      </div>
+    </div>
+
+    <!-- Item 3 - BJJ Brand -->
+    <div class="work-item">
+      <div class="work-item-bg">
+        <div class="work-mockup" style="background:linear-gradient(135deg,#0a0a0a 0%,#1a0000 100%);flex-direction:column;gap:16px;padding:24px">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:6px;color:var(--white);line-height:1;">GATOR</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;color:var(--red);">BRAZILIAN JIU JITSU</div>
+          <div style="width:40px;height:2px;background:var(--red)"></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.25);">GRAPHIC TEE — 001</div>
+        </div>
+      </div>
+      <div class="work-item-inner">
+        <div class="work-tag">Brand Identity</div>
+        <div class="work-name">GATOR BJJ</div>
+      </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="work-item">
+      <div class="work-item-bg">
+        <div class="mock-pricing">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,0.3);margin-bottom:12px;">[UGC] CONTENT ADVERTISING</div>
+          <div class="mock-price-card">
+            <div>
+              <div class="mock-price-name">STARTER</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);font-family:'Barlow Condensed';letter-spacing:2px;">3 POSTS</div>
+            </div>
+            <div class="mock-price-val">$125</div>
+          </div>
+          <div class="mock-price-card" style="background:rgba(196,30,30,0.25);border-color:var(--red)">
+            <div>
+              <div class="mock-price-name">BUSINESS</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'Barlow Condensed';letter-spacing:2px;">5 POSTS</div>
+            </div>
+            <div class="mock-price-val">$250</div>
+          </div>
+          <div class="mock-price-card">
+            <div>
+              <div class="mock-price-name">PREMIUM</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);font-family:'Barlow Condensed';letter-spacing:2px;">8 POSTS</div>
+            </div>
+            <div class="mock-price-val">$500</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-item-inner">
+        <div class="work-tag">Content Strategy</div>
+        <div class="work-name">UGC PACKAGES</div>
+      </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="work-item">
+      <div class="work-item-bg">
+        <div class="work-mockup" style="flex-direction:column;gap:8px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:4px;color:var(--white);line-height:1;">WARLOK</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:5px;color:var(--red);">LUXURY FEEL</div>
+          <div style="margin-top:16px;display:flex;gap:8px">
+            <div style="width:36px;height:36px;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:14px;letter-spacing:1px;">WL</div>
+            <div style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:14px;letter-spacing:1px;color:rgba(255,255,255,0.4);">WL</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-item-inner">
+        <div class="work-tag">Brand System</div>
+        <div class="work-name">WARLOK IDENTITY</div>
+      </div>
+    </div>
+
+    <!-- Item 6 -->
+    <div class="work-item">
+      <div class="work-item-bg">
+        <div class="mock-logos-grid" style="padding:2px">
+          <div class="mock-logo-cell active" style="font-size:14px;flex-direction:column;gap:4px">
+            <span>WARLOK</span>
+            <span style="font-size:8px;letter-spacing:3px;color:var(--red);font-family:'Barlow Condensed'">UK</span>
+          </div>
+          <div class="mock-logo-cell" style="font-size:12px;letter-spacing:2px">WL</div>
+          <div class="mock-logo-cell" style="font-size:11px;letter-spacing:2px;-webkit-text-stroke:1px rgba(255,255,255,0.3);color:transparent">WRLK</div>
+          <div class="mock-logo-cell active" style="font-size:10px;letter-spacing:3px">THE LAB</div>
+        </div>
+      </div>
+      <div class="work-item-inner">
+        <div class="work-tag">Logo Variants</div>
+        <div class="work-name">LOGO SYSTEM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-box">
+      <div class="about-box-inner">
+        WARLOK<br>
+        THE<br>
+        LAB
+      </div>
+    </div>
+    <div class="about-badge">
+      <div class="badge-num">54+</div>
+      <div class="badge-txt">Projects<br>Delivered</div>
+    </div>
+  </div>
+
+  <div class="about-content reveal" style="transition-delay:0.15s">
+    <div class="section-label">About The Lab</div>
+    <h2 class="about-title">WE DESIGN FOR<br><span>WARRIORS</span> &<br>BRANDS</h2>
+    <p class="about-body">
+      Studio Warlok isn't just a design agency — it's a movement. Born from fight culture and built for brands that carry that same relentless energy. We understand what it means to compete, to represent, and to show up with identity that commands respect.<br><br>
+      Whether you're an MMA promotion, a BJJ gym, a streetwear label, or a fighter building your personal brand — we create visuals that speak your language.
+    </p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-num">54<span>+</span></div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">Disciplines</div>
+      </div>
+      <div>
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">No Compromise</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">How We Work</div>
+      <h2 class="section-title">THE PROCESS</h2>
+    </div>
+    <div class="section-num">03</div>
+  </div>
+
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <div class="step-name">DISCOVERY</div>
+      <p class="step-desc">We dig into your brand, your culture, your competitors. We learn what makes you different before we draw a single line.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.1s">
+      <div class="step-num">02</div>
+      <div class="step-name">STRATEGY</div>
+      <p class="step-desc">We define the visual direction, tone, and identity system that will set you apart. Concepts rooted in purpose.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.2s">
+      <div class="step-num">03</div>
+      <div class="step-name">EXECUTION</div>
+      <p class="step-desc">Design with intention. Every asset crafted to hit hard, look elite, and communicate exactly what needs to be said.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.3s">
+      <div class="step-num">04</div>
+      <div class="step-name">DELIVERY</div>
+      <p class="step-desc">Clean files, complete packages, and ready-to-deploy assets. Built for print, screen, fabric — wherever you need to show up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="cta-label">Ready to build something powerful?</div>
+    <h2 class="cta-title">
+      LET'S BUILD<br>
+      <span class="outline">YOUR BRAND</span>
+    </h2>
+    <div class="cta-actions">
+      <a href="https://instagram.com/studiowarlokdesign" target="_blank" class="btn-white">Get In Touch</a>
+      <a href="#work" class="btn-outline-white">See More Work</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">WAR<span>LOK</span></div>
+      <p class="footer-tagline">Visual design for brands, fight culture & creation. Identity. Graphics. Apparel.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Brand Identity</a></li>
+        <li><a href="#services">Graphics</a></li>
+        <li><a href="#services">Apparel Design</a></li>
+        <li><a href="#services">Content Creation</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#work">Portfolio</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#cta">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <p class="footer-contact-item"><strong>Instagram</strong><br>@studiowarlokdesign</p>
+      <p class="footer-contact-item" style="margin-top:12px"><strong>Studio</strong><br>The Lab</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Studio Warlok — The Lab. All rights reserved.</div>
+    <div class="footer-social">
+      <a href="https://instagram.com/studiowarlokdesign" target="_blank" class="social-link">Instagram</a>
+      <a href="#" class="social-link">TikTok</a>
+      <a href="#" class="social-link">Behance</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Staggered counter animation
+  function animateCount(el, target, suffix = '') {
+    let start = 0;
+    const duration = 1500;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(ease * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+</script>
+</body>
+</html>
