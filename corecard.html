@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tuition Management System</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body { font-family: Arial; padding:20px; }
+    section { margin-bottom:40px; }
+    button { margin:2px; }
+    .card { border:1px solid #ccc; padding:10px; margin:5px; }
+  </style>
+</head>
+
+<body>
+
+<h1>Tuition Admin System</h1>
+
+<!-- STUDENTS -->
+<section>
+<h2>Students</h2>
+<input id="s_name" placeholder="Name">
+<input id="s_phone" placeholder="Phone">
+<button onclick="addStudent()">Add</button>
+<div id="students"></div>
+</section>
+
+<!-- CLASSES -->
+<section>
+<h2>Classes</h2>
+<input id="c_name" placeholder="Class Name">
+<input id="c_schedule" placeholder="Schedule">
+<input id="c_fee" placeholder="Monthly Fee">
+<button onclick="addClass()">Add</button>
+<div id="classes"></div>
+</section>
+
+<!-- ENROLL -->
+<section>
+<h2>Enroll</h2>
+<select id="en_student"></select>
+<select id="en_class"></select>
+<button onclick="enroll()">Enroll</button>
+</section>
+
+<!-- ATTENDANCE -->
+<section>
+<h2>Attendance</h2>
+<input type="date" id="att_date">
+<select id="att_class"></select>
+<button onclick="loadAttendance()">Load</button>
+<div id="attendance"></div>
+</section>
+
+<script>
+const db = supabase.createClient("YOUR_URL","YOUR_KEY");
+
+function code() {
+  return Math.floor(100000 + Math.random()*900000);
+}
+
+async function addStudent() {
+  await db.from('students').insert({
+    name: s_name.value,
+    phone: s_phone.value,
+    code: code()
+  });
+  loadStudents();
+}
+
+async function loadStudents() {
+  const { data } = await db.from('students').select('*');
+  students.innerHTML = '';
+  en_student.innerHTML = '';
+
+  data.forEach(s=>{
+    students.innerHTML += `
+      <div class="card">
+        ${s.name} (${s.code})
+        <button onclick="delStudent('${s.id}')">X</button>
+      </div>`;
+    en_student.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+  });
+}
+
+async function delStudent(id){
+  await db.from('students').delete().eq('id',id);
+  loadStudents();
+}
+
+async function addClass(){
+  await db.from('classes').insert({
+    name: c_name.value,
+    schedule: c_schedule.value,
+    fee: c_fee.value
+  });
+  loadClasses();
+}
+
+async function loadClasses(){
+  const { data } = await db.from('classes').select('*');
+  classes.innerHTML='';
+  en_class.innerHTML='';
+  att_class.innerHTML='';
+
+  data.forEach(c=>{
+    classes.innerHTML += `
+      <div class="card">
+        ${c.name} (Fee: ${c.fee})
+        <button onclick="delClass('${c.id}')">X</button>
+      </div>`;
+    en_class.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+    att_class.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+  });
+}
+
+async function delClass(id){
+  await db.from('classes').delete().eq('id',id);
+  loadClasses();
+}
+
+async function enroll(){
+  await db.from('enrollments').insert({
+    student_id: en_student.value,
+    class_id: en_class.value
+  });
+}
+
+async function loadAttendance(){
+  const class_id = att_class.value;
+  const date = att_date.value;
+  const month = date.slice(0,7);
+
+  const { data } = await db
+    .from('enrollments')
+    .select('students(*), classes(*)')
+    .eq('class_id', class_id);
+
+  attendance.innerHTML='';
+
+  for (let e of data){
+    const s = e.students;
+
+    const { data: pay } = await db
+      .from('payments')
+      .select('*')
+      .eq('student_id', s.id)
+      .eq('class_id', class_id)
+      .eq('month', month)
+      .single();
+
+    const status = pay?.paid ? "✅ Paid" : "❌ Due";
+
+    attendance.innerHTML += `
+      <div class="card">
+        ${s.name} (${s.code}) - ${status}
+        <button onclick="markAtt('${s.id}','${class_id}','${date}',true)">P</button>
+        <button onclick="markAtt('${s.id}','${class_id}','${date}',false)">A</button>
+        <button onclick="pay('${s.id}','${class_id}','${month}')">Pay</button>
+      </div>`;
+  }
+}
+
+async function markAtt(student_id,class_id,date,present){
+  await db.from('attendance').upsert({
+    student_id,class_id,date,present
+  });
+}
+
+async function pay(student_id,class_id,month){
+  await db.from('payments').upsert({
+    student_id,class_id,month,paid:true
+  });
+}
+
+loadStudents();
+loadClasses();
+</script>
+
+</body>
+</html>
