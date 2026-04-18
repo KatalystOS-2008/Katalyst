@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Humankind — Creating a Magical World for the Kid in All of Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0a0a0a;
+      --white:   #ffffff;
+      --cream:   #f4f1eb;
+      --offwhite:#e8e4da;
+      --gray:    #6b6b6b;
+      --mid:     #2a2a2a;
+      --accent:  #1a1a1a;
+      --ff-head: 'Bebas Neue', sans-serif;
+      --ff-body: 'Figtree', sans-serif;
+      --ff-serif:'Playfair Display', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ─── GRAIN OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .4;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--black); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+    .nav-logo {
+      font-family: var(--ff-head);
+      font-size: 1.5rem;
+      letter-spacing: .05em;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-cta {
+      display: flex; gap: 12px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 26px;
+      font-family: var(--ff-body);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: 2px solid var(--black);
+      transition: all .22s cubic-bezier(.4,0,.2,1);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--black);
+    }
+    .btn-outline:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+    .btn-solid {
+      background: var(--black);
+      color: var(--white);
+    }
+    .btn-solid:hover {
+      background: transparent;
+      color: var(--black);
+    }
+    .btn-white {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+    .btn-white:hover {
+      background: transparent;
+      color: var(--white);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: var(--cream);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-eyebrow {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp .7s .2s ease forwards;
+    }
+    .hero-title {
+      font-family: var(--ff-head);
+      font-size: clamp(7rem, 18vw, 18rem);
+      line-height: .88;
+      text-align: center;
+      letter-spacing: -.01em;
+      color: var(--black);
+      position: relative;
+      opacity: 0;
+      animation: fadeUp .8s .35s ease forwards;
+    }
+    .hero-title span {
+      display: block;
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--mid);
+      text-align: center;
+      margin-top: 24px;
+      max-width: 400px;
+      line-height: 1.65;
+      opacity: 0;
+      animation: fadeUp .8s .5s ease forwards;
+    }
+    .hero-cta {
+      margin-top: 40px;
+      display: flex; gap: 16px;
+      opacity: 0;
+      animation: fadeUp .8s .65s ease forwards;
+    }
+    .hero-img-row {
+      margin-top: 60px;
+      width: 100%;
+      height: 280px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp .8s .8s ease forwards;
+    }
+    .hero-img-row img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.15);
+      mix-blend-mode: multiply;
+    }
+    .hero-img-row::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, var(--cream) 0%, transparent 30%, transparent 70%, var(--cream) 100%);
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll-hint svg { opacity: .5; }
+
+    /* ─── DANGER SECTION ─── */
+    .danger {
+      background: var(--white);
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .danger-tag {
+      display: inline-block;
+      border: 2px solid var(--black);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      margin-bottom: 20px;
+    }
+    .danger h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .danger p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--mid);
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+    .danger-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      border: 2px solid var(--black);
+    }
+
+    /* ─── LUNCHBOX (Journey) ─── */
+    .journey {
+      background: var(--offwhite);
+      padding: 100px 48px;
+    }
+    .journey-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .journey-box {
+      background: var(--white);
+      border: 2px solid var(--black);
+      padding: 40px;
+      position: relative;
+    }
+    .journey-box::before {
+      content: '';
+      position: absolute;
+      top: 6px; left: 6px; right: -6px; bottom: -6px;
+      border: 2px solid var(--black);
+      z-index: -1;
+    }
+    .journey-box img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.15);
+      margin-bottom: 24px;
+    }
+    .journey-content h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .journey-content p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--mid);
+      margin-bottom: 32px;
+    }
+    .journey-content .note {
+      font-size: .78rem;
+      font-style: italic;
+      color: var(--gray);
+      border-left: 3px solid var(--black);
+      padding-left: 16px;
+      margin-top: 20px;
+      margin-bottom: 32px;
+    }
+
+    /* ─── COLLECTIBLES (Dark) ─── */
+    .collectibles {
+      background: var(--black);
+      color: var(--white);
+      padding: 120px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .collectibles::before {
+      content: 'COLLECT';
+      position: absolute;
+      font-family: var(--ff-head);
+      font-size: 22vw;
+      color: rgba(255,255,255,.03);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .collectibles-avatars {
+      display: flex; justify-content: center; gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+    .avatar {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,.2);
+      transition: transform .3s, border-color .3s;
+    }
+    .avatar:hover {
+      transform: scale(1.12) translateY(-4px);
+      border-color: var(--white);
+    }
+    .avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.2);
+    }
+    .collectibles h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .collectibles p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,.65);
+      max-width: 540px;
+      margin: 0 auto 40px;
+    }
+
+    /* ─── ART & KINDNESS ─── */
+    .art {
+      padding: 120px 48px;
+      background: var(--white);
+    }
+    .art-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .art h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .art-label {
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 16px;
+    }
+    .art p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--mid);
+      margin-bottom: 32px;
+    }
+    .art-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+    }
+    .stat-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+      margin-top: 48px;
+    }
+    .stat { border-top: 2px solid var(--black); padding-top: 20px; }
+    .stat-num {
+      font-family: var(--ff-head);
+      font-size: 3.5rem;
+      line-height: 1;
+    }
+    .stat-desc {
+      font-size: .85rem;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+
+    /* ─── CHARACTER LINEUP ─── */
+    .lineup {
+      background: var(--cream);
+      padding: 0;
+      overflow: hidden;
+      height: 320px;
+      position: relative;
+    }
+    .lineup img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+    }
+    .lineup::before, .lineup::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 200px;
+      z-index: 2;
+    }
+    .lineup::before { left: 0; background: linear-gradient(to right, var(--cream), transparent); }
+    .lineup::after  { right: 0; background: linear-gradient(to left, var(--cream), transparent); }
+
+    /* ─── UNIVERSE ─── */
+    .universe {
+      padding: 120px 48px;
+      background: var(--cream);
+    }
+    .universe-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .universe h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      margin-bottom: 28px;
+    }
+    .universe p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--mid);
+      margin-bottom: 40px;
+    }
+    .universe-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      border: 2px solid var(--black);
+    }
+
+    /* ─── STAY HUMAN ─── */
+    .stayhuman {
+      background: var(--black);
+      color: var(--white);
+      padding: 120px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .stayhuman-word {
+      font-family: var(--ff-head);
+      font-size: clamp(5rem, 16vw, 16rem);
+      line-height: .85;
+      letter-spacing: -.02em;
+      display: block;
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,.4) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stayhuman-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      border-top: 1px solid rgba(255,255,255,.15);
+      border-bottom: 1px solid rgba(255,255,255,.15);
+    }
+    .strip-img {
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+    .strip-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.2);
+      transition: transform .5s;
+    }
+    .strip-img:hover img { transform: scale(1.08); }
+
+    /* ─── CARDS (Studios / Fund) ─── */
+    .cards-section {
+      background: var(--black);
+      padding: 0 48px 120px;
+    }
+    .cards-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .card {
+      background: var(--mid);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card-icon {
+      width: 48px; height: 48px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .card h3 {
+      font-family: var(--ff-head);
+      font-size: 2.2rem;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .card p {
+      font-size: .9rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 32px;
+    }
+    .card-img {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 45%;
+      opacity: .2;
+    }
+    .card-img img {
+      width: 100%;
+      filter: grayscale(100%);
+    }
+
+    /* ─── PRICING ─── */
+    .pricing {
+      background: var(--white);
+      padding: 140px 48px;
+    }
+    .pricing-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 80px;
+    }
+    .section-label {
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 18px;
+    }
+    .pricing-header h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: .95;
+      margin-bottom: 20px;
+    }
+    .pricing-header p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--mid);
+    }
+    .pricing-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      margin-bottom: 60px;
+    }
+    .toggle-label {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 52px; height: 28px;
+      background: var(--black);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 22px; height: 22px;
+      background: var(--white);
+      border-radius: 50%;
+      transition: left .3s;
+    }
+    .toggle-switch.active::after { left: 27px; }
+    .save-badge {
+      background: var(--black);
+      color: var(--white);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+    }
+    .pricing-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--black);
+    }
+    .price-card {
+      padding: 56px 44px;
+      border-right: 2px solid var(--black);
+      position: relative;
+      transition: background .3s;
+    }
+    .price-card:last-child { border-right: none; }
+    .price-card.featured {
+      background: var(--black);
+      color: var(--white);
+    }
+    .price-badge {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      border: 1.5px solid currentColor;
+      padding: 5px 12px;
+      margin-bottom: 32px;
+      opacity: .7;
+    }
+    .price-name {
+      font-family: var(--ff-head);
+      font-size: 2.8rem;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .price-tagline {
+      font-size: .88rem;
+      font-style: italic;
+      color: var(--gray);
+      margin-bottom: 36px;
+    }
+    .price-card.featured .price-tagline { color: rgba(255,255,255,.55); }
+    .price-amount {
+      display: flex; align-items: flex-end; gap: 4px;
+      margin-bottom: 8px;
+    }
+    .price-currency {
+      font-family: var(--ff-head);
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+    .price-number {
+      font-family: var(--ff-head);
+      font-size: 5.5rem;
+      line-height: .85;
+    }
+    .price-per {
+      font-size: .82rem;
+      color: var(--gray);
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+    }
+    .price-card.featured .price-per { color: rgba(255,255,255,.45); }
+    .price-annual {
+      font-size: .78rem;
+      color: var(--gray);
+      margin-bottom: 40px;
+    }
+    .price-card.featured .price-annual { color: rgba(255,255,255,.4); }
+    .price-divider {
+      border: none;
+      border-top: 1.5px solid var(--offwhite);
+      margin-bottom: 36px;
+    }
+    .price-card.featured .price-divider { border-color: rgba(255,255,255,.15); }
+    .price-features {
+      list-style: none;
+      margin-bottom: 48px;
+    }
+    .price-features li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: .9rem;
+      line-height: 1.5;
+      color: var(--mid);
+      margin-bottom: 16px;
+    }
+    .price-card.featured .price-features li { color: rgba(255,255,255,.75); }
+    .price-features li::before {
+      content: '→';
+      font-size: .85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .price-features li.muted::before { content: '–'; opacity: .3; }
+    .price-features li.muted { opacity: .4; }
+    .btn-price {
+      width: 100%;
+      padding: 16px;
+      text-align: center;
+      font-family: var(--ff-body);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 2px solid var(--black);
+      transition: all .22s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-price-outline {
+      background: transparent;
+      color: var(--black);
+    }
+    .btn-price-outline:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+    .btn-price-solid {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+    .btn-price-solid:hover {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+    .price-popular {
+      position: absolute;
+      top: -1px; right: 44px;
+      background: var(--white);
+      color: var(--black);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 2px solid var(--black);
+      border-top: none;
+    }
+    .pricing-note {
+      text-align: center;
+      margin-top: 40px;
+      font-size: .82rem;
+      color: var(--gray);
+    }
+    .pricing-note a { color: var(--black); }
+
+    /* ─── BUILDING TOGETHER ─── */
+    .building {
+      background: var(--cream);
+      padding: 120px 48px;
+    }
+    .building-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .building-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .building-imgs img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+    }
+    .building-imgs img:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/9;
+    }
+    .building h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .building p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--mid);
+      margin-bottom: 40px;
+    }
+
+    /* ─── JOIN ADVENTURE ─── */
+    .join {
+      background: var(--black);
+      color: var(--white);
+      padding: 160px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .join-bg {
+      position: absolute; inset: 0;
+      z-index: 0;
+    }
+    .join-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) brightness(.25);
+    }
+    .join-content {
+      position: relative; z-index: 1;
+    }
+    .join h2 {
+      font-family: var(--ff-head);
+      font-size: clamp(3.5rem, 8vw, 8rem);
+      line-height: .9;
+      margin-bottom: 28px;
+    }
+    .join p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,.7);
+      max-width: 520px;
+      margin: 0 auto 48px;
+    }
+    .join-cta { display: flex; gap: 16px; justify-content: center; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--white);
+      padding: 80px 48px 40px;
+      border-top: 2px solid var(--black);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 64px;
+      margin-bottom: 80px;
+    }
+    .footer-brand-name {
+      font-family: var(--ff-head);
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .footer-tagline {
+      font-size: .9rem;
+      line-height: 1.7;
+      color: var(--mid);
+      margin-bottom: 28px;
+      max-width: 280px;
+    }
+    .footer-socials {
+      display: flex; gap: 12px;
+    }
+    .social-icon {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--black);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      color: var(--black);
+      font-size: .7rem;
+      font-weight: 800;
+      transition: all .2s;
+    }
+    .social-icon:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+    .footer-col h4 {
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a {
+      text-decoration: none;
+      font-size: .88rem;
+      color: var(--mid);
+      transition: color .2s;
+    }
+    .footer-col ul li a:hover { color: var(--black); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid var(--offwhite);
+      font-size: .78rem;
+      color: var(--gray);
+    }
+    .footer-bottom a { color: var(--gray); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(-8px); }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .danger, .journey-inner, .art-inner, .universe-inner,
+      .building-inner, .pricing-grid, .cards-grid, .footer-top {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .hero-title { font-size: 20vw; }
+      .pricing-grid { border-left: 2px solid var(--black); }
+      .price-card { border-right: none; border-bottom: 2px solid var(--black); }
+      .price-card:last-child { border-bottom: none; }
+      .stayhuman-strip { grid-template-columns: repeat(3,1fr); }
+      .join, .stayhuman, .collectibles, .pricing, .art,
+      .danger, .journey, .universe, .building { padding: 80px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav>
+    <a href="#" class="nav-logo">humankind</a>
+    <ul class="nav-links">
+      <li><a href="#collectibles">Collectibles</a></li>
+      <li><a href="#studios">Studios</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#community">Community</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-outline">Sign in</a>
+      <a href="#pricing" class="btn btn-solid">Start journey</a>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="hero">
+    <p class="hero-eyebrow">Creating a magical world for the kid in all of us</p>
+    <h1 class="hero-title">
+      <span>HUMAN</span>
+      <span>KIND</span>
+    </h1>
+    <p class="hero-subtitle">
+      An epic adventure of art, kindness, and unique storytelling — told across every corner of the globe.
+    </p>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-solid">Start a journey</a>
+      <a href="#" class="btn btn-outline">Learn more</a>
+    </div>
+    <div class="hero-img-row">
+      <img
+        src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1600&auto=format&fit=crop&q=80"
+        alt="Adventurers"
+      />
+    </div>
+    <div class="hero-scroll-hint">
+      <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
+        <path d="M8 0v16M1 9l7 8 7-8" stroke="#000" stroke-width="2"/>
+      </svg>
+      Scroll
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       DANGER
+  ═══════════════════════════════════════ -->
+  <section>
+    <div class="danger reveal">
+      <div>
+        <span class="danger-tag">⚡ Alert</span>
+        <h2>The land of Kinds is in danger!</h2>
+        <p>
+          Chapatu Village has been attacked by the giant Mechax. Maya and Dallas need you to join the adventure. The fate of an entire world rests in the hands of those brave enough to answer the call.
+        </p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <a href="#" class="btn btn-solid">Go help them</a>
+          <a href="#" class="btn btn-outline">Learn more</a>
+        </div>
+      </div>
+      <div>
+        <img
+          class="danger-img"
+          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900&auto=format&fit=crop&q=80"
+          alt="Village in danger"
+        />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       JOURNEY (Lunchbox)
+  ═══════════════════════════════════════ -->
+  <section class="journey">
+    <div class="journey-inner reveal">
+      <div class="journey-box">
+        <img
+          src="https://images.unsplash.com/photo-1502920514313-52581002a659?w=700&auto=format&fit=crop&q=80"
+          alt="Pack your bags"
+        />
+        <p style="font-size:.82rem;color:var(--gray);text-align:center;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Pack your bags. It's time.</p>
+      </div>
+      <div class="journey-content">
+        <h2>Grab your lunchbox. It will be a long journey.</h2>
+        <p>
+          You'll be adventuring alongside Maya and Dallas. It all starts with a simple and strange object — a lunchbox. A lunchbox? What does a lunchbox have to do with saving a world?
+        </p>
+        <p class="note">
+          Every lunchbox unlocks a character on a brand-new adventure. These characters will guide your food with a simple and unique promotional code, used by your Humankind community friends for over ten years.
+        </p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <a href="#" class="btn btn-solid">Go on quest</a>
+          <a href="#" class="btn btn-outline">Learn more</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       COLLECTIBLES
+  ═══════════════════════════════════════ -->
+  <section class="collectibles" id="collectibles">
+    <div class="collectibles-avatars reveal">
+      <!-- Avatar row — grayscale Unsplash portrait crops -->
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="avatar"><img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100&h=100&auto=format&fit=crop&q=80" alt=""/></div>
+    </div>
+    <h2 class="reveal">Humankind Collectibles</h2>
+    <p class="reveal">
+      We're building a collection of unique collectibles honouring the Humankind species — the Land of Kinds.
+    </p>
+    <a href="#" class="btn btn-white reveal">Explore collection</a>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       ART & KINDNESS
+  ═══════════════════════════════════════ -->
+  <section class="art">
+    <div class="art-inner">
+      <div class="reveal">
+        <p class="art-label">Our philosophy</p>
+        <h2>Art and kindness are our tools of trade</h2>
+        <p>
+          Humankind is a creative force developing relatable characters and epic stories for a global audience across various formats powered by decentralisation. We believe in the power of imagination to transform the world.
+        </p>
+        <a href="#" class="btn btn-solid">Learn more →</a>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-num">180+</div>
+            <div class="stat-desc">Unique characters</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">50K+</div>
+            <div class="stat-desc">Global community</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">10yr</div>
+            <div class="stat-desc">Building this world</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">30+</div>
+            <div class="stat-desc">Countries reached</div>
+          </div>
+        </div>
+      </div>
+      <img
+        class="art-img reveal"
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80"
+        alt="Art and creation"
+      />
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       CHARACTER LINEUP STRIP
+  ═══════════════════════════════════════ -->
+  <div class="lineup">
+    <img
+      src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1800&auto=format&fit=crop&q=80"
+      alt="Characters"
+    />
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       UNIVERSE
+  ═══════════════════════════════════════ -->
+  <section class="universe" id="about">
+    <div class="universe-inner">
+      <img
+        class="universe-img reveal"
+        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format&fit=crop&q=80"
+        alt="Designing a universe"
+      />
+      <div class="reveal">
+        <p class="art-label">The bigger picture</p>
+        <h2>Designing a universe</h2>
+        <p>
+          We're building the Humankind brand, its world, lore, and characters. Our goal is to explore the hearts and minds of kids and adults worldwide with epic creative figures, ideas, and community-driven storytelling.
+        </p>
+        <a href="#" class="btn btn-solid">Discover the story →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       STAY HUMAN
+  ═══════════════════════════════════════ -->
+  <section class="stayhuman">
+    <span class="stayhuman-word reveal">stayhuman</span>
+    <div class="stayhuman-strip reveal">
+      <div class="strip-img"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="strip-img"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="strip-img"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="strip-img"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="strip-img"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop&q=80" alt=""/></div>
+      <div class="strip-img"><img src="https://images.unsplash.com/photo-1504593811423-6dd665756598?w=400&auto=format&fit=crop&q=80" alt=""/></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       STUDIOS / FUND CARDS
+  ═══════════════════════════════════════ -->
+  <section class="cards-section" id="studios">
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 1l2.9 6 6.6.9-4.8 4.6 1.1 6.5L10 16l-5.9 3 1.1-6.5L.4 7.9l6.6-.9z" fill="white"/>
+          </svg>
+        </div>
+        <h3>Humankind Studios</h3>
+        <p>Creating original series, films, and immersive experiences that bring the Land of Kinds to life on screens worldwide.</p>
+        <a href="#" class="btn btn-white" style="display:inline-flex;">Explore studios →</a>
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&auto=format&fit=crop&q=80" alt=""/>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="white" stroke-width="2"/>
+            <path d="M10 6v4l3 3" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Humankind Fund</h3>
+        <p>Investing in creatives, storytellers, and communities to inspire kindness through art — one story at a time.</p>
+        <a href="#" class="btn btn-white" style="display:inline-flex;">Explore fund →</a>
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1459664018906-085c36f472af?w=400&auto=format&fit=crop&q=80" alt=""/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       PRICING
+  ═══════════════════════════════════════ -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-header reveal">
+      <p class="section-label">Join the adventure</p>
+      <h2>CHOOSE YOUR PATH</h2>
+      <p>
+        Every hero starts somewhere. Pick the plan that fits your journey and unlock a world of art, kindness, and storytelling.
+      </p>
+    </div>
+
+    <div class="pricing-toggle reveal">
+      <span class="toggle-label">Monthly</span>
+      <div class="toggle-switch" id="billingToggle" onclick="this.classList.toggle('active'); toggleBilling()"></div>
+      <span class="toggle-label">Annual</span>
+      <span class="save-badge">Save 25%</span>
+    </div>
+
+    <div class="pricing-grid reveal">
+
+      <!-- TIER 1: Scout -->
+      <div class="price-card">
+        <div class="price-badge">Tier 01</div>
+        <div class="price-name">The Scout</div>
+        <div class="price-tagline">Start your adventure.</div>
+        <div class="price-amount">
+          <span class="price-currency">$</span>
+          <span class="price-number" data-monthly="9" data-annual="7">9</span>
+          <span class="price-per">/mo</span>
+        </div>
+        <p class="price-annual" id="scout-annual">Billed $108/year</p>
+        <hr class="price-divider"/>
+        <ul class="price-features">
+          <li>Access to 1 active story arc</li>
+          <li>5 collectible character cards / month</li>
+          <li>Community forum access</li>
+          <li>Monthly newsletter & lore drops</li>
+          <li class="muted">Humankind Studios content</li>
+          <li class="muted">Exclusive character unlocks</li>
+          <li class="muted">Priority support</li>
+        </ul>
+        <a href="#" class="btn-price btn-price-outline">Begin as Scout →</a>
+      </div>
+
+      <!-- TIER 2: Explorer (Featured) -->
+      <div class="price-card featured">
+        <div class="price-popular">Most popular</div>
+        <div class="price-badge">Tier 02</div>
+        <div class="price-name">The Explorer</div>
+        <div class="price-tagline">For the brave-hearted.</div>
+        <div class="price-amount">
+          <span class="price-currency">$</span>
+          <span class="price-number" data-monthly="29" data-annual="22">29</span>
+          <span class="price-per">/mo</span>
+        </div>
+        <p class="price-annual" id="explorer-annual">Billed $348/year</p>
+        <hr class="price-divider"/>
+        <ul class="price-features">
+          <li>Access to all story arcs</li>
+          <li>Unlimited collectible cards</li>
+          <li>Community forum + live events</li>
+          <li>Early lore & chapter releases</li>
+          <li>Humankind Studios full library</li>
+          <li>3 exclusive character unlocks / month</li>
+          <li class="muted">Priority support</li>
+        </ul>
+        <a href="#" class="btn-price btn-price-solid">Become an Explorer →</a>
+      </div>
+
+      <!-- TIER 3: Legend -->
+      <div class="price-card">
+        <div class="price-badge">Tier 03</div>
+        <div class="price-name">The Legend</div>
+        <div class="price-tagline">Write your own story.</div>
+        <div class="price-amount">
+          <span class="price-currency">$</span>
+          <span class="price-number" data-monthly="79" data-annual="59">79</span>
+          <span class="price-per">/mo</span>
+        </div>
+        <p class="price-annual" id="legend-annual">Billed $948/year</p>
+        <hr class="price-divider"/>
+        <ul class="price-features">
+          <li>Everything in Explorer</li>
+          <li>Name a character in the universe</li>
+          <li>Private Discord with creators</li>
+          <li>Annual physical collectible box</li>
+          <li>Co-create lore with the team</li>
+          <li>Unlimited character unlocks</li>
+          <li>Priority 1-on-1 support</li>
+        </ul>
+        <a href="#" class="btn-price btn-price-outline">Become a Legend →</a>
+      </div>
+
+    </div>
+    <p class="pricing-note reveal">
+      All plans include a 14-day free trial. No credit card required. <a href="#">View full comparison →</a>
+    </p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       BUILDING TOGETHER
+  ═══════════════════════════════════════ -->
+  <section class="building" id="community">
+    <div class="building-inner">
+      <div class="building-imgs reveal">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&auto=format&fit=crop&q=80" alt="Community"/>
+        <img src="https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?w=600&auto=format&fit=crop&q=80" alt="Art"/>
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80" alt="Kids"/>
+      </div>
+      <div class="reveal">
+        <p class="art-label">Our community</p>
+        <h2>Building together</h2>
+        <p>
+          We connect and inspire people all over the globe through the power of art, kindness, and unique storytelling. Together, we build a kinder world, one story at a time.
+        </p>
+        <a href="#" class="btn btn-solid">Explore community →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       JOIN ADVENTURE
+  ═══════════════════════════════════════ -->
+  <section class="join">
+    <div class="join-bg">
+      <img
+        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&auto=format&fit=crop&q=80"
+        alt="Epic landscape"
+      />
+    </div>
+    <div class="join-content reveal">
+      <p class="section-label" style="color:rgba(255,255,255,.5);">Ready?</p>
+      <h2>JOIN OUR ADVENTURE</h2>
+      <p>
+        Imagine the despair and dreams this world is about to face. We will make space — a world where every soul matters — and join justly and justly and justly in the power of storytelling to be a kinder place in the world.
+      </p>
+      <div class="join-cta">
+        <a href="#pricing" class="btn btn-white">Start your journey</a>
+        <a href="#" class="btn btn-outline" style="border-color:rgba(255,255,255,.4);color:var(--white);">Learn about us</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">humankind</div>
+        <p class="footer-tagline">
+          Art and kindness are our tools of trade. We are storytellers, dreamers, and world-builders — for the kid in all of us.
+        </p>
+        <div class="footer-socials">
+          <a href="#" class="social-icon">TW</a>
+          <a href="#" class="social-icon">IG</a>
+          <a href="#" class="social-icon">YT</a>
+          <a href="#" class="social-icon">DC</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>World</h4>
+        <ul>
+          <li><a href="#">The Story</a></li>
+          <li><a href="#">Characters</a></li>
+          <li><a href="#">Land of Kinds</a></li>
+          <li><a href="#">Lore</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="#">Series</a></li>
+          <li><a href="#">Films</a></li>
+          <li><a href="#">Collectibles</a></li>
+          <li><a href="#">Lunchbox</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Humankind. All rights reserved.</span>
+      <div style="display:flex;gap:24px;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+      <span>Made with ♥ for the kind</span>
+    </div>
+  </footer>
+
+
+  <script>
+    /* ─── Scroll Reveal ─── */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    reveals.forEach(el => observer.observe(el));
+
+    /* ─── Billing Toggle ─── */
+    let isAnnual = false;
+    const priceNums = document.querySelectorAll('.price-number');
+
+    const annualLabels = {
+      'scout-annual':    { monthly: 'Billed $108/year', annual: 'Billed $84/year — save $24' },
+      'explorer-annual': { monthly: 'Billed $348/year', annual: 'Billed $264/year — save $84' },
+      'legend-annual':   { monthly: 'Billed $948/year', annual: 'Billed $708/year — save $240' },
+    };
+
+    function toggleBilling() {
+      isAnnual = !isAnnual;
+      priceNums.forEach(el => {
+        el.textContent = isAnnual ? el.dataset.annual : el.dataset.monthly;
+      });
+      Object.entries(annualLabels).forEach(([id, vals]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = isAnnual ? vals.annual : vals.monthly;
+      });
+    }
+  </script>
+</body>
+</html>
