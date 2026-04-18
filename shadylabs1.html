@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShadyLabs | Premium Web Design & Development Studio</title>
+<meta name="description" content="ShadyLabs is a Sri Lanka-based premium web design & development studio crafting SEO-optimized, high-converting websites for brands and businesses worldwide.">
+<meta name="keywords" content="web design, web development, SEO, landing pages, ecommerce, Sri Lanka, conversion optimization, UI UX design">
+<meta name="author" content="ShadyLabs — Kavindu Wasalamudali">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://shadylabs-web.github.io/shadylabs/">
+<meta property="og:title" content="ShadyLabs | Premium Web Design & Development">
+<meta property="og:description" content="We build websites that convert visitors into paying clients. Strategic design. Clean code. Real results.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://shadylabs-web.github.io/shadylabs/">
+<meta property="og:image" content="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/shadylabs-heroimage.JPG">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebDesignAgency","name":"ShadyLabs","url":"https://shadylabs-web.github.io/shadylabs/","description":"Premium web design & development studio based in Sri Lanka.","address":{"@type":"PostalAddress","addressLocality":"Kandy","addressCountry":"LK"},"sameAs":["https://www.instagram.com/shadylabs.dev","https://www.linkedin.com/in/shady-labs-b4a641399"]}
+</script>
+
+<style>
+/* ════════════════════════════════════════
+   RESET & TOKENS
+════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:  #0a0a0a;
+  --white:  #ffffff;
+  --cream:  #f4f1eb;
+  --offwhite:#e8e4da;
+  --dark:   #0a0a0a;
+  --mid:    #2a2a2a;
+  --text:   #333333;
+  --muted:  #888888;
+  --border: #d8d3ca;
+  --display:'Bebas Neue', sans-serif;
+  --sans:   'Figtree', sans-serif;
+  /* keep legacy compat aliases */
+  --red: #0a0a0a;
+  --red-dk: #2a2a2a;
+  --serif: 'Bebas Neue', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+/* grain overlay */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9998; opacity:.35;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+button { font-family: var(--sans); cursor: pointer; border: none; }
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--cream)}::-webkit-scrollbar-thumb{background:var(--black);border-radius:2px}
+
+/* ════════════════════════════════════════
+   NAVBAR
+════════════════════════════════════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%; height: 58px;
+  transition: background .35s, border-color .35s;
+  border-bottom: 1px solid transparent;
+}
+.nav.stuck {
+  background: rgba(244,241,235,0.95);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(0,0,0,.1);
+}
+.nav-logo {
+  font-family: var(--display);
+  font-size: 1.4rem; letter-spacing: .06em;
+  color: var(--white);
+  transition: color .35s; flex-shrink: 0;
+}
+.nav.stuck .nav-logo { color: var(--dark); }
+.nav-links {
+  display: flex; gap: 28px; align-items: center;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.nav-links a {
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.7);
+  transition: color .2s; white-space: nowrap;
+}
+.nav.stuck .nav-links a { color: var(--mid); }
+.nav-links a:hover { color: var(--white) !important; }
+.nav.stuck .nav-links a:hover { color: var(--dark) !important; }
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.nav-menu-pill {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 16px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28);
+  color: var(--white); font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  transition: background .25s, border-color .25s, color .25s;
+  white-space: nowrap; cursor: pointer;
+}
+.nav-menu-pill i { font-size: .65rem; }
+.nav.stuck .nav-menu-pill { background: var(--dark); border-color: var(--dark); color: var(--white); }
+.nav-menu-pill:hover { background: rgba(255,255,255,.22); }
+.nav.stuck .nav-menu-pill:hover { background: var(--mid); border-color: var(--mid); }
+
+/* Burger */
+.burger {
+  display: none; flex-direction: column; gap: 5px;
+  padding: 5px; cursor: pointer; flex-shrink: 0;
+}
+.burger span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--white); border-radius: 1px;
+  transition: background .35s, transform .3s, opacity .25s;
+}
+.nav.stuck .burger span { background: var(--dark); }
+.burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity: 0; }
+.burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile nav */
+.mob-nav {
+  position: fixed; inset: 0; background: var(--dark); z-index: 999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px;
+  transform: translateY(-100%); transition: transform .42s cubic-bezier(.77,0,.175,1);
+  pointer-events: none;
+}
+.mob-nav.open { transform: translateY(0); pointer-events: all; }
+.mob-nav a {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  letter-spacing: .04em;
+  color: var(--white); transition: opacity .2s;
+}
+.mob-nav a:hover { opacity: .6; }
+.mob-nav-cta {
+  margin-top: 8px;
+  background: var(--white); color: var(--dark);
+  padding: 13px 36px;
+  font-size: .82rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  border: 2px solid var(--white);
+  transition: background .2s, color .2s; cursor: pointer;
+}
+.mob-nav-cta:hover { background: transparent; color: var(--white); }
+.mob-close {
+  position: absolute; top: 18px; right: 22px;
+  background: none; border: none; color: var(--white);
+  font-size: 1.6rem; cursor: pointer; transition: opacity .2s; line-height: 1;
+}
+.mob-close:hover { opacity: .5; }
+
+/* ════════════════════════════════════════
+   HERO — dark, "BUILDING WORLDS THAT CONVERT"
+════════════════════════════════════════ */
+.hero {
+  background: var(--dark);
+  min-height: 90vh;
+  position: relative;
+  overflow: visible;
+  display: flex; flex-direction: column;
+  padding-top: 58px;
+}
+.hero-body {
+  flex: 1; display: flex;
+  padding: 48px 5% 36px;
+  position: relative; align-items: center;
+}
+.hero-text {
+  flex: 1; max-width: 56%;
+  z-index: 2;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0;
+}
+.hero-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(255,255,255,.45);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before {
+  content:''; display: inline-block;
+  width: 28px; height: 1.5px; background: rgba(255,255,255,.35);
+}
+.hero-h1 {
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 7.5vw, 7.5rem);
+  line-height: .9; letter-spacing: .01em;
+  color: var(--white); margin-bottom: 28px;
+}
+.hero-h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.5) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-pill {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: transparent; border: 1.5px solid rgba(255,255,255,.25);
+  color: var(--white); padding: 10px 22px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  transition: background .25s, border-color .25s; cursor: pointer;
+}
+.hero-pill:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.5); }
+.hero-pill i { font-size: .65rem; }
+.hero-photo-wrap {
+  position: absolute; right: 5%; top: 0; bottom: 0;
+  width: clamp(180px, 28%, 340px);
+  display: flex; align-items: flex-start; padding-top: 20px;
+}
+.hero-photo-card {
+  width: 100%;
+  height: clamp(300px, 56vh, 500px);
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,.12);
+}
+.hero-photo-card img {
+  filter: grayscale(100%) contrast(1.1);
+  object-position: top center;
+}
+
+/* ════════════════════════════════════════
+   BRAND SEAM — "ShadyLabs" across dark/cream boundary
+════════════════════════════════════════ */
+.seam-wrap {
+  position: relative; height: 0; overflow: visible; z-index: 50;
+}
+.seam-name {
+  position: absolute; left: 0; right: 0;
+  transform: translateY(-50%);
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 14vw, 11.5rem);
+  letter-spacing: .02em; line-height: 1;
+  text-align: center; white-space: nowrap;
+  user-select: none; pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%, #ffffff 50%,
+    #0a0a0a 50%, #0a0a0a 100%
+  );
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ════════════════════════════════════════
+   INTRO — white bg, "we build worlds"
+════════════════════════════════════════ */
+.intro {
+  background: var(--white);
+  padding-top: clamp(5rem, 8.5vw, 8.5rem);
+  padding-bottom: clamp(56px, 7vw, 96px);
+  padding-left: 5%; padding-right: 5%;
+  position: relative; z-index: 2;
+}
+.intro-grid {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(36px, 5.5vw, 80px);
+  align-items: start;
+}
+.intro-portrait {
+  width: 100%; height: clamp(200px, 28vw, 320px);
+  overflow: hidden; margin-bottom: 28px;
+  border: 2px solid var(--dark);
+}
+.intro-portrait img { filter: grayscale(100%) contrast(1.1); }
+.intro-heading {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  line-height: 1.05; color: var(--dark);
+  margin-bottom: 16px;
+}
+.intro-heading u { text-underline-offset: 4px; text-decoration-color: rgba(0,0,0,.3); }
+.intro-body {
+  font-size: .9rem; color: var(--muted); line-height: 1.8; margin-bottom: 28px;
+}
+.btn-red {
+  display: inline-block; background: var(--dark); color: var(--white);
+  padding: 12px 26px;
+  font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  border: 2px solid var(--dark);
+  transition: background .25s, color .25s;
+}
+.btn-red:hover { background: transparent; color: var(--dark); }
+
+/* Right column */
+.intro-link {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: opacity .2s;
+}
+.intro-link:first-child { border-top: 1px solid var(--border); }
+.intro-link:hover { opacity: .6; }
+.intro-thumb {
+  width: 54px; height: 54px; min-width: 54px;
+  overflow: hidden; background: var(--cream);
+  border: 1px solid var(--border);
+}
+.intro-thumb img { filter: grayscale(80%); }
+.intro-link h4 {
+  font-family: var(--display); font-size: 1.05rem;
+  color: var(--dark); margin-bottom: 3px; line-height: 1.15;
+  letter-spacing: .03em;
+}
+.intro-link p { font-size: .76rem; color: var(--muted); line-height: 1.55; }
+
+/* ════════════════════════════════════════
+   FEATURED WORK
+════════════════════════════════════════ */
+.featured {
+  background: var(--cream);
+  padding: clamp(52px, 7vw, 92px) 5%;
+  border-top: 2px solid var(--dark);
+  border-bottom: 2px solid var(--dark);
+}
+.featured-inner { max-width: 1160px; margin: 0 auto; }
+.featured-label {
+  font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: clamp(24px, 3.5vw, 44px);
+}
+.feat-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr 240px;
+  gap: clamp(20px, 3.5vw, 44px);
+  align-items: center;
+  margin-bottom: 40px;
+}
+.work-title-item {
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 1.8vw, 1.65rem);
+  letter-spacing: .03em;
+  color: var(--muted);
+  padding: clamp(9px, 1.4vw, 16px) 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: color .2s, padding-left .25s;
+  position: relative; line-height: 1.1;
+}
+.work-title-item:first-child { border-top: 1px solid var(--border); }
+.work-title-item.on { color: var(--dark); padding-left: 16px; }
+.work-title-item.on::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 55%; background: var(--dark); border-radius: 1px;
+}
+.work-title-item:not(.on):hover { color: var(--dark); padding-left: 6px; }
+.feat-cover-wrap { display: flex; align-items: center; justify-content: center; }
+.feat-cover {
+  width: clamp(150px, 17vw, 215px); height: clamp(200px, 23vw, 290px);
+  overflow: hidden;
+  border: 2px solid var(--dark);
+  box-shadow: 6px 6px 0 var(--dark);
+  transform: rotate(-3.5deg); transition: transform .35s; cursor: pointer;
+}
+.feat-cover:hover { transform: rotate(0deg) scale(1.03); }
+.feat-cover img { filter: grayscale(80%) contrast(1.05); }
+.feat-stars { color: var(--dark); font-size: .85rem; letter-spacing: 3px; margin-bottom: 13px; }
+.feat-desc { font-size: .86rem; color: var(--muted); line-height: 1.75; margin-bottom: 13px; }
+.feat-meta {
+  font-size: .74rem; color: var(--muted);
+  padding-top: 12px; border-top: 1.5px solid var(--border);
+}
+.feat-meta strong { color: var(--dark); }
+.feat-cta { text-align: center; }
+
+/* ════════════════════════════════════════
+   QUOTE — dark bg
+════════════════════════════════════════ */
+.quote-sec {
+  background: var(--dark);
+  padding: clamp(52px, 7vw, 92px) 5%;
+  position: relative; overflow: hidden;
+}
+.quote-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 64px); align-items: center;
+}
+.q-photos { position: relative; height: clamp(280px, 38vw, 460px); }
+.q-photo-a {
+  position: absolute; left: 0; top: 0;
+  width: 75%; height: 86%;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,.15);
+}
+.q-photo-a img { filter: grayscale(100%) contrast(1.1); }
+.q-photo-b {
+  position: absolute; right: 0; bottom: 0;
+  width: 46%; height: 52%;
+  overflow: hidden;
+  border: 3px solid var(--white);
+}
+.q-photo-b img { filter: grayscale(100%) contrast(1.1); }
+.q-text {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.1; letter-spacing: .02em;
+  color: var(--white); margin-bottom: 32px;
+}
+.btn-white {
+  display: inline-block; background: var(--white); color: var(--dark);
+  padding: 12px 26px;
+  font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  border: 2px solid var(--white);
+  transition: background .2s, color .2s;
+}
+.btn-white:hover { background: transparent; color: var(--white); }
+.q-platforms {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding-top: clamp(22px, 3.5vw, 40px);
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+.plat-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.15);
+  padding: 9px 18px;
+  color: var(--white); font-size: .72rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  transition: background .25s; cursor: pointer;
+}
+.plat-pill:hover { background: rgba(255,255,255,.15); }
+.plat-pill i { font-size: .75rem; }
+
+/* ════════════════════════════════════════
+   WHAT I DO
+════════════════════════════════════════ */
+.services {
+  background: var(--white);
+  padding: clamp(52px, 7vw, 92px) 5%;
+}
+.services-grid {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 72px); align-items: start;
+}
+.svc-h2 {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 4.8vw, 4.2rem);
+  line-height: .95; color: var(--dark);
+  margin-bottom: clamp(22px, 3vw, 38px);
+  letter-spacing: .02em;
+}
+.svc-item {
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2vw, 1.65rem);
+  letter-spacing: .03em;
+  color: var(--muted);
+  padding: clamp(9px, 1.3vw, 15px) 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: color .2s, padding-left .25s;
+}
+.svc-item:first-of-type { border-top: 1px solid var(--border); }
+.svc-item.on { color: var(--dark); padding-left: 12px; border-left: 3px solid var(--dark); }
+.svc-item:not(.on):hover { color: var(--dark); padding-left: 5px; }
+.svc-img {
+  height: clamp(280px, 40vw, 460px);
+  overflow: hidden;
+  border: 2px solid var(--dark);
+}
+.svc-img img { filter: grayscale(90%) contrast(1.05); }
+
+/* ════════════════════════════════════════
+   DARK BANNER
+════════════════════════════════════════ */
+.dark-banner {
+  position: relative; overflow: hidden;
+  min-height: clamp(300px, 42vw, 500px);
+  display: flex; align-items: center; justify-content: center; text-align: center;
+}
+.dark-banner-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.2) grayscale(100%);
+}
+.dark-banner-body {
+  position: relative; z-index: 2;
+  padding: clamp(36px, 5vw, 72px) clamp(20px, 5vw, 60px);
+  max-width: 720px; color: var(--white);
+}
+.dbn-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px;
+}
+.dbn-title {
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: .92; letter-spacing: .02em;
+  margin-bottom: 20px;
+}
+.dbn-sub {
+  font-size: .88rem; color: rgba(255,255,255,.5);
+  line-height: 1.75; max-width: 460px; margin: 0 auto 32px;
+}
+
+/* ════════════════════════════════════════
+   PRICING — 3 professional tiers
+════════════════════════════════════════ */
+.pricing-sec {
+  background: var(--white);
+  padding: clamp(60px, 8vw, 110px) 5%;
+  border-top: 2px solid var(--dark);
+}
+.pricing-header {
+  max-width: 640px; margin: 0 auto clamp(40px,5vw,72px);
+  text-align: center;
+}
+.pricing-eyebrow {
+  font-size: .72rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+}
+.pricing-h2 {
+  font-family: var(--display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: .92; letter-spacing: .02em;
+  color: var(--dark); margin-bottom: 16px;
+}
+.pricing-sub {
+  font-size: .92rem; color: var(--muted); line-height: 1.75;
+}
+.pricing-grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border: 2px solid var(--dark);
+  position: relative;
+}
+.p-card {
+  padding: clamp(28px,4vw,52px) clamp(22px,3vw,42px);
+  border-right: 2px solid var(--dark);
+  position: relative;
+  transition: background .3s;
+}
+.p-card:last-child { border-right: none; }
+.p-card.feat {
+  background: var(--dark); color: var(--white);
+}
+.p-popular {
+  position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
+  background: var(--white); color: var(--dark);
+  font-size: .62rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+  padding: 5px 14px;
+  border: 2px solid var(--dark); border-top: none;
+  white-space: nowrap;
+}
+.p-tier {
+  display: inline-block;
+  font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+  border: 1.5px solid currentColor; padding: 5px 12px;
+  margin-bottom: 22px; opacity: .6;
+}
+.p-name {
+  font-family: var(--display);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 1; letter-spacing: .03em;
+  margin-bottom: 6px;
+}
+.p-tag {
+  font-size: .86rem; font-style: italic;
+  color: var(--muted); margin-bottom: 24px;
+}
+.p-card.feat .p-tag { color: rgba(255,255,255,.5); }
+.p-price {
+  display: flex; align-items: flex-end; gap: 3px;
+  margin-bottom: 4px;
+}
+.p-cur {
+  font-family: var(--display);
+  font-size: 1.6rem; line-height: 1.35;
+}
+.p-num {
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 5vw, 5rem);
+  line-height: .85;
+}
+.p-per {
+  font-size: .78rem; color: var(--muted);
+  padding-bottom: 6px;
+}
+.p-card.feat .p-per { color: rgba(255,255,255,.4); }
+.p-note {
+  font-size: .74rem; color: var(--muted);
+  margin-bottom: 28px;
+}
+.p-card.feat .p-note { color: rgba(255,255,255,.35); }
+.p-div {
+  border: none; border-top: 1.5px solid var(--border);
+  margin-bottom: 26px;
+}
+.p-card.feat .p-div { border-color: rgba(255,255,255,.15); }
+.p-list {
+  list-style: none; margin-bottom: 36px;
+}
+.p-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: .88rem; color: var(--text);
+  line-height: 1.5; margin-bottom: 12px;
+}
+.p-card.feat .p-list li { color: rgba(255,255,255,.75); }
+.p-list li::before { content: '→'; font-weight: 900; flex-shrink: 0; margin-top: 1px; }
+.p-list li.dim::before { content: '–'; opacity: .3; }
+.p-list li.dim { opacity: .38; }
+.p-btn {
+  width: 100%; display: block; padding: 15px 12px;
+  text-align: center; font-family: var(--sans);
+  font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  cursor: pointer; border: 2px solid var(--dark);
+  transition: all .22s; text-decoration: none;
+  background: transparent; color: var(--dark);
+}
+.p-btn:hover { background: var(--dark); color: var(--white); }
+.p-btn.inv { background: var(--white); color: var(--dark); border-color: var(--white); }
+.p-btn.inv:hover { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
+.pricing-note {
+  text-align: center; margin-top: 28px;
+  font-size: .8rem; color: var(--muted);
+}
+.pricing-note a { color: var(--dark); font-weight: 700; }
+
+/* ════════════════════════════════════════
+   EXPERIENCE — angled collage
+════════════════════════════════════════ */
+.experience {
+  background: var(--cream);
+  padding: clamp(52px, 7vw, 92px) 5%;
+  text-align: center; overflow: hidden;
+  border-top: 2px solid var(--dark);
+}
+.exp-h2 {
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  line-height: .95; color: var(--dark);
+  margin-bottom: clamp(36px, 5vw, 56px);
+  letter-spacing: .02em;
+}
+.collage {
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: clamp(8px, 1.4vw, 18px); overflow: hidden;
+}
+.col-img {
+  overflow: hidden; flex-shrink: 0;
+  border: 2px solid var(--dark);
+  transition: transform .35s;
+}
+.col-img img { filter: grayscale(90%) contrast(1.1); }
+.col-img:hover { transform: scale(1.05) rotate(0deg) !important; }
+.col-img:nth-child(1) {
+  width: clamp(108px, 12vw, 185px); height: clamp(144px, 17vw, 248px);
+  transform: rotate(-5deg) translateY(18px);
+}
+.col-img:nth-child(2) {
+  width: clamp(138px, 16vw, 226px); height: clamp(184px, 22vw, 308px);
+  transform: rotate(2.5deg) translateY(-8px);
+}
+.col-img:nth-child(3) {
+  width: clamp(128px, 15vw, 212px); height: clamp(170px, 20vw, 286px);
+  transform: rotate(-3deg) translateY(13px);
+}
+.col-img:nth-child(4) {
+  width: clamp(100px, 12vw, 178px); height: clamp(134px, 16vw, 236px);
+  transform: rotate(4deg) translateY(20px);
+}
+
+/* ════════════════════════════════════════
+   WORDS OF READERS
+════════════════════════════════════════ */
+.readers {
+  background: var(--white);
+  padding: clamp(52px, 7vw, 92px) 5%;
+  border-top: 2px solid var(--dark);
+}
+.readers-inner { max-width: 1160px; margin: 0 auto; }
+.readers-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: clamp(24px, 3.5vw, 44px); flex-wrap: wrap; gap: 14px;
+}
+.readers-h2 {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: .95; color: var(--dark);
+  letter-spacing: .02em;
+}
+.readers-nav { display: flex; gap: 8px; }
+.r-arrow {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--dark); background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: .8rem; color: var(--dark);
+  transition: background .2s, color .2s;
+}
+.r-arrow:hover { background: var(--dark); color: var(--white); }
+.readers-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.8vw, 22px);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+}
+.r-card {
+  background: var(--cream);
+  padding: clamp(18px, 2.4vw, 28px);
+  border: 1.5px solid var(--dark);
+  transition: transform .3s;
+  scroll-snap-align: start;
+}
+.r-card:hover { transform: translateY(-4px); }
+.r-head { display: flex; gap: 11px; align-items: center; margin-bottom: 12px; }
+.r-avatar {
+  width: 44px; height: 44px; min-width: 44px;
+  overflow: hidden; background: var(--offwhite);
+  border: 2px solid var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 1.2rem; color: var(--dark);
+}
+.r-name { font-family: var(--display); font-size: 1rem; letter-spacing: .03em; color: var(--dark); line-height: 1.1; }
+.r-role { font-size: .68rem; color: var(--muted); margin-top: 2px; font-weight: 600; }
+.r-stars { color: var(--dark); font-size: .72rem; letter-spacing: 2px; margin-bottom: 9px; }
+.r-quote {
+  font-size: clamp(.86rem, 1.2vw, .95rem);
+  line-height: 1.7; color: var(--mid);
+  font-style: italic;
+}
+
+/* ════════════════════════════════════════
+   CONTACT
+════════════════════════════════════════ */
+.contact-sec {
+  background: var(--cream);
+  padding: clamp(52px, 7vw, 92px) 5% clamp(40px, 5vw, 68px);
+  border-top: 2px solid var(--dark);
+}
+.contact-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: clamp(24px, 4vw, 56px); align-items: center;
+}
+.contact-eyebrow {
+  display: block; font-size: .72rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 14px;
+}
+.contact-email {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 6.5vw, 6.5rem);
+  color: var(--dark); letter-spacing: .01em; line-height: .9;
+  margin-bottom: 28px; transition: opacity .3s;
+}
+.contact-email:hover { opacity: .65; }
+.contact-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.c-pill {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--white); border: 1.5px solid var(--dark);
+  padding: 9px 16px;
+  font-size: .74rem; font-weight: 700; color: var(--dark);
+  letter-spacing: .06em; text-transform: uppercase;
+  transition: background .2s, color .2s, transform .2s;
+  cursor: pointer;
+}
+.c-pill:hover { background: var(--dark); color: var(--white); transform: translateY(-2px); }
+.contact-photo {
+  width: clamp(100px, 15vw, 195px); height: clamp(135px, 20vw, 250px);
+  overflow: hidden; flex-shrink: 0;
+  border: 2px solid var(--dark);
+}
+.contact-photo img { filter: grayscale(100%) contrast(1.1); }
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+footer { background: var(--dark); padding: 0 5%; }
+.ft-top {
+  max-width: 1160px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,.07);
+  flex-wrap: wrap; gap: 16px;
+}
+.ft-logo {
+  font-family: var(--display); font-size: 1.6rem;
+  letter-spacing: .05em; color: var(--white);
+}
+.ft-nav { display: flex; gap: 18px; flex-wrap: wrap; }
+.ft-nav a {
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.35); transition: color .2s;
+}
+.ft-nav a:hover { color: var(--white); }
+.ft-book {
+  background: var(--white); color: var(--dark);
+  padding: 9px 20px;
+  font-size: .74rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+  border: 2px solid var(--white);
+  transition: background .2s, color .2s; white-space: nowrap; cursor: pointer;
+}
+.ft-book:hover { background: transparent; color: var(--white); }
+.ft-bot {
+  max-width: 1160px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0; flex-wrap: wrap; gap: 10px;
+}
+.ft-copy { font-size: .66rem; color: rgba(255,255,255,.22); }
+.ft-social { display: flex; gap: 7px; }
+.ft-social a {
+  width: 30px; height: 30px;
+  border: 1px solid rgba(255,255,255,.12);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.32); font-size: .74rem;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.ft-social a:hover { background: var(--white); border-color: var(--white); color: var(--dark); }
+
+/* ════════════════════════════════════════
+   MODALS
+════════════════════════════════════════ */
+.overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  display: none; align-items: center; justify-content: center; padding: 16px;
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--white); width: 100%; max-width: 440px;
+  max-height: 90vh; overflow-y: auto;
+  padding: clamp(22px, 3.5vw, 32px);
+  position: relative; animation: mIn .3s ease;
+  border: 2px solid var(--dark);
+}
+.modal.wide { max-width: 560px; }
+@keyframes mIn { from { transform: scale(.93) translateY(14px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+.m-x {
+  position: absolute; top: 12px; right: 12px;
+  width: 28px; height: 28px;
+  background: var(--cream); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .88rem; cursor: pointer; transition: background .2s;
+}
+.m-x:hover { background: var(--dark); color: var(--white); }
+.m-eyebrow { font-size: .68rem; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 4px; }
+.m-title { font-family: var(--display); font-size: 2rem; letter-spacing: .03em; color: var(--dark); margin-bottom: 18px; line-height: 1; }
+
+/* step dots */
+.step-dots { display: flex; gap: 4px; margin-bottom: 18px; }
+.sdot { flex: 1; height: 3px; background: var(--border); transition: background .3s; }
+.sdot.done { background: var(--dark); }
+
+/* form steps */
+.fstep { display: none; }
+.fstep.on { display: block; }
+.fs-num { font-size: .66rem; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 2px; }
+.fs-title { font-family: var(--display); font-size: 1.3rem; letter-spacing: .03em; color: var(--dark); margin-bottom: 13px; line-height: 1; }
+.fg { margin-bottom: 10px; }
+.fg label { display: block; font-size: .68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
+.fg input, .fg textarea, .fg select {
+  width: 100%; padding: 10px 13px;
+  border: 1.5px solid var(--border);
+  font-family: var(--sans); font-size: .86rem; color: var(--dark);
+  background: var(--cream); outline: none;
+  transition: border-color .2s, background .2s;
+}
+.fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--dark); background: var(--white); }
+.fg textarea { resize: vertical; min-height: 74px; }
+.fg-check { display: flex; align-items: flex-start; gap: 9px; }
+.fg-check input { width: auto; margin-top: 2px; }
+.fg-check span { font-size: .82rem; color: var(--text); line-height: 1.5; }
+.form-nav { display: flex; gap: 8px; margin-top: 10px; }
+.fbtn {
+  flex: 1; padding: 11px;
+  font-size: .8rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+  background: var(--dark); color: var(--white); cursor: pointer;
+  border: 2px solid var(--dark);
+  transition: background .2s, color .2s;
+}
+.fbtn:hover { background: transparent; color: var(--dark); }
+.fbtn.sec { background: var(--cream); color: var(--dark); border: 1.5px solid var(--border); }
+.fbtn.sec:hover { background: var(--border); }
+
+/* Case popup */
+.case-img { width: 100%; height: 225px; overflow: hidden; margin-bottom: 16px; border: 1.5px solid var(--border); }
+.case-img img { filter: grayscale(70%) contrast(1.05); }
+.case-badge { display: inline-block; background: var(--dark); color: var(--white); padding: 4px 14px; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 15px; }
+.case-g { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 13px; }
+.case-full { grid-column: 1 / -1; }
+.cf strong { display: block; font-size: .64rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 3px; }
+.cf p { font-size: .82rem; color: var(--dark); line-height: 1.6; }
+
+/* Slot form */
+.sf-in {
+  width: 100%; padding: 10px 13px; margin-bottom: 10px;
+  border: 1.5px solid var(--border);
+  font-family: var(--sans); font-size: .86rem; color: var(--dark);
+  background: var(--cream); outline: none; transition: border-color .2s;
+}
+.sf-in:focus { border-color: var(--dark); background: var(--white); }
+
+/* ════════════════════════════════════════
+   REVEAL ANIMATIONS
+════════════════════════════════════════ */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .2s; }
+.d3 { transition-delay: .3s; }
+
+/* ════════════════════════════════════════
+   RESPONSIVE — TABLET (≤960px)
+════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .nav-menu-pill { display: none; }
+  .burger { display: flex; }
+
+  .intro-grid { grid-template-columns: 1fr; gap: 28px; }
+  .intro-portrait { height: clamp(180px, 38vw, 300px); }
+
+  .feat-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .feat-cover-wrap { display: none; }
+
+  .quote-inner { grid-template-columns: 1fr; gap: 32px; }
+  .q-photos { height: clamp(260px, 38vw, 380px); }
+
+  .services-grid { grid-template-columns: 1fr; gap: 28px; }
+  .svc-img { height: clamp(260px, 38vw, 360px); }
+
+  .readers-grid { grid-template-columns: 1fr 1fr; }
+
+  .contact-inner { grid-template-columns: 1fr; }
+  .contact-photo { display: none; }
+
+  /* Pricing: stack to single column */
+  .pricing-grid { grid-template-columns: 1fr; border-right: none; }
+  .p-card { border-right: none; border-bottom: 2px solid var(--dark); }
+  .p-card:last-child { border-bottom: none; }
+  .p-card.feat { border-right: none; }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤640px)
+════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .hero-body { flex-direction: column; padding-top: 28px; align-items: flex-start; }
+  .hero-text { max-width: 100%; }
+  .hero-photo-wrap {
+    position: relative; right: auto; top: auto; bottom: auto;
+    width: 100%; padding-top: 0; margin-top: 24px;
+    justify-content: center; display: flex;
+  }
+  .hero-photo-card { width: 68%; height: clamp(220px, 55vw, 320px); }
+
+  .seam-name { font-size: clamp(2.6rem, 17vw, 5.5rem); white-space: nowrap; }
+
+  .feat-grid { grid-template-columns: 1fr; gap: 20px; }
+  .feat-cover-wrap { display: flex; }
+  .feat-cover { width: clamp(140px, 38vw, 195px); height: clamp(185px, 50vw, 258px); }
+
+  .readers-grid { grid-template-columns: 1fr; }
+
+  .collage { flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .col-img:nth-child(1),
+  .col-img:nth-child(2),
+  .col-img:nth-child(3),
+  .col-img:nth-child(4) {
+    width: clamp(98px, 42vw, 148px);
+    height: clamp(130px, 56vw, 194px);
+  }
+  .col-img:nth-child(1) { transform: rotate(-3deg); }
+  .col-img:nth-child(2) { transform: rotate(2deg) translateY(0); }
+  .col-img:nth-child(3) { transform: rotate(-2deg); }
+  .col-img:nth-child(4) { transform: rotate(3deg); }
+
+  .plat-pill { padding: 7px 11px; font-size: .68rem; }
+  .q-platforms { gap: 7px; }
+
+  .ft-top { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .ft-bot { flex-direction: column; align-items: flex-start; }
+
+  .contact-email { font-size: clamp(1.8rem, 8vw, 3rem); }
+  .contact-pills { gap: 7px; }
+
+  .pricing-h2 { font-size: clamp(2.5rem, 9vw, 4rem); }
+  .p-num { font-size: clamp(3rem, 10vw, 4.5rem); }
+}
+
+@media (max-width: 400px) {
+  .hero-h1 { font-size: clamp(2.2rem, 9vw, 3rem); }
+  .seam-name { font-size: clamp(1.9rem, 15vw, 3rem); }
+  .contact-email { font-size: clamp(1.5rem, 7.5vw, 2.2rem); }
+}
+</style>
+</head>
+
+<body id="top">
+
+<!-- ══════════════════════════════════════
+     MOBILE NAV OVERLAY
+══════════════════════════════════════ -->
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#top"      onclick="closeMob()">Home</a>
+  <a href="#about"    onclick="closeMob()">The Story</a>
+  <a href="#work"     onclick="closeMob()">The Work</a>
+  <a href="#services" onclick="closeMob()">The Craft</a>
+  <a href="#contact"  onclick="closeMob()">Connect</a>
+  <button class="mob-nav-cta" onclick="closeMob(); openSlot();">Book a Call</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-logo">ShadyLabs</a>
+
+  <div class="nav-links">
+    <a href="#about">The Story</a>
+    <a href="#work">The Work</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Connect</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-menu-pill" onclick="openSlot()">
+      <i class="fa-solid fa-bars"></i>&nbsp;Menu
+    </button>
+    <div class="burger" id="burger" onclick="toggleMob()" role="button" aria-label="Toggle menu" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-body">
+
+    <div class="hero-text">
+      <p class="hero-eyebrow">Web Design &amp; Development Studio · Sri Lanka</p>
+      <h1 class="hero-h1">Building<br>worlds that<br><em>convert</em></h1>
+      <a href="#work" class="hero-pill">
+        <i class="fa-solid fa-share-nodes"></i>&nbsp;Follow the Journey
+      </a>
+    </div>
+
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-card">
+        <img
+          src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=700&auto=format&fit=crop&q=80"
+          alt="ShadyLabs web design studio" loading="eager">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Brand name across dark→cream seam -->
+<div class="seam-wrap" aria-hidden="true">
+  <span class="seam-name">ShadyLabs</span>
+</div>
+
+<!-- ══════════════════════════════════════
+     INTRO — "The Story"
+══════════════════════════════════════ -->
+<section class="intro" id="about">
+  <div class="intro-grid">
+
+    <!-- Left: portrait + bio -->
+    <div class="reveal">
+      <div class="intro-portrait">
+        <img
+          src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=900&auto=format&fit=crop&q=80"
+          alt="Kavindu Wasalamudali — Founder, ShadyLabs" loading="lazy">
+      </div>
+      <h2 class="intro-heading">
+        ShadyLabs is a <u>Sri Lanka-based</u> digital forge — an award-recognised studio brave enough to build brands that get seen
+      </h2>
+      <p class="intro-body">
+        We turn client visions into high-performance digital experiences. To challenge the ordinary, and to bring brands online to stand out — to create something that converts. That's our story. We craft SEO-optimised, conversion-focused websites for brands, creators, and businesses who refuse to blend in.
+      </p>
+      <button class="btn-red" onclick="openForm()">Start a Project →</button>
+    </div>
+
+    <!-- Right: project link list -->
+    <div class="reveal d1">
+      <div class="intro-link" onclick="openCase('katalyst')">
+        <div class="intro-thumb">
+          <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/katalystos.JPG" alt="Katalyst OS" loading="lazy">
+        </div>
+        <div>
+          <h4>Katalyst OS — AI Automation</h4>
+          <p>Generating personalised DMs, emails & onboarding flows via Claude API + Supabase backend.</p>
+        </div>
+      </div>
+      <div class="intro-link" onclick="openCase('wingednika')">
+        <div class="intro-thumb">
+          <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/wingednika.jpg" alt="Winged Nika" loading="lazy">
+        </div>
+        <div>
+          <h4>Winged Nika — Premium Jewelry Store</h4>
+          <p>CMS-powered ecommerce with PayPal & smart cart for a global luxury jewelry brand.</p>
+        </div>
+      </div>
+      <div class="intro-link" onclick="openCase('opiumtrim')">
+        <div class="intro-thumb">
+          <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/opiumtrim.jpg" alt="Opiumtrim" loading="lazy">
+        </div>
+        <div>
+          <h4>Opiumtrim — Streetwear Pre-Launch</h4>
+          <p>High-converting pre-launch landing page with email capture for an urban clothing brand.</p>
+        </div>
+      </div>
+      <div class="intro-link" onclick="openCase('noirframe')">
+        <div class="intro-thumb">
+          <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/noirframe.JPG" alt="NoirFrame" loading="lazy">
+        </div>
+        <div>
+          <h4>NoirFrame — Creator Portfolio Template</h4>
+          <p>Ultra-minimal Notion-style portfolio trusted by creators and freelancers worldwide.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FEATURED WORK
+══════════════════════════════════════ -->
+<section class="featured" id="work">
+  <div class="featured-inner">
+
+    <p class="featured-label reveal">The featured work</p>
+
+    <div class="feat-grid reveal">
+
+      <!-- Titles column -->
+      <div>
+        <div class="work-title-item on" onclick="switchWork(this,'katalyst')">Katalyst OS</div>
+        <div class="work-title-item"    onclick="switchWork(this,'wingednika')">Winged Nika</div>
+        <div class="work-title-item"    onclick="switchWork(this,'opiumtrim')">Opiumtrim</div>
+        <div class="work-title-item"    onclick="switchWork(this,'noirframe')">NoirFrame</div>
+      </div>
+
+      <!-- Cover image -->
+      <div class="feat-cover-wrap">
+        <div class="feat-cover" id="featCover" onclick="openCase('katalyst')">
+          <img id="featImg"
+            src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/katalystos.JPG"
+            alt="Katalyst OS" loading="lazy">
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div>
+        <div class="feat-stars" id="featStars">★★★★★</div>
+        <p class="feat-desc" id="featDesc">AI automation tool generating personalised DMs, emails & onboarding flows built on Supabase and Claude API for real-time intelligent content creation.</p>
+        <div class="feat-meta" id="featMeta"><strong>Category:</strong> AI Tool &nbsp;·&nbsp; <strong>Budget:</strong> $1,500 &nbsp;·&nbsp; <strong>Location:</strong> Sri Lanka</div>
+        <br>
+        <button class="btn-red" id="featCaseBtn" onclick="openCase('katalyst')" style="margin-top:6px;">View Case Study →</button>
+      </div>
+
+    </div>
+
+    <div class="feat-cta reveal" style="margin-top:8px;">
+      <button class="btn-red" onclick="openForm()" style="padding:11px 28px;">Start Your Own Story →</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     QUOTE — dark bg
+══════════════════════════════════════ -->
+<section class="quote-sec">
+  <div class="quote-inner">
+
+    <!-- Overlapping photos -->
+    <div class="q-photos reveal">
+      <div class="q-photo-a">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&auto=format&fit=crop&q=80" alt="ShadyLabs craft" loading="lazy">
+      </div>
+      <div class="q-photo-b">
+        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&auto=format&fit=crop&q=80" alt="Kavindu Wasalamudali" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Bold quote -->
+    <div class="reveal d1">
+      <p class="q-text">
+        "I turn brand visions into pixels, and pixels into impact. Web design isn't just what I do — it's how I forge ideas, dare boundaries, and tell the stories that convert."
+      </p>
+      <button class="btn-white" onclick="openForm()">Forge Something Together →</button>
+    </div>
+
+    <!-- Platform pills row -->
+    <div class="q-platforms reveal">
+      <a href="https://www.instagram.com/shadylabs.dev" target="_blank" rel="noopener" class="plat-pill">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
+      <a href="https://www.linkedin.com/in/shady-labs-b4a641399" target="_blank" rel="noopener" class="plat-pill">
+        <i class="fa-brands fa-linkedin"></i> LinkedIn
+      </a>
+      <a href="https://shadylabs.gumroad.com/" target="_blank" rel="noopener" class="plat-pill">
+        <i class="fa-solid fa-bag-shopping"></i> Gumroad
+      </a>
+      <a href="mailto:digitalclarity.shadylabs@gmail.com" class="plat-pill">
+        <i class="fa-solid fa-envelope"></i> Email
+      </a>
+      <a href="https://wa.me/?text=Hey%20ShadyLabs!" target="_blank" rel="noopener" class="plat-pill">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     WHAT I DO — "The Craft"
+══════════════════════════════════════ -->
+<section class="services" id="services">
+  <div class="services-grid">
+
+    <div class="reveal">
+      <h2 class="svc-h2">The tools of our trade</h2>
+      <div class="svc-item on"  onclick="activeSvc(this)">Web Design</div>
+      <div class="svc-item"     onclick="activeSvc(this)">Development &amp; Code</div>
+      <div class="svc-item"     onclick="activeSvc(this)">Award-Winning Builds</div>
+      <div class="svc-item"     onclick="activeSvc(this)">E-commerce</div>
+      <div class="svc-item"     onclick="activeSvc(this)">SEO &amp; Analytics</div>
+      <div class="svc-item"     onclick="activeSvc(this)">Brand Strategy</div>
+    </div>
+
+    <div class="svc-img reveal d1">
+      <img
+        src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&auto=format&fit=crop&q=80"
+        alt="ShadyLabs strategic web design" loading="lazy">
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     DARK BANNER
+══════════════════════════════════════ -->
+<section class="dark-banner">
+  <img class="dark-banner-bg"
+    src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740?w=1800&auto=format&fit=crop&q=80"
+    alt="ShadyLabs digital precision" loading="lazy">
+  <div class="dark-banner-body reveal">
+    <p class="dbn-eyebrow">The ShadyLabs Promise</p>
+    <h2 class="dbn-title">Stay Brave.<br>Build Bold.</h2>
+    <p class="dbn-sub">Not cookie-cutter templates. Every website is forged with intention, strategy, and a relentless belief in craft that moves your business forward.</p>
+    <button class="btn-white" onclick="openSlot()">Book a Free Strategy Call →</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PRICING — 3 PROFESSIONAL TIERS
+══════════════════════════════════════ -->
+<section class="pricing-sec" id="pricing">
+  <div class="pricing-header reveal">
+    <p class="pricing-eyebrow">Choose your path</p>
+    <h2 class="pricing-h2">Pick Your Build</h2>
+    <p class="pricing-sub">Every great brand starts with a decision. Choose the plan that matches where your story is headed — and let's build it together.</p>
+  </div>
+
+  <div class="pricing-grid reveal">
+
+    <!-- TIER 1: Blueprint -->
+    <div class="p-card">
+      <div class="p-tier">Tier 01</div>
+      <div class="p-name">The Blueprint</div>
+      <div class="p-tag">Plant your flag online.</div>
+      <div class="p-price">
+        <span class="p-cur">$</span>
+        <span class="p-num">299</span>
+      </div>
+      <p class="p-per">one-time investment</p>
+      <p class="p-note">Delivered in 7 business days</p>
+      <hr class="p-div">
+      <ul class="p-list">
+        <li>Single high-converting landing page</li>
+        <li>Mobile-first responsive design</li>
+        <li>On-page SEO foundation</li>
+        <li>Contact form + email integration</li>
+        <li>2 revision rounds</li>
+        <li class="dim">CMS / blog system</li>
+        <li class="dim">E-commerce integration</li>
+        <li class="dim">AI-powered features</li>
+      </ul>
+      <button class="p-btn" onclick="openForm()">Start as Blueprint →</button>
+    </div>
+
+    <!-- TIER 2: Craftsman (FEATURED) -->
+    <div class="p-card feat">
+      <div class="p-popular">Most chosen</div>
+      <div class="p-tier">Tier 02</div>
+      <div class="p-name">The Craftsman</div>
+      <div class="p-tag">A full world for your brand.</div>
+      <div class="p-price">
+        <span class="p-cur">$</span>
+        <span class="p-num">799</span>
+      </div>
+      <p class="p-per">one-time investment</p>
+      <p class="p-note">Delivered in 14 business days</p>
+      <hr class="p-div">
+      <ul class="p-list">
+        <li>Up to 6 custom pages</li>
+        <li>CMS / blog system setup</li>
+        <li>PayPal or Stripe checkout</li>
+        <li>Advanced SEO + Google Analytics</li>
+        <li>Speed & performance optimisation</li>
+        <li>4 revision rounds</li>
+        <li>1 month of post-launch support</li>
+        <li class="dim">AI-powered features</li>
+      </ul>
+      <button class="p-btn inv" onclick="openForm()">Start as Craftsman →</button>
+    </div>
+
+    <!-- TIER 3: Legend -->
+    <div class="p-card">
+      <div class="p-tier">Tier 03</div>
+      <div class="p-name">The Legend</div>
+      <div class="p-tag">Your most powerful build.</div>
+      <div class="p-price">
+        <span class="p-cur">$</span>
+        <span class="p-num">1499</span>
+        <span class="p-per" style="margin-left:4px;">+</span>
+      </div>
+      <p class="p-per">custom investment</p>
+      <p class="p-note">Delivered in 21 business days</p>
+      <hr class="p-div">
+      <ul class="p-list">
+        <li>Everything in The Craftsman</li>
+        <li>Full e-commerce store build</li>
+        <li>AI-powered features (Claude API)</li>
+        <li>Custom CMS + admin dashboard</li>
+        <li>Priority SEO strategy & setup</li>
+        <li>Unlimited revisions</li>
+        <li>3 months of post-launch support</li>
+        <li>Strategy call included</li>
+      </ul>
+      <button class="p-btn" onclick="openForm()">Become a Legend →</button>
+    </div>
+
+  </div>
+
+  <p class="pricing-note reveal">
+    Not sure which tier fits? <a href="#" onclick="openSlot(); return false;">Book a free 20-min call</a> and we'll figure it out together.
+  </p>
+</section>
+
+<!-- ══════════════════════════════════════
+     EXPERIENCE — angled collage
+══════════════════════════════════════ -->
+<section class="experience">
+  <h2 class="exp-h2 reveal">Experience the<br>Work in Action</h2>
+  <div class="collage reveal">
+    <div class="col-img">
+      <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/noirframe.JPG" alt="NoirFrame" loading="lazy">
+    </div>
+    <div class="col-img">
+      <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/katalystos.JPG" alt="Katalyst OS" loading="lazy">
+    </div>
+    <div class="col-img">
+      <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/wingednika.jpg" alt="Winged Nika" loading="lazy">
+    </div>
+    <div class="col-img">
+      <img src="https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/opiumtrim.jpg" alt="Opiumtrim" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     WORDS FROM THE JOURNEY
+══════════════════════════════════════ -->
+<section class="readers">
+  <div class="readers-inner">
+    <div class="readers-top reveal">
+      <h2 class="readers-h2">Words from<br>the Journey</h2>
+      <div class="readers-nav">
+        <button class="r-arrow" onclick="nudge(-1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="r-arrow" onclick="nudge(1)"  aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="readers-grid reveal" id="rgrid">
+      <div class="r-card">
+        <div class="r-head">
+          <div class="r-avatar">N</div>
+          <div>
+            <div class="r-name">Narina Kasporova</div>
+            <div class="r-role">Founder · Winged Nika</div>
+          </div>
+        </div>
+        <div class="r-stars">★★★★★</div>
+        <p class="r-quote">"I loved working with ShadyLabs. They took our preferences for customising the page and the end product is absolutely gorgeous — beyond what I imagined."</p>
+      </div>
+      <div class="r-card">
+        <div class="r-head">
+          <div class="r-avatar">Ni</div>
+          <div>
+            <div class="r-name">Nicholas</div>
+            <div class="r-role">Founder · Opiumtrim</div>
+          </div>
+        </div>
+        <div class="r-stars">★★★★★</div>
+        <p class="r-quote">"Impressed with the attention to detail and professionalism. The website came out just the way we wanted — clean, fast, and exactly on-brand."</p>
+      </div>
+      <div class="r-card">
+        <div class="r-head">
+          <div class="r-avatar">M</div>
+          <div>
+            <div class="r-name">Michael Chen</div>
+            <div class="r-role">Creator · NoirFrame</div>
+          </div>
+        </div>
+        <div class="r-stars">★★★★★</div>
+        <p class="r-quote">"ShadyLabs delivered beyond expectations. Their attention to detail is unmatched — the NoirFrame template changed how I present my work online."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<section class="contact-sec" id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <span class="contact-eyebrow">Start the Adventure</span>
+      <a class="contact-email" href="mailto:digitalclarity.shadylabs@gmail.com">
+        hello@shadylabs
+      </a>
+      <div class="contact-pills">
+        <a href="https://www.instagram.com/shadylabs.dev" target="_blank" rel="noopener" class="c-pill">
+          <i class="fa-brands fa-instagram"></i> Instagram
+        </a>
+        <a href="https://www.linkedin.com/in/shady-labs-b4a641399" target="_blank" rel="noopener" class="c-pill">
+          <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+        </a>
+        <a href="https://shadylabs.gumroad.com/" target="_blank" rel="noopener" class="c-pill">
+          <i class="fa-solid fa-bag-shopping"></i> Shop
+        </a>
+        <button class="c-pill" onclick="openSlot()">
+          <i class="fa-solid fa-calendar-check"></i> Book a Call
+        </button>
+      </div>
+    </div>
+    <div class="contact-photo reveal d1">
+      <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80" alt="ShadyLabs founder" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <div class="ft-top">
+    <span class="ft-logo">ShadyLabs</span>
+    <nav class="ft-nav">
+      <a href="#top">Home</a>
+      <a href="#about">The Story</a>
+      <a href="#work">The Work</a>
+      <a href="#services">The Craft</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Connect</a>
+    </nav>
+    <button class="ft-book" onclick="openSlot()">Book a Call →</button>
+  </div>
+  <div class="ft-bot">
+    <span class="ft-copy">© 2025 ShadyLabs — Kavindu Wasalamudali · All rights reserved.</span>
+    <div class="ft-social">
+      <a href="https://www.instagram.com/shadylabs.dev" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/shady-labs-b4a641399" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://shadylabs.gumroad.com/" target="_blank" rel="noopener" aria-label="Gumroad"><i class="fa-solid fa-bag-shopping"></i></a>
+      <a href="https://wa.me/?text=Hey%20ShadyLabs!" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     MODAL: Multi-step project form
+══════════════════════════════════════ -->
+<div class="overlay" id="formOverlay">
+  <div class="modal wide">
+    <button class="m-x" onclick="closeModal('formOverlay')">✕</button>
+    <p class="m-eyebrow">Start a Project</p>
+    <h2 class="m-title">Let's forge something great</h2>
+    <div class="step-dots" id="sDots"></div>
+    <form id="planForm" action="https://formsubmit.co/digitalclarity.shadylabs@gmail.com" method="POST">
+
+      <div class="fstep">
+        <p class="fs-num">Step 1 of 9</p>
+        <p class="fs-title">What's your name?</p>
+        <div class="fg"><label>Full Name</label><input type="text" name="name" placeholder="Your full name" required></div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 2 of 9</p>
+        <p class="fs-title">How do we reach you?</p>
+        <div class="fg"><label>Email Address</label><input type="email" name="email" placeholder="you@email.com" required></div>
+        <div class="fg"><label>WhatsApp / Phone (optional)</label><input type="text" name="phone" placeholder="+1 234 567 8900"></div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 3 of 9</p>
+        <p class="fs-title">What's your brand called?</p>
+        <div class="fg"><label>Business / Brand Name</label><input type="text" name="brand" placeholder="e.g. Winged Nika"></div>
+        <div class="fg"><label>Industry / Niche</label><input type="text" name="industry" placeholder="e.g. Fashion, SaaS, Coaching"></div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 4 of 9</p>
+        <p class="fs-title">What do you need built?</p>
+        <div class="fg"><label>Project Type</label>
+          <select name="project_type">
+            <option>Landing Page</option>
+            <option>Full Website</option>
+            <option>E-commerce Store</option>
+            <option>Portfolio / Personal Brand</option>
+            <option>AI-Powered Tool</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 5 of 9</p>
+        <p class="fs-title">Do you have a website already?</p>
+        <div class="fg"><label>Current Website URL (if any)</label><input type="text" name="current_url" placeholder="https://yoursite.com"></div>
+        <div class="fg"><label>What do you dislike about it?</label><textarea name="current_issues" placeholder="Tell us what's not working..."></textarea></div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 6 of 9</p>
+        <p class="fs-title">What's your budget range?</p>
+        <div class="fg"><label>Estimated Budget</label>
+          <select name="budget">
+            <option>Under $300</option>
+            <option>$300 – $800</option>
+            <option>$800 – $1,500</option>
+            <option>$1,500 – $3,000</option>
+            <option>$3,000+</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 7 of 9</p>
+        <p class="fs-title">When do you need it live?</p>
+        <div class="fg"><label>Preferred Launch Date</label><input type="date" name="launch_date"></div>
+        <div class="fg"><label>Is this deadline flexible?</label>
+          <select name="deadline_flex"><option>Yes, flexible</option><option>No, hard deadline</option></select>
+        </div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 8 of 9</p>
+        <p class="fs-title">Describe your vision</p>
+        <div class="fg"><label>What's the goal of this website?</label><textarea name="goal" placeholder="e.g. Sell products, generate leads, showcase work..."></textarea></div>
+        <div class="fg"><label>Any design inspiration / references?</label><input type="text" name="inspiration" placeholder="Links or brand names you admire"></div>
+      </div>
+
+      <div class="fstep">
+        <p class="fs-num">Step 9 of 9</p>
+        <p class="fs-title">Almost there — one last thing</p>
+        <div class="fg fg-check"><input type="checkbox" name="agree" required><span>I agree to be contacted by ShadyLabs regarding my project enquiry.</span></div>
+        <div class="fg"><label>Anything else we should know?</label><textarea name="extra" placeholder="Extra details, questions, or requests..."></textarea></div>
+        <input type="hidden" name="_subject" value="🚀 New Project Enquiry — ShadyLabs">
+        <input type="hidden" name="_captcha" value="false">
+      </div>
+
+      <div class="form-nav">
+        <button type="button" class="fbtn sec" id="prevBtn" onclick="fNav(-1)" style="display:none;">← Back</button>
+        <button type="button" class="fbtn" id="nextBtn" onclick="fNav(1)">Next →</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL: Case study
+══════════════════════════════════════ -->
+<div class="overlay" id="caseOverlay">
+  <div class="modal wide">
+    <button class="m-x" onclick="closeModal('caseOverlay')">✕</button>
+    <div class="case-img"><img id="cImg" src="" alt=""></div>
+    <span class="case-badge" id="cCost"></span>
+    <h2 class="m-title" id="cName"></h2>
+    <div class="case-g">
+      <div class="cf case-full"><strong>Overview</strong><p id="cOverview"></p></div>
+      <div class="cf"><strong>The Challenge</strong><p id="cChallenge"></p></div>
+      <div class="cf"><strong>The Solution</strong><p id="cSolution"></p></div>
+      <div class="cf case-full"><strong>The Outcome</strong><p id="cResult"></p></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-red" id="cVisit">Visit Live Site →</button>
+      <button class="btn-red" onclick="closeModal('caseOverlay'); openForm();" style="background:transparent;color:var(--dark);border-color:var(--dark);">Start My Project →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL: Book a slot
+══════════════════════════════════════ -->
+<div class="overlay" id="slotOverlay">
+  <div class="modal">
+    <button class="m-x" onclick="closeModal('slotOverlay')">✕</button>
+    <p class="m-eyebrow">Free Strategy Call</p>
+    <h2 class="m-title">Book your slot</h2>
+    <p style="font-size:.84rem;color:var(--muted);line-height:1.7;margin-bottom:18px;">20 minutes. No fluff. Just honest talk about your brand and what we can build together.</p>
+    <form action="https://formsubmit.co/digitalclarity.shadylabs@gmail.com" method="POST">
+      <input class="sf-in" type="text"   name="name"  placeholder="Your full name" required>
+      <input class="sf-in" type="email"  name="email" placeholder="Email address" required>
+      <input class="sf-in" type="text"   name="brand" placeholder="Brand / company name">
+      <input class="sf-in" type="date"   name="preferred_date">
+      <select class="sf-in" name="timezone">
+        <option value="">Select your timezone</option>
+        <option>GMT+5:30 (Sri Lanka / India)</option>
+        <option>GMT+3 (East Africa)</option>
+        <option>GMT+0 (UK / Portugal)</option>
+        <option>GMT+1 (Central Europe)</option>
+        <option>GMT+2 (Armenia / Eastern Europe)</option>
+        <option>GMT+4 (UAE / Mauritius)</option>
+        <option>GMT+8 (Singapore / China)</option>
+        <option>GMT+10 (Australia)</option>
+        <option>EST (USA / Canada)</option>
+        <option>PST (USA)</option>
+      </select>
+      <input type="hidden" name="_subject" value="📅 New Strategy Call — ShadyLabs">
+      <input type="hidden" name="_captcha" value="false">
+      <button type="submit" class="btn-red" style="width:100%;padding:13px;text-align:center;display:block;margin-top:4px;">
+        Confirm My Slot →
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT — ALL FUNCTIONS PRESERVED
+══════════════════════════════════════ -->
+<script>
+/* ── Nav scroll ─────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('stuck', window.scrollY > 48);
+}, { passive: true });
+
+/* ── Mobile nav ─────────────────────── */
+let isOpen = false;
+function toggleMob() {
+  isOpen = !isOpen;
+  document.getElementById('mobNav').classList.toggle('open', isOpen);
+  document.getElementById('burger').classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+function closeMob() {
+  isOpen = false;
+  document.getElementById('mobNav').classList.remove('open');
+  document.getElementById('burger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── Modal helpers ───────────────────── */
+function openModal(id)  { document.getElementById(id).classList.add('open');    document.body.style.overflow = 'hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = '';       }
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) closeModal(o.id); });
+});
+function openForm() { fStep = 0; renderStep(); openModal('formOverlay'); }
+function openSlot() { openModal('slotOverlay'); }
+
+/* ── Work data ───────────────────────── */
+const WD = {
+  katalyst: {
+    name: 'Katalyst OS', cost: '$1,500',
+    img:  'https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/katalystos.JPG',
+    desc: 'AI automation tool generating personalized DMs, emails & onboarding flows via Supabase + Claude API.',
+    meta: '<strong>Category:</strong> AI Tool &nbsp;·&nbsp; <strong>Budget:</strong> $1,500 &nbsp;·&nbsp; <strong>Location:</strong> Sri Lanka',
+    overview:   'AI automation tool that generates personalized DMs, emails, onboarding questions and scopes for businesses.',
+    challenge:  'Needed a full system running on AI integration to generate personalized business content with realtime performance data.',
+    solution:   'Built a secured Supabase database and integrated Claude API endpoints that seamlessly connects the UI and backend.',
+    result:     'A fully functional AI automation tool that works with data and decisions, giving tailored content for each user.',
+    link: 'https://katalyst.info-katalystos.workers.dev/'
+  },
+  wingednika: {
+    name: 'Winged Nika', cost: '$599 + Add-ons',
+    img:  'https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/wingednika.jpg',
+    desc: 'CMS-powered ecommerce store for a premium jewelry brand with PayPal integration and smart cart.',
+    meta: '<strong>Category:</strong> E-commerce &nbsp;·&nbsp; <strong>Budget:</strong> $599+ &nbsp;·&nbsp; <strong>Location:</strong> Armenia',
+    overview:   'Custom CMS-powered ecommerce website for a premium jewelry brand shipping globally.',
+    challenge:  'Needed secure payment integration, easy product management, and premium branding.',
+    solution:   'Built with CMS structure, PayPal integration, smart cart, and a strong SEO foundation.',
+    result:     'Increased brand authority and streamlined global order processing, boosting conversions significantly.',
+    link: 'https://wingednika.github.io/winged-nika/'
+  },
+  opiumtrim: {
+    name: 'Opiumtrim', cost: '$399',
+    img:  'https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/opiumtrim.jpg',
+    desc: 'Pre-launch hype-building landing page with email capture for an urban streetwear brand.',
+    meta: '<strong>Category:</strong> Landing Page &nbsp;·&nbsp; <strong>Budget:</strong> $399 &nbsp;·&nbsp; <strong>Location:</strong> Zambia',
+    overview:   'Pre-launch ecommerce site for a streetwear brand targeting the urban fashion market.',
+    challenge:  'Needed a hype-building structure before product release to grow a waitlist.',
+    solution:   'Designed a high-converting landing page with email capture, countdown, and brand storytelling.',
+    result:     'Generated early traction and significant brand awareness before official launch.',
+    link: '#'
+  },
+  noirframe: {
+    name: 'NoirFrame', cost: '$199',
+    img:  'https://raw.githubusercontent.com/ShadyLabs-Web/shadylabs-assets/main/noirframe.JPG',
+    desc: 'Ultra-minimal Notion-style portfolio template trusted by creators and freelancers worldwide.',
+    meta: '<strong>Category:</strong> Portfolio Template &nbsp;·&nbsp; <strong>Budget:</strong> $199 &nbsp;·&nbsp; <strong>Location:</strong> Sri Lanka',
+    overview:   'Minimal portfolio website template inspired by Notion aesthetics for creators worldwide.',
+    challenge:  'Required ultra-clean UI with structured storytelling for any creative professional.',
+    solution:   'Developed lightweight minimal design with modular sections and easy customization.',
+    result:     'Improved personal branding for dozens of creators who purchased the template.',
+    link: 'https://shadylabs.gumroad.com/l/noirframe'
+  }
+};
+
+function switchWork(el, key) {
+  document.querySelectorAll('.work-title-item').forEach(i => i.classList.remove('on'));
+  el.classList.add('on');
+  const d = WD[key];
+  const img = document.getElementById('featImg'); img.src = d.img; img.alt = d.name;
+  document.getElementById('featDesc').textContent = d.desc;
+  document.getElementById('featMeta').innerHTML = d.meta;
+  document.getElementById('featCaseBtn').onclick = () => openCase(key);
+  document.getElementById('featCover').onclick   = () => openCase(key);
+}
+
+function openCase(key) {
+  const d = WD[key];
+  document.getElementById('cName').textContent    = d.name;
+  document.getElementById('cImg').src             = d.img;
+  document.getElementById('cImg').alt             = d.name;
+  document.getElementById('cCost').textContent    = 'Investment: ' + d.cost;
+  document.getElementById('cOverview').textContent = d.overview;
+  document.getElementById('cChallenge').textContent = d.challenge;
+  document.getElementById('cSolution').textContent = d.solution;
+  document.getElementById('cResult').textContent  = d.result;
+  document.getElementById('cVisit').onclick = () => window.open(d.link, '_blank');
+  openModal('caseOverlay');
+}
+
+/* ── Services click ──────────────────── */
+function activeSvc(el) {
+  document.querySelectorAll('.svc-item').forEach(i => i.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ── Multi-step form ─────────────────── */
+const TOTAL = 9;
+let fStep = 0;
+function buildDots() {
+  document.getElementById('sDots').innerHTML =
+    Array.from({length: TOTAL}, (_, i) =>
+      `<div class="sdot${i < fStep ? ' done' : ''}"></div>`
+    ).join('');
+}
+function renderStep() {
+  const steps = document.querySelectorAll('#planForm .fstep');
+  steps.forEach((s, i) => s.classList.toggle('on', i === fStep));
+  document.getElementById('prevBtn').style.display = fStep === 0 ? 'none' : 'block';
+  document.getElementById('nextBtn').textContent = fStep === TOTAL - 1 ? 'Submit ✓' : 'Next →';
+  buildDots();
+}
+function fNav(dir) {
+  if (dir === 1 && fStep === TOTAL - 1) {
+    document.getElementById('planForm').submit();
+    document.getElementById('planForm').innerHTML = `
+      <div style="text-align:center;padding:40px 0;">
+        <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+        <h3 style="font-family:var(--display);font-size:2rem;margin-bottom:12px;letter-spacing:.03em;">Received!</h3>
+        <p style="color:var(--muted);line-height:1.7;">We'll send a tailored proposal within <strong>24–48 hours</strong>. Check your inbox!</p>
+      </div>`;
+    return;
+  }
+  fStep = Math.max(0, Math.min(TOTAL - 1, fStep + dir));
+  renderStep();
+}
+
+/* ── Testimonial nudge ───────────────── */
+function nudge(dir) {
+  document.getElementById('rgrid').scrollBy({ left: dir * 320, behavior: 'smooth' });
+}
+
+/* ── Scroll reveal ───────────────────── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -28px 0px' });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+
+</body>
+</html>
