@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ShadyLabs Web | Websites That Actually Work for Your Business</title>
+    <meta name="description" content="We design and develop fast, modern, and reliable websites for small businesses—without the complexity or agency-level pricing. Built for real businesses.">
+    <meta name="keywords" content="web design, web development, small business websites, fast websites, ShadyLabs Web">
+    <meta name="author" content="Kavindu Wasalamudali">
+    <link rel="canonical" href="https://yourwebsite.com/">
+
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS Variables (Color Palette & Fonts) --- */
+        :root {
+            --bg-main: #0F172A;
+            --bg-sec: #111827;
+            --text-main: #F8FAFC;
+            --text-sec: #94A3B8;
+            --accent: #4F46E5;
+            --accent-grad: linear-gradient(135deg, #4F46E5, #8B5CF6);
+            --success: #10B981;
+            
+            --font-primary: 'Sora', sans-serif;
+            --font-secondary: 'Inter', sans-serif;
+            --font-accent: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- Global Reset & Typography --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-sec);
+            font-family: var(--font-secondary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-primary);
+            color: var(--text-main);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-main);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            font-family: var(--font-accent);
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            text-align: center;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+            color: var(--text-main);
+        }
+
+        .btn-primary {
+            background: var(--accent-grad);
+            color: var(--text-main);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--text-sec);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* --- Layout & Sections --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding-top: 12rem;
+            padding-bottom: 8rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(15,23,42,0.8), var(--bg-main)), 
+                        url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1920&q=80') center/cover;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            max-width: 800px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .trust-line {
+            font-size: 0.9rem;
+            color: var(--text-sec);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .trust-line i {
+            color: var(--success);
+        }
+
+        /* --- What We Do (Services) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .service-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .service-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .service-list i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        /* --- Our Work (Portfolio) --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-card {
+            background-color: var(--bg-sec);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .portfolio-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-content p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .portfolio-closing {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        /* --- Why Us (Features) --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg-sec);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* --- Pricing --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background-color: var(--bg-sec);
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.2);
+        }
+
+        .pricing-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-header p {
+            font-size: 0.9rem;
+            min-height: 40px;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-family: var(--font-primary);
+            color: var(--text-main);
+            margin: 1.5rem 0;
+            font-weight: 700;
+        }
+
+        .pricing-features {
+            list-style: none;
+            flex-grow: 1;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .pricing-features i {
+            color: var(--success);
+            margin-top: 4px;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+        }
+
+        /* --- Testimonial --- */
+        .testimonial {
+            background-color: var(--bg-sec);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .testimonial blockquote {
+            font-size: 1.5rem;
+            font-family: var(--font-primary);
+            color: var(--text-main);
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            font-style: italic;
+            position: relative;
+        }
+
+        .testimonial cite {
+            display: block;
+            font-family: var(--font-accent);
+            color: var(--accent);
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* --- FAQ --- */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: var(--bg-sec);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .faq-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-item p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* --- Final CTA --- */
+        .final-cta {
+            text-align: center;
+            background: var(--accent-grad);
+            border-radius: 20px;
+            padding: 5rem 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+        }
+
+        .final-cta .btn {
+            background: #ffffff;
+            color: var(--accent);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--bg-sec);
+            padding: 4rem 0 2rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--text-sec);
+            font-size: 0.95rem;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+
+        /* --- Modal Form --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--bg-sec);
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-sec);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--text-main);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--bg-main);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 5px;
+            color: var(--text-main);
+            font-family: var(--font-secondary);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Simplification for mobile, usually a hamburger menu goes here */
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" alt="ShadyLabs Web Logo">
+                ShadyLabs Web
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Websites That Actually Work for Your Business</h1>
+            <p>We design and develop fast, modern, and reliable websites for small businesses—without the complexity or agency-level pricing.</p>
+            <div class="hero-btns">
+                <a href="#pricing" class="btn btn-primary">Get Your Website</a>
+                <a href="#work" class="btn btn-outline">View Our Work</a>
+            </div>
+            <div class="trust-line">
+                <i class="fa-solid fa-circle-check"></i> Built for real businesses. No fluff. No broken features.
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="services-grid">
+                <div>
+                    <h2>What We Do</h2>
+                    <p>At ShadyLabs Web, we don’t just make websites look good—we make them work.</p>
+                    <p>We build clean, high-performing websites that help small businesses succeed. From simple landing pages to full business websites, everything is designed with one goal: results without complications.</p>
+                    <ul class="service-list">
+                        <li><i class="fa-solid fa-arrow-right"></i> Look professional online</li>
+                        <li><i class="fa-solid fa-arrow-right"></i> Load fast on all devices</li>
+                        <li><i class="fa-solid fa-arrow-right"></i> Convert visitors into customers</li>
+                        <li><i class="fa-solid fa-arrow-right"></i> Run smoothly without constant fixes</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=800&q=80" alt="Workspace" style="border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" style="background-color: var(--bg-sec);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Work</h2>
+                <p>A website isn’t finished when it looks good—it’s finished when it works flawlessly.</p>
+            </div>
+            
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-img" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="portfolio-content">
+                        <h3>Local Business Website</h3>
+                        <p>Clean UI, mobile-first, fast loading</p>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-img" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="portfolio-content">
+                        <h3>Service Brand Website</h3>
+                        <p>Lead-focused design with clear CTAs</p>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <div class="portfolio-img" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="portfolio-content">
+                        <h3>Personal Brand Site</h3>
+                        <p>Minimal, modern, high engagement</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="portfolio-closing">Every project is built with precision, performance, and real-world usability in mind.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Why ShadyLabs?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fa-solid fa-hammer feature-icon"></i>
+                    <h3>1. Built to Work</h3>
+                    <p>Most websites break, lag, or confuse users. Ours don’t. We prioritize function alongside form.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-compress feature-icon"></i>
+                    <h3>2. Simple, Not Overcomplicated</h3>
+                    <p>We remove the unnecessary and focus on what actually matters for your business goals.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-wallet feature-icon"></i>
+                    <h3>3. Budget-Friendly</h3>
+                    <p>You get a premium feel and professional functionality without paying exorbitant agency prices.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-bolt feature-icon"></i>
+                    <h3>4. Fast & Reliable</h3>
+                    <p>Speed, responsiveness, and clean code are non-negotiable for every project we deliver.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" style="background-color: var(--bg-sec);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple Pricing</h2>
+                <p>No hidden fees. No confusion. Choose what fits your business.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Starter</h3>
+                        <p>Perfect for getting online</p>
+                    </div>
+                    <div class="price">$200</div>
+                    <ul class="pricing-features">
+                        <li><i class="fa-solid fa-check"></i> 1–3 pages</li>
+                        <li><i class="fa-solid fa-check"></i> Mobile responsive design</li>
+                        <li><i class="fa-solid fa-check"></i> Basic SEO setup</li>
+                        <li><i class="fa-solid fa-check"></i> Fast loading optimization</li>
+                    </ul>
+                    <button class="btn btn-outline modal-trigger">Get Started</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3>Growth</h3>
+                        <p>For businesses that want results</p>
+                    </div>
+                    <div class="price">$500</div>
+                    <ul class="pricing-features">
+                        <li><i class="fa-solid fa-check"></i> 4–7 pages</li>
+                        <li><i class="fa-solid fa-check"></i> Conversion-focused design</li>
+                        <li><i class="fa-solid fa-check"></i> Contact forms + integrations</li>
+                        <li><i class="fa-solid fa-check"></i> Performance optimization</li>
+                    </ul>
+                    <button class="btn btn-primary modal-trigger">Choose Growth</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Pro</h3>
+                        <p>Full business solution</p>
+                    </div>
+                    <div class="price">$1500</div>
+                    <ul class="pricing-features">
+                        <li><i class="fa-solid fa-check"></i> 8+ pages</li>
+                        <li><i class="fa-solid fa-check"></i> Advanced features & custom design</li>
+                        <li><i class="fa-solid fa-check"></i> Full optimization (speed, SEO, UX)</li>
+                        <li><i class="fa-solid fa-check"></i> Priority support</li>
+                    </ul>
+                    <button class="btn btn-outline modal-trigger">Go Pro</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial">
+        <div class="container">
+            <h2>What Clients Say</h2><br><br>
+            <blockquote>
+                “Working with ShadyLabs Web was the best decision for our business. The website is fast, clean, and actually brings in customers. Everything just works.”
+            </blockquote>
+            <cite>— Narina Kasporova</cite>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h4>How long does it take?</h4>
+                    <p>Most websites are completed within 1–3 weeks depending on complexity.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Will my website work on mobile?</h4>
+                    <p>Yes. Every site is fully optimized for phones, tablets, and desktops.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I request changes?</h4>
+                    <p>Absolutely. We include revisions to make sure you're satisfied.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Do you handle hosting or domain?</h4>
+                    <p>We can guide you or set everything up for you.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What if I don’t know what I need?</h4>
+                    <p>That’s completely fine. We’ll help you choose the best setup.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="final-cta">
+                <h2>Stop Losing Customers with a Bad Website</h2>
+                <p>Your website is often the first impression of your business.<br>Make sure it’s fast, clear, and built to convert.</p>
+                <a href="#pricing" class="btn">Get Your Website Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 1rem;">
+                        <img src="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" alt="ShadyLabs Web Logo">
+                        ShadyLabs Web
+                    </div>
+                    <p style="font-size: 0.9rem;">Modern websites built for real businesses.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#work">Work</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:digitalclarity.shadylabs@gmail.com">digitalclarity.shadylabs@gmail.com</a></li>
+                        <li><span style="color: var(--text-sec); font-size: 0.95rem;">Location: Sri Lanka</span></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Socials</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fa-brands fa-linkedin"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 ShadyLabs Web. All rights reserved. | Founded by Kavindu Wasalamudali</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content">
+            <i class="fa-solid fa-xmark close-btn" id="closeModal"></i>
+            <h3>Let's Get Started</h3>
+            
+            <form action="https://formsubmit.co/digitalclarity.shadylabs@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="john@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+1 234 567 8900">
+                </div>
+                
+                <div class="form-group">
+                    <label for="requirements">Project Requirements</label>
+                    <textarea id="requirements" name="requirements" required placeholder="Tell us a bit about your business and what you need..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary submit-btn">Send Details</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Modal Logic
+            const modal = document.getElementById('contactModal');
+            const btns = document.querySelectorAll('.modal-trigger');
+            const closeBtn = document.getElementById('closeModal');
+
+            // Open modal when any pricing button is clicked
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modal.classList.add('active');
+                });
+            });
+
+            // Close modal when X is clicked
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            // Close modal when clicking outside the form area
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Smooth Scrolling for Nav Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
