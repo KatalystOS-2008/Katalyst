@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Primary SEO Meta -->
+  <title>ShadyLabs Web | Modern Websites for Small Businesses</title>
+  <meta name="description" content="ShadyLabs Web designs and develops fast, modern, and reliable websites for small businesses—without the complexity or agency-level pricing. Built for real businesses. No fluff." />
+  <meta name="keywords" content="web design, web development, small business website, affordable website design, Sri Lanka web developer, fast websites, responsive design, ShadyLabs Web" />
+  <meta name="author" content="Kavindu Wasalamudali" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://shadylabsweb.github.io/" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shadylabsweb.github.io/" />
+  <meta property="og:title" content="ShadyLabs Web | Websites That Actually Work for Your Business" />
+  <meta property="og:description" content="We design and develop fast, modern, and reliable websites for small businesses—without the complexity or agency-level pricing." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ShadyLabs Web | Websites That Actually Work" />
+  <meta name="twitter:description" content="Fast, modern, and reliable websites for small businesses without the agency price tag." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" />
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" />
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "ShadyLabs Web",
+    "description": "Modern websites built for real businesses. Fast, clean, and conversion-focused web design and development.",
+    "url": "https://shadylabsweb.github.io/",
+    "email": "digitalclarity.shadylabs@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "LK"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Kavindu Wasalamudali"
+    },
+    "serviceArea": {
+      "@type": "Place",
+      "name": "Sri Lanka"
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Starter Website",
+        "price": "200",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "name": "Growth Website",
+        "price": "500",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "name": "Pro Website",
+        "price": "1500",
+        "priceCurrency": "USD"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── CSS VARIABLES ─────────────────────────────────────────── */
+    :root {
+      --bg-primary:   #0F172A;
+      --bg-secondary: #111827;
+      --bg-card:      #1E293B;
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --accent:       #4F46E5;
+      --accent-2:     #8B5CF6;
+      --success:      #10B981;
+      --border:       rgba(255,255,255,0.07);
+      --gradient:     linear-gradient(135deg, #4F46E5, #8B5CF6);
+      --gradient-text: linear-gradient(135deg, #818CF8, #C4B5FD);
+      --shadow-accent: 0 0 40px rgba(79,70,229,0.25);
+      --font-heading: 'Sora', sans-serif;
+      --font-body:    'Inter', sans-serif;
+      --font-button:  'Space Grotesk', sans-serif;
+      --max-width:    1200px;
+      --radius:       12px;
+      --radius-lg:    20px;
+    }
+
+    /* ─── RESET & BASE ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    section { position: relative; }
+
+    /* ─── SCROLLBAR ─────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ─── UTILITY ───────────────────────────────────────────────── */
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      font-family: var(--font-button);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: var(--gradient);
+      border-radius: 2px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    .gradient-text {
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: var(--font-button);
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--gradient);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(79,70,229,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(79,70,229,0.55);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: rgba(79,70,229,0.5);
+      background: rgba(79,70,229,0.08);
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.25);
+      color: var(--success);
+      border-radius: 100px;
+      font-family: var(--font-button);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ─── GRAIN OVERLAY ─────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── NAVBAR ────────────────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      transition: all 0.4s ease;
+      padding: 20px 0;
+    }
+    #navbar.scrolled {
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo img {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .nav-logo span {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links a {
+      padding: 8px 16px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); background: var(--border); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      cursor: pointer;
+    }
+    .hamburger span {
+      width: 22px; height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg-primary);
+      z-index: 999;
+      padding: 100px 24px 40px;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 600;
+      padding: 12px 0;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--text-primary); }
+
+    /* ─── HERO ──────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: blur(2px) saturate(0.5);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(79,70,229,0.15) 0%, transparent 70%),
+                  linear-gradient(to bottom, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.95) 100%);
+    }
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.2;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 400px; height: 400px; background: #4F46E5; top: 10%; left: -5%; animation-delay: 0s; }
+    .orb-2 { width: 300px; height: 300px; background: #8B5CF6; top: 30%; right: -5%; animation-delay: -3s; }
+    .orb-3 { width: 250px; height: 250px; background: #4F46E5; bottom: 20%; left: 30%; animation-delay: -6s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(79,70,229,0.12);
+      border: 1px solid rgba(79,70,229,0.3);
+      border-radius: 100px;
+      font-family: var(--font-button);
+      font-size: 12px;
+      font-weight: 600;
+      color: #818CF8;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+    .hero-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+    .hero-trust {
+      margin-top: 32px;
+      font-family: var(--font-button);
+      font-size: 13px;
+      color: var(--text-secondary);
+      animation: fadeUp 0.8s ease 0.6s both;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .hero-trust .check { color: var(--success); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      animation: bounceY 2s ease infinite;
+    }
+    .hero-scroll span {
+      display: block;
+      width: 24px; height: 40px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      position: relative;
+      margin: 0 auto;
+    }
+    .hero-scroll span::after {
+      content: '';
+      position: absolute;
+      width: 4px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+      top: 6px; left: 50%;
+      transform: translateX(-50%);
+      animation: scrollDot 2s ease infinite;
+    }
+    @keyframes scrollDot {
+      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(16px); opacity: 0; }
+    }
+    @keyframes bounceY {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-6px); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── LOGOS STRIP ───────────────────────────────────────────── */
+    #logos {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .logos-label {
+      text-align: center;
+      font-family: var(--font-button);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      opacity: 0.6;
+    }
+    .logos-track {
+      display: flex;
+      gap: 64px;
+      animation: scroll 28s linear infinite;
+      width: max-content;
+    }
+    .logos-track .logo-item {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(248,250,252,0.2);
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+    .logos-track .logo-item:hover { color: rgba(248,250,252,0.6); }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── WHAT WE DO ────────────────────────────────────────────── */
+    #what-we-do {
+      padding: 120px 0;
+      background: var(--bg-secondary);
+    }
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .what-text p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+    .what-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 36px;
+    }
+    .what-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.3s;
+    }
+    .what-feature:hover {
+      border-color: rgba(79,70,229,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .feat-icon {
+      width: 36px; height: 36px;
+      background: rgba(79,70,229,0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .feat-text strong {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .feat-text span {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .what-image {
+      position: relative;
+    }
+    .what-image img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    }
+    .what-image-badge {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .badge-stat {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .badge-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: var(--font-button);
+    }
+
+    /* ─── OUR WORK ──────────────────────────────────────────────── */
+    #work {
+      padding: 120px 0;
+    }
+    .work-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 64px;
+    }
+    .work-header p {
+      color: var(--text-secondary);
+      margin-top: 16px;
+      font-size: 17px;
+    }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .work-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    .work-card:hover {
+      border-color: rgba(79,70,229,0.4);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(79,70,229,0.1);
+    }
+    .work-img {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .work-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .work-card:hover .work-img img { transform: scale(1.06); }
+    .work-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(17,24,39,0.9) 100%);
+    }
+    .work-type {
+      position: absolute;
+      top: 14px; left: 14px;
+      font-family: var(--font-button);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      background: rgba(79,70,229,0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 6px;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+    .work-body {
+      padding: 24px;
+    }
+    .work-title {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .work-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .work-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .work-tag {
+      padding: 3px 10px;
+      background: rgba(79,70,229,0.1);
+      border: 1px solid rgba(79,70,229,0.2);
+      border-radius: 6px;
+      font-family: var(--font-button);
+      font-size: 11px;
+      color: #818CF8;
+    }
+    .work-footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* ─── WHY SHADYLABS ─────────────────────────────────────────── */
+    #why {
+      padding: 120px 0;
+      background: var(--bg-secondary);
+      position: relative;
+      overflow: hidden;
+    }
+    #why::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(79,70,229,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .why-header {
+      text-align: center;
+      max-width: 540px;
+      margin: 0 auto 64px;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .why-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .why-card:hover::before { opacity: 0.04; }
+    .why-card:hover {
+      border-color: rgba(79,70,229,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    }
+    .why-num {
+      font-family: var(--font-heading);
+      font-size: 48px;
+      font-weight: 800;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.25;
+      position: absolute;
+      top: 24px; right: 28px;
+      line-height: 1;
+    }
+    .why-icon {
+      width: 48px; height: 48px;
+      background: rgba(79,70,229,0.1);
+      border: 1px solid rgba(79,70,229,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .why-card h3 {
+      font-family: var(--font-heading);
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .why-card p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    /* ─── PRICING ───────────────────────────────────────────────── */
+    #pricing {
+      padding: 120px 0;
+    }
+    .pricing-header {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 20px;
+    }
+    .pricing-intro {
+      text-align: center;
+      color: var(--text-secondary);
+      margin-bottom: 64px;
+      font-size: 15px;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+    .pricing-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    .pricing-card.featured {
+      background: linear-gradient(145deg, #1a1f3a, #1e1b4b);
+      border-color: rgba(79,70,229,0.5);
+      box-shadow: var(--shadow-accent);
+    }
+    .pricing-card.featured:hover {
+      box-shadow: 0 20px 60px rgba(79,70,229,0.35);
+    }
+    .featured-badge {
+      position: absolute;
+      top: -1px; right: 28px;
+      background: var(--gradient);
+      color: #fff;
+      font-family: var(--font-button);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 5px 14px 7px;
+      border-radius: 0 0 10px 10px;
+    }
+    .plan-name {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .plan-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .plan-price {
+      margin-bottom: 28px;
+    }
+    .plan-price .amount {
+      font-family: var(--font-heading);
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .plan-price .currency {
+      font-size: 22px;
+      font-weight: 600;
+      vertical-align: top;
+      margin-top: 8px;
+      display: inline-block;
+    }
+    .plan-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      margin-bottom: 32px;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .plan-features li .check {
+      color: var(--success);
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .btn-plan {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      font-family: var(--font-button);
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .btn-plan-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-plan-outline:hover {
+      border-color: rgba(79,70,229,0.5);
+      background: rgba(79,70,229,0.08);
+    }
+    .btn-plan-filled {
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 20px rgba(79,70,229,0.4);
+    }
+    .btn-plan-filled:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(79,70,229,0.55);
+    }
+
+    /* ─── TESTIMONIAL ───────────────────────────────────────────── */
+    #testimonial {
+      padding: 120px 0;
+      background: var(--bg-secondary);
+    }
+    .testimonial-header {
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto 64px;
+    }
+    .testimonial-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 52px 56px;
+      position: relative;
+      text-align: center;
+    }
+    .testimonial-card::before {
+      content: '\201C';
+      position: absolute;
+      top: 24px; left: 40px;
+      font-family: var(--font-heading);
+      font-size: 100px;
+      line-height: 1;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.3;
+    }
+    .testimonial-quote {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 500;
+      line-height: 1.65;
+      color: var(--text-primary);
+      margin-bottom: 36px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .author-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid rgba(79,70,229,0.4);
+      overflow: hidden;
+      object-fit: cover;
+    }
+    .author-name {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .author-title {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .stars {
+      color: #FBBF24;
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 28px;
+    }
+
+    /* ─── STATS ─────────────────────────────────────────────────── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 64px;
+      border: 1px solid var(--border);
+    }
+    .stat-item {
+      background: var(--bg-card);
+      padding: 36px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-heading);
+      font-size: 44px;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-family: var(--font-button);
+    }
+
+    /* ─── FAQ ───────────────────────────────────────────────────── */
+    #faq {
+      padding: 120px 0;
+    }
+    .faq-header {
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto 64px;
+    }
+    .faq-grid {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq-item.open {
+      border-color: rgba(79,70,229,0.35);
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 28px;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 600;
+      user-select: none;
+    }
+    .faq-icon {
+      width: 28px; height: 28px;
+      flex-shrink: 0;
+      background: rgba(79,70,229,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.3s;
+      color: var(--accent);
+    }
+    .faq-item.open .faq-icon {
+      background: rgba(79,70,229,0.2);
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 28px;
+    }
+    .faq-answer p {
+      padding-bottom: 22px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+    }
+
+    /* ─── FINAL CTA ─────────────────────────────────────────────── */
+    #cta-final {
+      padding: 140px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .cta-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.08;
+      filter: saturate(0.3);
+    }
+    .cta-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(79,70,229,0.2) 0%, rgba(15,23,42,0.9) 70%);
+    }
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .cta-content h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      line-height: 1.12;
+    }
+    .cta-content p {
+      color: var(--text-secondary);
+      font-size: 18px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────────── */
+    #footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 80px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 64px;
+    }
+    .footer-brand .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .footer-brand .logo-wrap img {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+    }
+    .footer-brand .logo-wrap span {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .footer-brand p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 24px;
+    }
+    .socials {
+      display: flex;
+      gap: 10px;
+    }
+    .social-link {
+      width: 38px; height: 38px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .social-link:hover {
+      border-color: rgba(79,70,229,0.5);
+      color: var(--text-primary);
+      background: rgba(79,70,229,0.1);
+    }
+    .footer-col h4 {
+      font-family: var(--font-heading);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .footer-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col ul li a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--text-primary); }
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .footer-contact-item .ico {
+      color: var(--accent);
+      font-size: 15px;
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .footer-bottom a { color: var(--accent); }
+
+    /* ─── MODAL POPUP ───────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid rgba(79,70,229,0.3);
+      border-radius: 20px;
+      padding: 48px 44px;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      transform: scale(0.92) translateY(20px);
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(79,70,229,0.1);
+    }
+    .modal-overlay.active .modal-box {
+      transform: scale(1) translateY(0);
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text-primary);
+    }
+    .modal-plan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-family: var(--font-button);
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(79,70,229,0.12);
+      border: 1px solid rgba(79,70,229,0.3);
+      color: #818CF8;
+      margin-bottom: 16px;
+    }
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .modal-subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-family: var(--font-button);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(79,70,229,0.6);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(148,163,184,0.5); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .modal-submit {
+      width: 100%;
+      padding: 15px;
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-button);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 6px;
+    }
+    .modal-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(79,70,229,0.5);
+    }
+
+    /* ─── SCROLL ANIMATIONS ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.7s cubic-bezier(0.22,0.61,0.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .what-grid { grid-template-columns: 1fr; gap: 48px; }
+      .what-image { display: none; }
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: span 2; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .work-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; gap: 0; }
+      .testimonial-card { padding: 36px 28px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: auto; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .modal-box { padding: 36px 24px; }
+      .what-features { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-buttons { flex-direction: column; }
+      .hero-buttons .btn { width: 100%; justify-content: center; }
+      .cta-buttons { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══════════════════════════════════════════════════ -->
+  <nav id="navbar" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" aria-label="ShadyLabs Web Home">
+          <img src="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" alt="ShadyLabs Web Logo" width="36" height="36" />
+          <span>ShadyLabs Web</span>
+        </a>
+        <div class="nav-links" role="menubar">
+          <a href="#what-we-do" role="menuitem">Services</a>
+          <a href="#work" role="menuitem">Work</a>
+          <a href="#pricing" role="menuitem">Pricing</a>
+          <a href="#faq" role="menuitem">FAQ</a>
+        </div>
+        <div class="nav-cta">
+          <a href="mailto:digitalclarity.shadylabs@gmail.com" class="btn btn-outline" style="padding:10px 20px; font-size:14px;">Contact</a>
+          <a href="#pricing" class="btn btn-primary" style="padding:10px 20px; font-size:14px;">Get Started</a>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <a href="#what-we-do" onclick="closeMobileMenu()">Services</a>
+    <a href="#work" onclick="closeMobileMenu()">Work</a>
+    <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+    <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+    <a href="mailto:digitalclarity.shadylabs@gmail.com" onclick="closeMobileMenu()">Contact</a>
+  </div>
+
+  <!-- ═══ HERO ══════════════════════════════════════════════════════ -->
+  <section id="hero" aria-label="Hero section">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?w=1600&q=80&auto=format&fit=crop" alt="" role="presentation" loading="eager" />
+    </div>
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot" aria-hidden="true"></span>
+        Now accepting new clients for 2026
+      </div>
+      <h1 class="hero-h1">
+        Websites That<br />
+        <span class="gradient-text">Actually Work</span><br />
+        for Your Business
+      </h1>
+      <p class="hero-sub">
+        We design and develop fast, modern, and reliable websites for small businesses—without the complexity or agency-level pricing.
+      </p>
+      <div class="hero-buttons">
+        <a href="#pricing" class="btn btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5l7 7-7 7M6 12h14"/></svg>
+          Get Your Website
+        </a>
+        <a href="#work" class="btn btn-outline">View Our Work</a>
+      </div>
+      <p class="hero-trust">
+        <span class="check" aria-hidden="true">✓</span>
+        Built for real businesses. No fluff. No broken features.
+      </p>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ═══ LOGOS STRIP ════════════════════════════════════════════════ -->
+  <div id="logos" aria-label="Trusted by businesses">
+    <p class="logos-label">Trusted by businesses across industries</p>
+    <div style="overflow:hidden;">
+      <div class="logos-track" aria-hidden="true">
+        <span class="logo-item">Local Brands</span>
+        <span class="logo-item">Retail</span>
+        <span class="logo-item">Consulting</span>
+        <span class="logo-item">Healthcare</span>
+        <span class="logo-item">Real Estate</span>
+        <span class="logo-item">Startups</span>
+        <span class="logo-item">Hospitality</span>
+        <span class="logo-item">Education</span>
+        <!-- Duplicated for infinite scroll -->
+        <span class="logo-item">Local Brands</span>
+        <span class="logo-item">Retail</span>
+        <span class="logo-item">Consulting</span>
+        <span class="logo-item">Healthcare</span>
+        <span class="logo-item">Real Estate</span>
+        <span class="logo-item">Startups</span>
+        <span class="logo-item">Hospitality</span>
+        <span class="logo-item">Education</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ WHAT WE DO ════════════════════════════════════════════════ -->
+  <section id="what-we-do" aria-labelledby="what-title">
+    <div class="container">
+      <div class="what-grid">
+        <div class="what-text reveal">
+          <p class="section-label">What We Do</p>
+          <h2 class="section-title" id="what-title">
+            We don't just make<br/>
+            websites look good—<br/>
+            <span class="gradient-text">we make them work.</span>
+          </h2>
+          <p style="margin-top:24px;">
+            At ShadyLabs Web, we build clean, high-performing websites that help small businesses achieve real, measurable results.
+          </p>
+          <p>
+            From simple landing pages to full business websites, everything is designed with one goal in mind: results without complications.
+          </p>
+          <div class="what-features">
+            <div class="what-feature reveal reveal-delay-1">
+              <div class="feat-icon" aria-hidden="true">🏆</div>
+              <div class="feat-text">
+                <strong>Look Professional</strong>
+                <span>Make the right first impression</span>
+              </div>
+            </div>
+            <div class="what-feature reveal reveal-delay-2">
+              <div class="feat-icon" aria-hidden="true">⚡</div>
+              <div class="feat-text">
+                <strong>Load Fast</strong>
+                <span>All devices, every time</span>
+              </div>
+            </div>
+            <div class="what-feature reveal reveal-delay-3">
+              <div class="feat-icon" aria-hidden="true">🎯</div>
+              <div class="feat-text">
+                <strong>Convert Visitors</strong>
+                <span>Turn traffic into customers</span>
+              </div>
+            </div>
+            <div class="what-feature reveal reveal-delay-4">
+              <div class="feat-icon" aria-hidden="true">🔧</div>
+              <div class="feat-text">
+                <strong>Run Smoothly</strong>
+                <span>No constant fixes needed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="what-image reveal reveal-delay-2" aria-hidden="true">
+          <img
+            src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80&auto=format&fit=crop"
+            alt="Modern web design process on multiple devices"
+            width="600" height="400"
+            loading="lazy"
+          />
+          <div class="what-image-badge">
+            <div class="badge-stat">100%</div>
+            <div class="badge-label">Client Satisfaction Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ OUR WORK ══════════════════════════════════════════════════ -->
+  <section id="work" aria-labelledby="work-title">
+    <div class="container">
+      <div class="work-header reveal">
+        <p class="section-label">Our Work</p>
+        <h2 class="section-title" id="work-title">Websites Built to <span class="gradient-text">Perform</span></h2>
+        <p>A website isn't finished when it looks good—it's finished when it works flawlessly.</p>
+      </div>
+
+      <div class="work-grid">
+        <article class="work-card reveal reveal-delay-1">
+          <div class="work-img">
+            <img
+              src="https://images.unsplash.com/photo-1621839673705-6617adf9e890?w=700&q=80&auto=format&fit=crop"
+              alt="Local business website project with clean mobile-first design"
+              width="400" height="220"
+              loading="lazy"
+            />
+            <div class="work-img-overlay"></div>
+            <span class="work-type">Local Business</span>
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">Local Business Website</h3>
+            <p class="work-desc">Clean UI, mobile-first architecture, and fast loading speeds built to serve local service businesses.</p>
+            <div class="work-tags">
+              <span class="work-tag">Mobile First</span>
+              <span class="work-tag">Fast Loading</span>
+              <span class="work-tag">Clean UI</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="work-card reveal reveal-delay-2">
+          <div class="work-img">
+            <img
+              src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=700&q=80&auto=format&fit=crop"
+              alt="Service brand website focused on lead generation and clear CTAs"
+              width="400" height="220"
+              loading="lazy"
+            />
+            <div class="work-img-overlay"></div>
+            <span class="work-type">Service Brand</span>
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">Service Brand Website</h3>
+            <p class="work-desc">Lead-focused design with clear CTAs strategically placed to maximize conversions and inquiry rates.</p>
+            <div class="work-tags">
+              <span class="work-tag">Lead Gen</span>
+              <span class="work-tag">Conversion CRO</span>
+              <span class="work-tag">Clear CTAs</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="work-card reveal reveal-delay-3">
+          <div class="work-img">
+            <img
+              src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=700&q=80&auto=format&fit=crop"
+              alt="Personal brand site with minimal modern high engagement design"
+              width="400" height="220"
+              loading="lazy"
+            />
+            <div class="work-img-overlay"></div>
+            <span class="work-type">Personal Brand</span>
+          </div>
+          <div class="work-body">
+            <h3 class="work-title">Personal Brand Site</h3>
+            <p class="work-desc">Minimal, modern design with a high engagement rate—making a lasting impression on every visitor.</p>
+            <div class="work-tags">
+              <span class="work-tag">Minimal</span>
+              <span class="work-tag">High Engagement</span>
+              <span class="work-tag">Modern</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="work-footer reveal" style="margin-top:40px;">
+        Every project is built with precision, performance, and real-world usability in mind.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ WHY SHADYLABS ══════════════════════════════════════════════ -->
+  <section id="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="why-header reveal">
+        <p class="section-label">Why ShadyLabs?</p>
+        <h2 class="section-title" id="why-title">Built different.<br/><span class="gradient-text">Built for you.</span></h2>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card reveal reveal-delay-1">
+          <span class="why-num" aria-hidden="true">01</span>
+          <div class="why-icon" aria-hidden="true">⚙️</div>
+          <h3>Built to Work, Not Just Look Good</h3>
+          <p>Most websites break, lag, or confuse users. Ours don't. Every line of code is written to perform flawlessly in the real world.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-2">
+          <span class="why-num" aria-hidden="true">02</span>
+          <div class="why-icon" aria-hidden="true">✂️</div>
+          <h3>Simple, Not Overcomplicated</h3>
+          <p>We remove the unnecessary and focus on what actually matters for your business. Clean, focused, and effective—every time.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-3">
+          <span class="why-num" aria-hidden="true">03</span>
+          <div class="why-icon" aria-hidden="true">💎</div>
+          <h3>Budget-Friendly Without Looking Cheap</h3>
+          <p>You get a premium feel without paying agency prices. Professional quality at a price point that makes sense for small businesses.</p>
+        </div>
+        <div class="why-card reveal reveal-delay-4">
+          <span class="why-num" aria-hidden="true">04</span>
+          <div class="why-icon" aria-hidden="true">🚀</div>
+          <h3>Fast &amp; Reliable</h3>
+          <p>Speed, responsiveness, and clean code are non-negotiable. Every site we build scores high on performance benchmarks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRICING ════════════════════════════════════════════════════ -->
+  <section id="pricing" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="pricing-header reveal">
+        <p class="section-label">Simple Pricing</p>
+        <h2 class="section-title" id="pricing-title">No surprises.<br/><span class="gradient-text">No hidden fees.</span></h2>
+      </div>
+      <p class="pricing-intro reveal">Choose what fits your business. Every plan comes with our full attention and care.</p>
+
+      <div class="pricing-grid">
+        <!-- Starter -->
+        <div class="pricing-card reveal reveal-delay-1">
+          <div class="plan-name">Starter</div>
+          <div class="plan-desc">Perfect for getting online</div>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="amount">200</span>
+          </div>
+          <ul class="plan-features" aria-label="Starter plan features">
+            <li><span class="check" aria-hidden="true">✓</span> 1–3 pages</li>
+            <li><span class="check" aria-hidden="true">✓</span> Mobile responsive design</li>
+            <li><span class="check" aria-hidden="true">✓</span> Basic SEO setup</li>
+            <li><span class="check" aria-hidden="true">✓</span> Fast loading optimization</li>
+          </ul>
+          <button class="btn-plan btn-plan-outline" onclick="openModal('Starter', '$200')" aria-label="Get started with Starter plan for $200">Get Started</button>
+        </div>
+
+        <!-- Growth (Featured) -->
+        <div class="pricing-card featured reveal reveal-delay-2">
+          <div class="featured-badge" aria-label="Most popular plan">Most Popular</div>
+          <div class="plan-name">Growth</div>
+          <div class="plan-desc">For businesses that want results</div>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="amount">500</span>
+          </div>
+          <ul class="plan-features" aria-label="Growth plan features">
+            <li><span class="check" aria-hidden="true">✓</span> 4–7 pages</li>
+            <li><span class="check" aria-hidden="true">✓</span> Conversion-focused design</li>
+            <li><span class="check" aria-hidden="true">✓</span> Contact forms + integrations</li>
+            <li><span class="check" aria-hidden="true">✓</span> Performance optimization</li>
+          </ul>
+          <button class="btn-plan btn-plan-filled" onclick="openModal('Growth', '$500')" aria-label="Choose Growth plan for $500">Choose Growth</button>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card reveal reveal-delay-3">
+          <div class="plan-name">Pro</div>
+          <div class="plan-desc">Full business solution</div>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="amount">1500</span>
+          </div>
+          <ul class="plan-features" aria-label="Pro plan features">
+            <li><span class="check" aria-hidden="true">✓</span> 8+ pages</li>
+            <li><span class="check" aria-hidden="true">✓</span> Advanced features &amp; custom design</li>
+            <li><span class="check" aria-hidden="true">✓</span> Full optimization (speed, SEO, UX)</li>
+            <li><span class="check" aria-hidden="true">✓</span> Priority support</li>
+          </ul>
+          <button class="btn-plan btn-plan-outline" onclick="openModal('Pro', '$1500')" aria-label="Go Pro with the Pro plan for $1500">Go Pro</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TESTIMONIAL ════════════════════════════════════════════════ -->
+  <section id="testimonial" aria-labelledby="testimonial-title">
+    <div class="container">
+      <div class="testimonial-header reveal">
+        <p class="section-label">What Clients Say</p>
+        <h2 class="section-title" id="testimonial-title">Real results from <span class="gradient-text">real businesses</span></h2>
+      </div>
+
+      <div class="testimonial-wrap reveal">
+        <div class="testimonial-card">
+          <div class="stars" aria-label="5 out of 5 stars" role="img">★★★★★</div>
+          <blockquote class="testimonial-quote">
+            "Working with ShadyLabs Web was the best decision for our business. The website is fast, clean, and actually brings in customers. Everything just works."
+          </blockquote>
+          <div class="testimonial-author">
+            <img
+              class="author-avatar"
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80&auto=format&fit=crop&crop=faces"
+              alt="Narina Kasporova, satisfied client"
+              width="52" height="52"
+              loading="lazy"
+            />
+            <div>
+              <div class="author-name">Narina Kasporova</div>
+              <div class="author-title">Business Owner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-bar reveal" role="list" aria-label="Company statistics">
+        <div class="stat-item" role="listitem">
+          <div class="stat-num" aria-label="6 plus years">6+</div>
+          <div class="stat-label">Years of Experience</div>
+        </div>
+        <div class="stat-item" role="listitem">
+          <div class="stat-num" aria-label="70 plus projects">70+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-item" role="listitem">
+          <div class="stat-num" aria-label="18 plus happy clients">18+</div>
+          <div class="stat-label">Satisfied Clients</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ════════════════════════════════════════════════════════ -->
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="faq-header reveal">
+        <p class="section-label">FAQ</p>
+        <h2 class="section-title" id="faq-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      </div>
+
+      <div class="faq-grid" itemscope itemtype="https://schema.org/FAQPage">
+        <div class="faq-item reveal" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFaq(this)">
+            <span itemprop="name">How long does it take?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Most websites are completed within 1–3 weeks depending on complexity. We'll give you a clear timeline upfront so you know exactly what to expect.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFaq(this)">
+            <span itemprop="name">Will my website work on mobile?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Yes. Every site is fully optimized for phones, tablets, and desktops. Mobile-first design is a core part of our development process.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFaq(this)">
+            <span itemprop="name">Can I request changes?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Absolutely. We include revisions in every plan to make sure you're fully satisfied with the final result before we hand anything over.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-3" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFaq(this)">
+            <span itemprop="name">Do you handle hosting or domain?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">We can guide you through the process or set everything up for you. Just let us know your preference and we'll handle it accordingly.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-4" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleFaq(this)">
+            <span itemprop="name">What if I don't know what I need?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">That's completely fine. We'll help you choose the best setup for your goals and budget. Many of our clients come to us with just an idea and we take it from there.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FINAL CTA ══════════════════════════════════════════════════ -->
+  <section id="cta-final" aria-label="Call to action">
+    <div class="cta-bg" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&q=80&auto=format&fit=crop"
+        alt=""
+        role="presentation"
+        loading="lazy"
+      />
+    </div>
+    <div class="container">
+      <div class="cta-content">
+        <div class="tag reveal" style="display:inline-flex; margin-bottom:24px;">
+          <span aria-hidden="true">🚀</span> Ready to grow?
+        </div>
+        <h2 class="reveal">
+          Stop Losing Customers<br />
+          with a <span class="gradient-text">Bad Website</span>
+        </h2>
+        <p class="reveal">
+          Your website is often the first impression of your business.<br />
+          Make sure it's fast, clear, and built to convert.
+        </p>
+        <div class="cta-buttons reveal">
+          <a href="#pricing" class="btn btn-primary" style="padding:16px 36px; font-size:16px;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5l7 7-7 7M6 12h14"/></svg>
+            Get Your Website Now
+          </a>
+          <a href="mailto:digitalclarity.shadylabs@gmail.com" class="btn btn-outline" style="padding:16px 36px; font-size:16px;">
+            Send Us an Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════════ -->
+  <footer id="footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-wrap">
+            <img src="https://raw.githubusercontent.com/KatalystOS-2008/Katalyst/50876743d3569bca869b1f4acb1db782c00d770e/Instagram%20Post%20Square.png" alt="ShadyLabs Web Logo" width="36" height="36" loading="lazy" />
+            <span>ShadyLabs Web</span>
+          </div>
+          <p>Modern websites built for real businesses. Fast, clean, and conversion-focused.</p>
+          <div class="socials">
+            <a href="https://instagram.com" class="social-link" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://linkedin.com" class="social-link" aria-label="Connect on LinkedIn" rel="noopener noreferrer" target="_blank">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#what-we-do">Services</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item">
+            <span class="ico" aria-hidden="true">✉</span>
+            <a href="mailto:digitalclarity.shadylabs@gmail.com">digitalclarity.shadylabs@gmail.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <span class="ico" aria-hidden="true">📍</span>
+            <span>Sri Lanka</span>
+          </div>
+          <div style="margin-top:16px;">
+            <a href="#pricing" class="btn btn-primary" style="padding:11px 22px; font-size:14px; display:inline-flex;">
+              Start a Project →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 ShadyLabs Web. All rights reserved. Founded by <strong>Kavindu Wasalamudali</strong>.</p>
+        <p style="font-size:12px; opacity:0.5;">Designed &amp; developed in Sri Lanka 🇱🇰</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ MODAL POPUP ════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="closeModalOnOverlay(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close dialog">✕</button>
+      <div class="modal-plan-badge">
+        <span aria-hidden="true">🚀</span>
+        <span id="modalPlan">Starter Plan</span>
+      </div>
+      <h2 class="modal-title" id="modalTitle">Let's Build Your Website</h2>
+      <p class="modal-subtitle" id="modalSubtitle">Tell us about your project and we'll get back to you within 24 hours.</p>
+
+      <form
+        action="https://formsubmit.co/digitalclarity.shadylabs@gmail.com"
+        method="POST"
+        id="planForm"
+        novalidate
+      >
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" id="formSubject" value="New Website Inquiry" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="plan" id="formPlan" value="" />
+
+        <div class="form-group">
+          <label for="clientName">Your Name</label>
+          <input
+            type="text" id="clientName" name="name"
+            placeholder="e.g. John Smith"
+            required
+            autocomplete="name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="clientEmail">Email Address</label>
+          <input
+            type="email" id="clientEmail" name="email"
+            placeholder="e.g. john@business.com"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="clientPhone">Phone Number</label>
+          <input
+            type="tel" id="clientPhone" name="phone"
+            placeholder="e.g. +1 555 000 0000"
+            autocomplete="tel"
+          />
+        </div>
+        <div class="form-group">
+          <label for="clientRequirements">Your Requirements</label>
+          <textarea
+            id="clientRequirements" name="requirements"
+            placeholder="Tell us about your business and what you're looking for in a website..."
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="modal-submit">
+          Send My Request →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══ JAVASCRIPT ════════════════════════════════════════════════ -->
+  <script>
+    // ── Navbar scroll effect ─────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    const scrollHandler = () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    };
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+
+    // ── Mobile menu ──────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
+
+    hamburger.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      hamburger.setAttribute('aria-expanded', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    });
+
+    function closeMobileMenu() {
+      menuOpen = false;
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    // ── FAQ accordion ────────────────────────────────────────────
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      // Open clicked if was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    // ── Modal ────────────────────────────────────────────────────
+    function openModal(planName, planPrice) {
+      const overlay = document.getElementById('modalOverlay');
+      document.getElementById('modalPlan').textContent = planName + ' Plan — ' + planPrice;
+      document.getElementById('modalTitle').textContent = 'Get Your ' + planName + ' Website';
+      document.getElementById('modalSubtitle').textContent =
+        'You selected the ' + planName + ' plan (' + planPrice + '). Fill in your details and we\'ll reach out within 24 hours.';
+      document.getElementById('formPlan').value = planName + ' — ' + planPrice;
+      document.getElementById('formSubject').value =
+        'New Website Inquiry — ' + planName + ' Plan (' + planPrice + ')';
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // Focus first input
+      setTimeout(() => document.getElementById('clientName').focus(), 100);
+    }
+
+    function closeModal() {
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalOnOverlay(e) {
+      if (e.target === e.currentTarget) closeModal();
+    }
+
+    // Close modal on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ── Scroll reveal ────────────────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ── Smooth anchor scroll for nav links ───────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ── Active nav highlight ─────────────────────────────────────
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const activeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.style.color = link.getAttribute('href') === '#' + id
+              ? 'var(--text-primary)'
+              : '';
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(sec => activeObserver.observe(sec));
+  </script>
+</body>
+</html>
